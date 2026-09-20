@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Vazirmatn:wght@300;400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 9 12 18;
+  --foreground: 255 255 255;
+  --muted: 26 26 46;
+  --muted-foreground: 160 160 176;
+  --border: 45 45 68;
+  --primary: 225 6 0;
+  --primary-foreground: 255 255 255;
+  --secondary: 155 81 224;
+  --accent: 0 210 190;
+  --destructive: 225 6 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-surface text-white font-sans;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+.font-f1 {
+  font-family: 'Orbitron', system-ui, sans-serif;
+}
+
+.font-persian {
+  font-family: 'Vazirmatn', system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500 rounded-full;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  @apply bg-muted h-2 rounded-lg cursor-pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  @apply w-4 h-4 bg-f1-red rounded-full transition-transform hover:scale-110;
+}
+
+input[type="range"]::-moz-range-thumb {
+  @apply w-4 h-4 bg-f1-red rounded-full border-0 transition-transform hover:scale-110;
+}
+
+.input-field {
+  @apply w-full px-4 py-2 bg-muted border border-gray-700 rounded-lg text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-f1-red focus:border-transparent transition-all;
+}
+
+.card-glass {
+  @apply bg-surface/80 backdrop-blur-sm border border-gray-700/50 rounded-xl;
+}
+
+.btn-primary {
+  @apply px-6 py-2.5 bg-f1-red text-white font-medium rounded-lg hover:bg-f1-red/90 active:bg-f1-red transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-f1-red focus:ring-offset-2 focus:ring-offset-surface;
+}
+
+.btn-secondary {
+  @apply px-6 py-2.5 bg-muted text-white font-medium rounded-lg border border-gray-700 hover:bg-muted/80 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-surface;
+}
+
+.tab-trigger {
+  @apply px-4 py-2 text-sm font-medium text-gray-400 hover:text-white hover:bg-muted/50 rounded-lg transition-colors data-[state=active]:bg-f1-red/20 data-[state=active]:text-f1-red data-[state=active]:border-b-2 data-[state=active]:border-f1-red;
+}
+
+.telemetry-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3;
+}
+
+.stat-card {
+  @apply p-4 bg-muted/50 border border-gray-700/50 rounded-xl transition-all hover:border-f1-red/30 hover:bg-f1-red/5;
+}
+
+.section-title {
+  @apply text-lg font-f1 font-bold tracking-tighter text-white;
+}
+
+.section-subtitle {
+  @apply text-sm text-gray-400 mt-1;
+}
+
+.live-indicator {
+  @apply inline-flex items-center gap-1.5 text-xs font-medium text-f1-red;
+}
+
+.live-indicator::before {
+  content: '';
+  @apply w-2 h-2 rounded-full bg-f1-red animate-pulse-fast;
+}
+
+.track-container {
+  @apply relative w-full h-full bg-surface rounded-xl border border-gray-700 overflow-hidden;
+}
+
+.driver-badge {
+  @apply w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white;
+}
+
+.sector-marker {
+  @apply absolute w-px h-full opacity-30;
+}
+
+.sector-marker::after {
+  @apply absolute bottom-2 left-1/2 -translate-x-1/2 text-xs font-f1 text-gray-400;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.stagger-1 { animation-delay: 50ms; }
+.stagger-2 { animation-delay: 100ms; }
+.stagger-3 { animation-delay: 150ms; }
+.stagger-4 { animation-delay: 200ms; }
+.stagger-5 { animation-delay: 250ms; }
+.stagger-6 { animation-delay: 300ms; }
+
+.recharts-tooltip-wrapper {
+  @apply pointer-events-none;
+}
+
+.recharts-default-tooltip {
+  @apply bg-gray-800 border border-gray-700 rounded-lg shadow-lg p-2 !important;
+}
+
+.recharts-legend-wrapper {
+  @apply text-sm;
+}
+
+.recharts-legend-item-text {
+  @apply font-mono;
+}
+
+.eyebrow {
+  @apply text-xs font-f1 font-bold uppercase tracking-[0.25em] text-f1-red;
+}
+
+.race-panel {
+  background-image: radial-gradient(circle at 20% 0%, rgba(225, 6, 0, 0.08), transparent 55%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 40%);
+}
+
+.action-link {
+  @apply text-f1-red underline-offset-4 hover:underline;
+}
+
+.glow-line {
+  background: linear-gradient(90deg, transparent, rgba(225, 6, 0, 0.7), transparent);
+  height: 1px;
+}

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="#0a0a0f"/>
+  <path d="M 150 450 L 150 300 Q 150 260 190 260 L 280 260 Q 320 260 340 220 L 380 140 Q 400 100 440 100 L 560 100 Q 600 100 620 140 L 660 220 Q 680 260 720 280 L 760 300 Q 800 320 800 360 L 800 440 Q 800 480 760 480 L 200 480 Q 150 480 150 450 Z" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <path d="M 150 450 L 150 300 Q 150 260 190 260 L 280 260 Q 320 260 340 220 L 380 140 Q 400 100 440 100 L 560 100 Q 600 100 620 140 L 660 220 Q 680 260 720 280 L 760 300 Q 800 320 800 360 L 800 440 Q 800 480 760 480 L 200 480 Q 150 480 150 450 Z" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="150" cy="380" r="6" fill="#E10600"/>
+  <circle cx="800" cy="400" r="6" fill="#FFD700"/>
+  <circle cx="440" cy="100" r="6" fill="#9B51E0"/>
+  <text x="400" y="560" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="18" font-weight="bold">Circuit de Spa-Francorchamps</text>
+  <text x="400" y="585" text-anchor="middle" fill="#888" font-family="Arial,sans-serif" font-size="12">Belgium</text>
+</svg>

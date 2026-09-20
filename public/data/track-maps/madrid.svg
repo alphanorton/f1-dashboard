@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="#0a0a0f"/>
+  <path d="M 150 400 L 150 220 Q 150 180 190 180 L 280 180 Q 320 180 340 200 L 380 240 Q 400 260 440 260 L 560 260 Q 600 260 620 220 L 660 140 Q 680 100 720 100 L 760 100 Q 800 100 800 140 L 800 420 Q 800 460 760 460 L 200 460 Q 150 460 150 400 Z" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <path d="M 150 400 L 150 220 Q 150 180 190 180 L 280 180 Q 320 180 340 200 L 380 240 Q 400 260 440 260 L 560 260 Q 600 260 620 220 L 660 140 Q 680 100 720 100 L 760 100 Q 800 100 800 140 L 800 420 Q 800 460 760 460 L 200 460 Q 150 460 150 400 Z" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="150" cy="320" r="6" fill="#E10600"/>
+  <circle cx="800" cy="280" r="6" fill="#FFD700"/>
+  <circle cx="440" cy="100" r="6" fill="#9B51E0"/>
+  <text x="400" y="560" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="18" font-weight="bold">Madrid Circuit</text>
+  <text x="400" y="585" text-anchor="middle" fill="#888" font-family="Arial,sans-serif" font-size="12">Spain</text>
+</svg>

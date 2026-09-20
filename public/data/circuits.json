@@ -1,0 +1,1351 @@
+{
+  "season": 2026,
+  "circuits": [
+    {
+      "id": "albert_park",
+      "name": "Albert Park Circuit",
+      "country": "Australia",
+      "city": "Melbourne",
+      "length": 5.278,
+      "laps": 58,
+      "turns": 14,
+      "capacity": 124000,
+      "lapRecord": "1:19.813 (Charles Leclerc, Ferrari, 2024)",
+      "maxGForce": "5.2G (Turn 11-12 chicane)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1",
+          "type": "right",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 2,
+          "name": "Turn 2",
+          "type": "left",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 3,
+          "name": "Turn 3",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Best overtaking spot"
+        },
+        {
+          "number": 4,
+          "name": "Turn 4",
+          "type": "left",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 5,
+          "name": "Turn 5",
+          "type": "right",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 6,
+          "name": "Turn 6",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 7,
+          "name": "Turn 7",
+          "type": "right",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 8,
+          "name": "Turn 8",
+          "type": "left",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 9,
+          "name": "Turn 9",
+          "type": "left",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 10,
+          "name": "Turn 10",
+          "type": "right",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 11,
+          "name": "Turn 11-12 Chicane",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 13,
+          "name": "Turn 13",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 14,
+          "name": "Turn 14",
+          "type": "right",
+          "speed": "medium",
+          "gear": 3
+        }
+      ],
+      "trackMapUrl": "/data/track-maps/albert_park.png",
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com"
+    },
+    {
+      "id": "shanghai",
+      "name": "Shanghai International Circuit",
+      "country": "China",
+      "city": "Shanghai",
+      "length": 5.451,
+      "laps": 56,
+      "turns": 16,
+      "lapRecord": "1:32.238 (Michael Schumacher, Ferrari, 2004)",
+      "maxGForce": "4.8G (Turn 14 hairpin)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1-2",
+          "type": "right-left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 3,
+          "name": "Turn 3",
+          "type": "right",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 4,
+          "name": "Turn 4",
+          "type": "left",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 5,
+          "name": "Turn 5",
+          "type": "right",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 6,
+          "name": "Turn 6-7-8",
+          "type": "snake",
+          "speed": "fast",
+          "gear": "5-6",
+          "notes": "Snake corner sequence"
+        },
+        {
+          "number": 11,
+          "name": "Turn 11",
+          "type": "right",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 13,
+          "name": "Turn 13",
+          "type": "left",
+          "speed": "fast",
+          "gear": 7
+        },
+        {
+          "number": 14,
+          "name": "Turn 14 Hairpin",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Slowest corner on the track"
+        }
+      ],
+      "capacity": 200000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/shanghai.png"
+    },
+    {
+      "id": "suzuka",
+      "name": "Suzuka International Racing Course",
+      "country": "Japan",
+      "city": "Suzuka",
+      "length": 5.807,
+      "laps": 53,
+      "turns": 18,
+      "lapRecord": "1:30.983 (Lewis Hamilton, Mercedes, 2019)",
+      "maxGForce": "5.8G (Casio Triangle chicane - highest G of all F1 circuits)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1",
+          "type": "right",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 2,
+          "name": "Turn 2",
+          "type": "left",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 3,
+          "name": "S Curves - Turn 3",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": 6,
+          "notes": "Start of the famous S Curves"
+        },
+        {
+          "number": 4,
+          "name": "S Curves - Turn 4",
+          "type": "right",
+          "speed": "very_fast",
+          "gear": 6
+        },
+        {
+          "number": 5,
+          "name": "S Curves - Turn 5",
+          "type": "left",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 6,
+          "name": "S Curves - Turn 6",
+          "type": "right",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 7,
+          "name": "S Curves - Turn 7 (Dunlop)",
+          "type": "left",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 8,
+          "name": "Degner 1",
+          "type": "left",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 9,
+          "name": "Degner 2",
+          "type": "left",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 11,
+          "name": "Hairpin",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 13,
+          "name": "Spoon Curve",
+          "type": "left",
+          "speed": "fast",
+          "gear": "4-5",
+          "notes": "Two apexes, long and famous corner"
+        },
+        {
+          "number": 15,
+          "name": "130R",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": 8,
+          "notes": "300 km/h, sustained 3.5G lateral"
+        },
+        {
+          "number": 16,
+          "name": "Casio Triangle (Chicane)",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Highest G-load in F1: 5.8G"
+        }
+      ],
+      "capacity": 155000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/suzuka.png"
+    },
+    {
+      "id": "miami",
+      "name": "Miami International Autodrome",
+      "country": "United States",
+      "city": "Miami Gardens, Florida",
+      "length": 5.412,
+      "laps": 57,
+      "turns": 19,
+      "lapRecord": "1:27.685 (Max Verstappen, Red Bull, 2023)",
+      "maxGForce": "5.0G (Turn 17)",
+      "sectors": 3,
+      "corners": [],
+      "capacity": 85000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/miami.png"
+    },
+    {
+      "id": "gilles_villeneuve",
+      "name": "Circuit Gilles-Villeneuve",
+      "country": "Canada",
+      "city": "Montréal",
+      "length": 4.361,
+      "laps": 70,
+      "turns": 14,
+      "lapRecord": "1:13.078 (Valtteri Bottas, Mercedes, 2019)",
+      "maxGForce": "4.7G (Turn 10 - Hairpin)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Virage Senna",
+          "type": "right",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 2,
+          "name": "Turn 2",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 3,
+          "name": "Turn 3-4 Chicane",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 6,
+          "name": "Turn 6-7 Chicane",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 8,
+          "name": "Epingle (Hairpin)",
+          "type": "left",
+          "speed": "slow",
+          "gear": 1,
+          "notes": "Slowest corner"
+        },
+        {
+          "number": 10,
+          "name": "Turn 10",
+          "type": "right",
+          "speed": "fast",
+          "gear": 7
+        },
+        {
+          "number": 13,
+          "name": "Wall of Champions",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Wall of Champions - famous incidents"
+        }
+      ],
+      "capacity": 100000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/montreal.png"
+    },
+    {
+      "id": "monaco",
+      "name": "Circuit de Monaco",
+      "country": "Monaco",
+      "city": "Monte Carlo",
+      "length": 3.337,
+      "laps": 78,
+      "turns": 19,
+      "lapRecord": "1:10.166 (Lewis Hamilton, Mercedes, 2021)",
+      "maxGForce": "5.1G (Sainte Dévote - Turn 1)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Sainte Dévote",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 3,
+          "name": "Massenet",
+          "type": "left",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 5,
+          "name": "Mirabeau",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 6,
+          "name": "Grand Hotel Hairpin",
+          "type": "right",
+          "speed": "slow",
+          "gear": 1,
+          "notes": "Slowest corner in F1: ~45 km/h"
+        },
+        {
+          "number": 8,
+          "name": "Portier",
+          "type": "left",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 10,
+          "name": "Tunnel",
+          "type": "left",
+          "speed": "fast",
+          "gear": 7,
+          "notes": "Famous tunnel"
+        },
+        {
+          "number": 11,
+          "name": "Nouvelle Chicane",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 13,
+          "name": "Tabac",
+          "type": "left",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 15,
+          "name": "Swimming Pool",
+          "type": "chicane",
+          "speed": "medium",
+          "gear": "3-4",
+          "notes": "Swimming pool section"
+        },
+        {
+          "number": 16,
+          "name": "Rascasse",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 19,
+          "name": "Anthony Noghès",
+          "type": "right",
+          "speed": "medium",
+          "gear": 4
+        }
+      ],
+      "capacity": 37000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/monaco.png"
+    },
+    {
+      "id": "catalunya",
+      "name": "Circuit de Barcelona-Catalunya",
+      "country": "Spain",
+      "city": "Montmeló (Barcelona)",
+      "length": 4.657,
+      "laps": 66,
+      "turns": 16,
+      "lapRecord": "1:18.149 (Max Verstappen, Red Bull, 2023)",
+      "maxGForce": "4.6G (Turn 9)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Elf",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 3,
+          "name": "Repsol",
+          "type": "right",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 5,
+          "name": "Seat",
+          "type": "left",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 7,
+          "name": "Wurth",
+          "type": "right",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 9,
+          "name": "Campsa",
+          "type": "right",
+          "speed": "fast",
+          "gear": 7
+        },
+        {
+          "number": 10,
+          "name": "La Caixa",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        }
+      ],
+      "capacity": 140700,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/barcelona.png"
+    },
+    {
+      "id": "red_bull_ring",
+      "name": "Red Bull Ring",
+      "country": "Austria",
+      "city": "Spielberg",
+      "length": 4.318,
+      "laps": 71,
+      "turns": 10,
+      "lapRecord": "1:05.619 (Carlos Sainz, Ferrari, 2020)",
+      "maxGForce": "4.9G (Turn 3)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Castrol Edge",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 2,
+          "name": "Remus",
+          "type": "right",
+          "speed": "fast",
+          "gear": 6,
+          "notes": "Long uphill corner"
+        },
+        {
+          "number": 3,
+          "name": "Schlossgold",
+          "type": "right",
+          "speed": "fast",
+          "gear": 7
+        },
+        {
+          "number": 4,
+          "name": "Rauch",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 6,
+          "name": "Rindt",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 7,
+          "name": "Jochen",
+          "type": "right",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 9,
+          "name": "Power Horse",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 10,
+          "name": "Wurth",
+          "type": "right",
+          "speed": "slow",
+          "gear": 3
+        }
+      ],
+      "capacity": 142000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/red_bull_ring.png"
+    },
+    {
+      "id": "silverstone",
+      "name": "Silverstone Circuit",
+      "country": "United Kingdom",
+      "city": "Silverstone",
+      "length": 5.891,
+      "laps": 52,
+      "turns": 18,
+      "lapRecord": "1:27.097 (Max Verstappen, Red Bull, 2020)",
+      "maxGForce": "5.9G (Maggotts-Becketts - highest lateral G in F1)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Abbey",
+          "type": "right",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 3,
+          "name": "Village",
+          "type": "right",
+          "speed": "slow",
+          "gear": 3
+        },
+        {
+          "number": 6,
+          "name": "Brooklands",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 7,
+          "name": "Luffield",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 9,
+          "name": "Copse",
+          "type": "right",
+          "speed": "very_fast",
+          "gear": 7
+        },
+        {
+          "number": 10,
+          "name": "Maggotts",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": 7,
+          "notes": "Start of the famous sequence"
+        },
+        {
+          "number": 11,
+          "name": "Becketts",
+          "type": "right-left",
+          "speed": "very_fast",
+          "gear": "6-7",
+          "notes": "5.9G lateral"
+        },
+        {
+          "number": 13,
+          "name": "Chapel",
+          "type": "right",
+          "speed": "very_fast",
+          "gear": 7
+        },
+        {
+          "number": 15,
+          "name": "Stowe",
+          "type": "right",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 16,
+          "name": "Vale",
+          "type": "right",
+          "speed": "slow",
+          "gear": 3
+        },
+        {
+          "number": 17,
+          "name": "Club",
+          "type": "right",
+          "speed": "fast",
+          "gear": 5
+        }
+      ],
+      "capacity": 150000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/silverstone.png"
+    },
+    {
+      "id": "spa",
+      "name": "Circuit de Spa-Francorchamps",
+      "country": "Belgium",
+      "city": "Stavelot",
+      "length": 7.004,
+      "laps": 44,
+      "turns": 19,
+      "lapRecord": "1:46.286 (Valtteri Bottas, Mercedes, 2018)",
+      "maxGForce": "5.5G (Eau Rouge-Raidillon)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "La Source Hairpin",
+          "type": "right",
+          "speed": "slow",
+          "gear": 1
+        },
+        {
+          "number": 3,
+          "name": "Eau Rouge",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": 7,
+          "notes": "Steep climb, start of Eau Rouge"
+        },
+        {
+          "number": 4,
+          "name": "Raidillon",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": 8,
+          "notes": "5.5G, one of the most famous corners in F1"
+        },
+        {
+          "number": 5,
+          "name": "Les Combes",
+          "type": "right-left",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 9,
+          "name": "Pouhon",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": 6,
+          "notes": "Double-apex, long corner"
+        },
+        {
+          "number": 11,
+          "name": "Campus",
+          "type": "chicane",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 13,
+          "name": "Stavelot",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 15,
+          "name": "Blanchimont",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": 7,
+          "notes": "full throttle"
+        },
+        {
+          "number": 18,
+          "name": "Bus Stop Chicane",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2
+        }
+      ],
+      "capacity": 70000,
+      "trackMapUrl": "/data/track-maps/spa.svg",
+      "trackMapStatus": "local-svg",
+      "trackMapNote": "Local SVG track map",
+      "trackMapFailure": "CDN GET returned an incomplete image body; decoding could not be completed."
+    },
+    {
+      "id": "hungaroring",
+      "name": "Hungaroring",
+      "country": "Hungary",
+      "city": "Budapest",
+      "length": 4.381,
+      "laps": 70,
+      "turns": 14,
+      "lapRecord": "1:16.627 (Lewis Hamilton, Mercedes, 2020)",
+      "maxGForce": "4.2G (Turn 4)",
+      "sectors": 3,
+      "corners": [],
+      "capacity": 70000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/hungaroring.png"
+    },
+    {
+      "id": "zandvoort",
+      "name": "Circuit Zandvoort",
+      "country": "Netherlands",
+      "city": "Zandvoort",
+      "length": 4.259,
+      "laps": 72,
+      "turns": 14,
+      "lapRecord": "1:11.097 (Lewis Hamilton, Mercedes, 2021)",
+      "maxGForce": "5.2G (Turn 3 - Hugenholtz, banked 18°)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Tarzan",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 3,
+          "name": "Hugenholtz",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6,
+          "notes": "18-degree banking, 5.2G"
+        },
+        {
+          "number": 7,
+          "name": "Scheivlak",
+          "type": "left",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 10,
+          "name": "Kumho",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 11,
+          "name": "Mastersbocht",
+          "type": "right",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 13,
+          "name": "Hans Ernst Bocht",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 14,
+          "name": "Arie Luyendyk",
+          "type": "right",
+          "speed": "fast",
+          "gear": 7,
+          "notes": "19-degree banking"
+        }
+      ],
+      "capacity": 105000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/zandvoort.png"
+    },
+    {
+      "id": "monza",
+      "name": "Autodromo Nazionale Monza",
+      "country": "Italy",
+      "city": "Monza",
+      "length": 5.793,
+      "laps": 53,
+      "turns": 11,
+      "lapRecord": "1:21.046 (Rubens Barrichello, Ferrari, 2004)",
+      "maxGForce": "5.5G (Variante del Rettifilo - Turn 1 chicane)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Variante del Rettifilo",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "350 -> 80 km/h"
+        },
+        {
+          "number": 3,
+          "name": "Curva Grande",
+          "type": "right",
+          "speed": "very_fast",
+          "gear": 7
+        },
+        {
+          "number": 4,
+          "name": "Variante della Roggia",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 6,
+          "name": "Lesmo 1",
+          "type": "right",
+          "speed": "fast",
+          "gear": 5
+        },
+        {
+          "number": 7,
+          "name": "Lesmo 2",
+          "type": "right",
+          "speed": "fast",
+          "gear": 4
+        },
+        {
+          "number": 8,
+          "name": "Variante Ascari",
+          "type": "chicane",
+          "speed": "medium",
+          "gear": 4
+        },
+        {
+          "number": 11,
+          "name": "Parabolica",
+          "type": "right",
+          "speed": "fast",
+          "gear": "5-6",
+          "notes": "Famous final corner"
+        }
+      ],
+      "capacity": 113860,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/monza.png"
+    },
+    {
+      "id": "madring",
+      "name": "Madring Circuit (Madrid)",
+      "country": "Spain",
+      "city": "Madrid",
+      "length": 5.47,
+      "laps": 57,
+      "turns": 22,
+      "lapRecord": "1:28.xxx (New circuit - 2026)",
+      "maxGForce": "5.3G (La Monumental - Turn 11, banked 24%)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1",
+          "type": "right",
+          "speed": "medium",
+          "gear": 3
+        },
+        {
+          "number": 4,
+          "name": "Turn 4",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": 8,
+          "notes": "340 km/h"
+        },
+        {
+          "number": 5,
+          "name": "Turn 5-6 Chicane",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Under the bridge, best overtaking spot"
+        },
+        {
+          "number": 11,
+          "name": "La Monumental",
+          "type": "right",
+          "speed": "very_fast",
+          "gear": 7,
+          "notes": "24% banking, 500 m, 45,000 spectators, inspired by the Las Ventas bullring"
+        },
+        {
+          "number": 13,
+          "name": "Turn 13",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Exit of the Monumental"
+        }
+      ],
+      "capacity": 110000,
+      "trackMapUrl": "/data/track-maps/madring.svg",
+      "trackMapStatus": "local-svg",
+      "trackMapNote": "Local SVG track map"
+    },
+    {
+      "id": "baku",
+      "name": "Baku City Circuit",
+      "country": "Azerbaijan",
+      "city": "Baku",
+      "length": 6.003,
+      "laps": 51,
+      "turns": 20,
+      "lapRecord": "1:43.009 (Charles Leclerc, Ferrari, 2019)",
+      "maxGForce": "5.1G (Turn 8 - Castle section)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 3,
+          "name": "Turn 3",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Slowest section"
+        },
+        {
+          "number": 7,
+          "name": "Turn 7-8",
+          "type": "uphill",
+          "speed": "medium",
+          "gear": "3-4",
+          "notes": "Climb to the castle"
+        },
+        {
+          "number": 16,
+          "name": "Castle Section",
+          "type": "narrow",
+          "speed": "medium",
+          "gear": "3-4",
+          "notes": "Narrowest section: 7.6 m"
+        },
+        {
+          "number": 20,
+          "name": "Turn 20",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Before the finish line"
+        }
+      ],
+      "capacity": 55000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/baku.png"
+    },
+    {
+      "id": "marina_bay",
+      "name": "Marina Bay Street Circuit",
+      "country": "Singapore",
+      "city": "Singapore",
+      "length": 4.94,
+      "laps": 62,
+      "turns": 19,
+      "lapRecord": "1:35.867 (Lewis Hamilton, Mercedes, 2023)",
+      "maxGForce": "4.8G (Turn 7)",
+      "sectors": 3,
+      "corners": [],
+      "capacity": 80000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/singapore.png"
+    },
+    {
+      "id": "cota",
+      "name": "Circuit of the Americas",
+      "country": "United States",
+      "city": "Austin, Texas",
+      "length": 5.513,
+      "laps": 56,
+      "turns": 20,
+      "lapRecord": "1:36.169 (Charles Leclerc, Ferrari, 2019)",
+      "maxGForce": "5.0G (Turn 1)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Steep 40 m climb"
+        },
+        {
+          "number": 3,
+          "name": "Turns 3-6",
+          "type": "esses",
+          "speed": "fast",
+          "gear": "4-6",
+          "notes": "Inspired by Silverstone's Maggotts-Becketts"
+        },
+        {
+          "number": 11,
+          "name": "Turn 11",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 12,
+          "name": "Turn 12",
+          "type": "right",
+          "speed": "fast",
+          "gear": 6,
+          "notes": "Start of the stadium section"
+        },
+        {
+          "number": 15,
+          "name": "Turn 15",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 19,
+          "name": "Turn 19",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        }
+      ],
+      "capacity": 120000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/cota.png"
+    },
+    {
+      "id": "rodriguez",
+      "name": "Autódromo Hermanos Rodríguez",
+      "country": "Mexico",
+      "city": "Mexico City",
+      "length": 4.304,
+      "laps": 71,
+      "turns": 17,
+      "lapRecord": "1:17.774 (Valtteri Bottas, Mercedes, 2021)",
+      "maxGForce": "4.9G (Turn 1) - reduced 30% due to 2,285 m altitude",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 4,
+          "name": "Turn 4 (Esses)",
+          "type": "esses",
+          "speed": "fast",
+          "gear": "5-6"
+        },
+        {
+          "number": 12,
+          "name": "Peraltada",
+          "type": "left",
+          "speed": "fast",
+          "gear": 7,
+          "notes": "Long banked corner"
+        },
+        {
+          "number": 17,
+          "name": "Stadium Section",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": "2-3"
+        }
+      ],
+      "capacity": 140000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/mexico.png"
+    },
+    {
+      "id": "interlagos",
+      "name": "Autódromo José Carlos Pace (Interlagos)",
+      "country": "Brazil",
+      "city": "São Paulo",
+      "length": 4.309,
+      "laps": 71,
+      "turns": 15,
+      "lapRecord": "1:10.540 (Valtteri Bottas, Mercedes, 2018)",
+      "maxGForce": "4.5G (Descida do Lago - Turn 8 downhill)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Senna S",
+          "type": "esses",
+          "speed": "medium",
+          "gear": "3-4"
+        },
+        {
+          "number": 4,
+          "name": "Descida do Lago",
+          "type": "left",
+          "speed": "fast",
+          "gear": 6,
+          "notes": "Steep descent"
+        },
+        {
+          "number": 6,
+          "name": "Ferradura",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 8,
+          "name": "Laranjinha",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 12,
+          "name": "Juncão",
+          "type": "right",
+          "speed": "fast",
+          "gear": 6
+        },
+        {
+          "number": 15,
+          "name": "Bico de Pato",
+          "type": "right",
+          "speed": "medium",
+          "gear": 4
+        }
+      ],
+      "capacity": 60000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/interlagos.png"
+    },
+    {
+      "id": "las_vegas",
+      "name": "Las Vegas Strip Circuit",
+      "country": "United States",
+      "city": "Las Vegas, Nevada",
+      "length": 6.201,
+      "laps": 50,
+      "turns": 17,
+      "lapRecord": "1:35.490 (Oscar Piastri, McLaren, 2023)",
+      "maxGForce": "5.0G (Turn 14)",
+      "sectors": 3,
+      "corners": [],
+      "capacity": 105000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/las_vegas.png"
+    },
+    {
+      "id": "lusail",
+      "name": "Lusail International Circuit",
+      "country": "Qatar",
+      "city": "Lusail",
+      "length": 5.419,
+      "laps": 57,
+      "turns": 16,
+      "lapRecord": "1:24.319 (Max Verstappen, Red Bull, 2023)",
+      "maxGForce": "4.9G (Turn 6)",
+      "sectors": 3,
+      "corners": [],
+      "capacity": 80000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/losail.png"
+    },
+    {
+      "id": "yas_marina",
+      "name": "Yas Marina Circuit",
+      "country": "United Arab Emirates",
+      "city": "Abu Dhabi (Yas Island)",
+      "length": 5.281,
+      "laps": 58,
+      "turns": 16,
+      "lapRecord": "1:26.103 (Max Verstappen, Red Bull, 2021)",
+      "maxGForce": "4.7G (Turn 5-6)",
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1",
+          "type": "right",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 5,
+          "name": "Turn 5-6-7",
+          "type": "chicane",
+          "speed": "medium",
+          "gear": "3-4"
+        },
+        {
+          "number": 9,
+          "name": "North Hairpin",
+          "type": "left",
+          "speed": "slow",
+          "gear": 2
+        },
+        {
+          "number": 11,
+          "name": "Turn 11-14",
+          "type": "esses",
+          "speed": "fast",
+          "gear": "5-6"
+        },
+        {
+          "number": 16,
+          "name": "Hotel Section",
+          "type": "chicane",
+          "speed": "slow",
+          "gear": 2,
+          "notes": "Under the W Hotel"
+        }
+      ],
+      "capacity": 60000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Downloaded from Formula1.com",
+      "trackMapUrl": "/data/track-maps/yas_marina.png"
+    }
+  ]
+}
