@@ -135,6 +135,7 @@ export const COUNTRY_FLAGS: Record<string, string> = {
   'Hungary': '🇭🇺',
   'Italy': '🇮🇹',
   'Japan': '🇯🇵',
+  'Malaysia': '🇲🇾',
   'Mexico': '🇲🇽',
   'Monaco': '🇲🇨',
   'Netherlands': '🇳🇱',

@@ -21,9 +21,11 @@ interface Circuit {
   length: number;
   laps: number;
   turns: number;
+  raceDistance?: number;
   capacity: number;
   lapRecord: string;
   maxGForce: string;
+  maxGForceHistorical?: boolean;
   sectors: number;
   trackMapUrl?: string;
   flag?: string;
@@ -184,9 +186,17 @@ export function TrackMapPage() {
                 <p className="text-lg font-bold text-emerald-400">{selectedCircuit.capacity.toLocaleString('en-US')}</p>
               </div>
               <div className="p-3 rounded-lg bg-gray-800/60 border border-gray-700/60">
-                <p className="text-xs text-gray-500 mb-1">Max G-force</p>
+                <p className="text-xs text-gray-500 mb-1">
+                  {selectedCircuit.maxGForceHistorical ? 'Highest documented G-force' : 'Max G-force'}
+                </p>
                 <p className="text-lg font-bold text-red-400">{selectedCircuit.maxGForce}</p>
               </div>
+              {selectedCircuit.raceDistance !== undefined && (
+                <div className="p-3 rounded-lg bg-gray-800/60 border border-gray-700/60">
+                  <p className="text-xs text-gray-500 mb-1">Race distance</p>
+                  <p className="text-lg font-bold text-white">{selectedCircuit.raceDistance.toFixed(3)} km</p>
+                </div>
+              )}
             </div>
 
             {/* Lap Record & Corners */}

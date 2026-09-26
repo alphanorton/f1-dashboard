@@ -1072,6 +1072,146 @@
       "trackMapUrl": "/data/track-maps/baku.png"
     },
     {
+      "id": "sepang",
+      "name": "Sepang International Circuit",
+      "country": "Malaysia",
+      "city": "Sepang, Selangor",
+      "length": 5.543,
+      "laps": 56,
+      "turns": 15,
+      "raceDistance": 310.398,
+      "lapRecord": "1:34.080 (Sebastian Vettel, 2017)",
+      "maxGForce": "4.2G (Turn 5 - highest documented, historical F1 data approx. 1.1 s)",
+      "maxGForceHistorical": true,
+      "sectors": 3,
+      "corners": [
+        {
+          "number": 1,
+          "name": "Turn 1",
+          "type": "right",
+          "speed": "slow",
+          "gear": "low",
+          "notes": "Heavy-braking start of the opening complex"
+        },
+        {
+          "number": 2,
+          "name": "Turn 2",
+          "type": "left",
+          "speed": "medium",
+          "gear": "low-mid",
+          "notes": "Exit of the opening complex - important overtaking area"
+        },
+        {
+          "number": 3,
+          "name": "Turn 3",
+          "type": "right",
+          "speed": "fast",
+          "gear": "high",
+          "notes": "Fast right-hander leading into the next braking zone"
+        },
+        {
+          "number": 4,
+          "name": "Turn 4",
+          "type": "right",
+          "speed": "slow",
+          "gear": "low",
+          "notes": "Heavy braking"
+        },
+        {
+          "number": 5,
+          "name": "Turn 5",
+          "type": "right",
+          "speed": "very_fast",
+          "gear": "high",
+          "notes": "High-speed right-hander - historically documented location of the highest G-force figure (4.2 G, historical F1 data)"
+        },
+        {
+          "number": 6,
+          "name": "Turn 6",
+          "type": "right",
+          "speed": "very_fast",
+          "gear": "high",
+          "notes": "High-speed sweeping corner - signature Turns 5-6 section"
+        },
+        {
+          "number": 7,
+          "name": "Turn 7",
+          "type": "left",
+          "speed": "fast",
+          "gear": "high",
+          "notes": "Fast double-apex section"
+        },
+        {
+          "number": 8,
+          "name": "Turn 8",
+          "type": "right",
+          "speed": "fast",
+          "gear": "high",
+          "notes": "Exit of the fast double-apex section"
+        },
+        {
+          "number": 9,
+          "name": "Turn 9",
+          "type": "right",
+          "speed": "slow",
+          "gear": "low",
+          "notes": "Slow corner - requires good traction on exit"
+        },
+        {
+          "number": 10,
+          "name": "Turn 10",
+          "type": "left",
+          "speed": "medium",
+          "gear": "mid",
+          "notes": "Technical middle-sector sequence"
+        },
+        {
+          "number": 11,
+          "name": "Turn 11",
+          "type": "right",
+          "speed": "slow",
+          "gear": "low",
+          "notes": "Technical middle-sector sequence"
+        },
+        {
+          "number": 12,
+          "name": "Turn 12",
+          "type": "left",
+          "speed": "very_fast",
+          "gear": "high",
+          "notes": "Very high-speed left-hand kink"
+        },
+        {
+          "number": 13,
+          "name": "Turn 13",
+          "type": "right",
+          "speed": "fast",
+          "gear": "high",
+          "notes": "Fast right-hander with significant lateral loading"
+        },
+        {
+          "number": 14,
+          "name": "Turn 14",
+          "type": "right",
+          "speed": "slow",
+          "gear": "low",
+          "notes": "Heavy braking into the final hairpin"
+        },
+        {
+          "number": 15,
+          "name": "Turn 15",
+          "type": "left",
+          "speed": "slow",
+          "gear": "low",
+          "notes": "Slow final hairpin onto the long main straight - overtaking opportunity into Turns 1-2"
+        }
+      ],
+      "capacity": 130000,
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Official-style F1 circuit map (Wikimedia Commons), current 15-corner GP layout",
+      "trackMapUrl": "/data/track-maps/sepang.png"
+    },
+    {
       "id": "marina_bay",
       "name": "Marina Bay Street Circuit",
       "country": "Singapore",

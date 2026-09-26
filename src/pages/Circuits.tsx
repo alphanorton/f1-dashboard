@@ -21,9 +21,11 @@ interface Circuit {
   length: number;
   laps: number;
   turns: number;
+  raceDistance?: number;
   capacity: number;
   lapRecord: string;
   maxGForce: string;
+  maxGForceHistorical?: boolean;
   sectors: number;
   trackMapUrl?: string;
   corners: Corner[];
@@ -174,6 +176,12 @@ export function Circuits() {
                   <span className="text-[10px] text-gray-500 block">Sectors</span>
                   <span className="text-sm font-bold text-white">{circuit.sectors}</span>
                 </div>
+                {circuit.raceDistance !== undefined && (
+                  <div className="bg-gray-800/60 px-2 py-1.5 rounded border border-gray-700/60">
+                    <span className="text-[10px] text-gray-500 block">Race distance</span>
+                    <span className="text-sm font-bold text-white">{circuit.raceDistance.toFixed(3)} km</span>
+                  </div>
+                )}
               </div>
 
               {/* Max G-Force Badge */}
@@ -183,7 +191,7 @@ export function Circuits() {
                 'bg-blue-500/20 text-blue-300 border border-blue-500/40'
               }`}>
                 <TrendingUp className="h-3 w-3" />
-                <span>Max: {circuit.maxGForce}</span>
+                <span>{circuit.maxGForceHistorical ? 'Highest documented G:' : 'Max:'} {circuit.maxGForce}</span>
               </div>
 
               {/* Corner count indicator */}
@@ -281,7 +289,9 @@ export function Circuits() {
               <div className="bg-gray-800/40 p-4 rounded-xl border border-gray-800">
                 <div className="flex items-center gap-1.5 text-red-400 mb-2">
                   <TrendingUp className="h-4 w-4" />
-                  <span className="text-xs font-medium uppercase">Max G-force</span>
+                  <span className="text-xs font-medium uppercase">
+                    {selectedCircuit.maxGForceHistorical ? 'Highest documented G-force' : 'Max G-force'}
+                  </span>
                 </div>
                 <p className="text-sm text-red-300 font-bold">{selectedCircuit.maxGForce}</p>
               </div>

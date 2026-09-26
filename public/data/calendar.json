@@ -1,8 +1,8 @@
 {
   "season": 2026,
   "source": "Formula1.com Official & FIA Entry / ESPN 2026",
-  "asOfDate": "2026-09-19",
-  "totalRounds": 24,
+  "asOfDate": "2026-09-26",
+  "totalRounds": 25,
   "races": [
     {
       "round": 1,
@@ -252,12 +252,28 @@
       "date": "2026-09-26",
       "weekendDates": "24 - 26 Sep",
       "isSprint": false,
-      "status": "next",
-      "notes": "Next race — Round 17",
-      "podium": []
+      "status": "completed",
+      "winner": "George Russell (Mercedes)",
+      "podium": ["George Russell (Mercedes)", "Max Verstappen (Red Bull Racing)", "Isack Hadjar (Red Bull Racing)"],
+      "notes": "George Russell took his third win of 2026 over 51 laps at the 6.003 km Baku City Circuit, with Max Verstappen second and Isack Hadjar promoted to the final podium spot. Both Alpine cars and both Aston Martins failed to finish.",
+      "resultsNote": "Full P1-P22 classification with status available (Lawson back at Racing Bulls, Hadjar returns for Red Bull Racing, Tsunoda absent)"
     },
     {
       "round": 18,
+      "name": "Bahrain Grand Prix in Malaysia",
+      "circuit": "Sepang International Circuit",
+      "locality": "Sepang, Selangor",
+      "country": "Malaysia",
+      "flag": "🇲🇾",
+      "date": "2026-10-04",
+      "weekendDates": "02 - 04 Oct",
+      "isSprint": false,
+      "status": "next",
+      "notes": "Next race — Round 18. Official event name: FORMULA 1 GULF AIR BAHRAIN GRAND PRIX IN MALAYSIA 2026, hosted at Sepang International Circuit, Malaysia. Malaysia is the host; Bahrain remains the Grand Prix identity. 15:00 local start.",
+      "podium": []
+    },
+    {
+      "round": 19,
       "name": "Singapore Grand Prix",
       "circuit": "Marina Bay Street Circuit",
       "locality": "Singapore",
@@ -270,7 +286,7 @@
       "podium": []
     },
     {
-      "round": 19,
+      "round": 20,
       "name": "United States Grand Prix",
       "circuit": "Circuit of the Americas",
       "locality": "Austin, Texas",
@@ -283,7 +299,7 @@
       "podium": []
     },
     {
-      "round": 20,
+      "round": 21,
       "name": "Mexico City Grand Prix",
       "circuit": "Autódromo Hermanos Rodríguez",
       "locality": "Mexico City",
@@ -296,7 +312,7 @@
       "podium": []
     },
     {
-      "round": 21,
+      "round": 22,
       "name": "São Paulo Grand Prix",
       "circuit": "Autódromo José Carlos Pace (Interlagos)",
       "locality": "São Paulo",
@@ -309,7 +325,7 @@
       "podium": []
     },
     {
-      "round": 22,
+      "round": 23,
       "name": "Las Vegas Grand Prix",
       "circuit": "Las Vegas Strip Circuit",
       "locality": "Las Vegas, Nevada",
@@ -322,7 +338,7 @@
       "podium": []
     },
     {
-      "round": 23,
+      "round": 24,
       "name": "Qatar Grand Prix",
       "circuit": "Lusail International Circuit",
       "locality": "Lusail",
@@ -335,7 +351,7 @@
       "podium": []
     },
     {
-      "round": 24,
+      "round": 25,
       "name": "Abu Dhabi Grand Prix",
       "circuit": "Yas Marina Circuit",
       "locality": "Yas Island",

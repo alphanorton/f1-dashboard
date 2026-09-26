@@ -12,6 +12,7 @@ const COUNTRY_CODES: Record<string, string> = {
   'Hungary': 'hu',
   'Italy': 'it',
   'Japan': 'jp',
+  'Malaysia': 'my',
   'Mexico': 'mx',
   'Monaco': 'mc',
   'Netherlands': 'nl',
