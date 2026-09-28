@@ -1,4 +1,8 @@
 ﻿# F1 Dashboard 2026
+## 🌐 Live Demo
+
+"🔗 View F1 Dashboard" **(https://f1-dashboard-taupe.vercel.app/)**
+
 
 Formula 1 2026 season dashboard: race calendar, standings, circuits with track maps, and a per-race / per-driver tyre strategy explorer powered by the OpenF1 API.
 
