@@ -1,6 +1,6 @@
 {
   "season": 2026,
-  "asOfRound": 17,
+  "asOfRound": 18,
   "asOfDate": "2026-09-26",
   "source": "Official FIA Classification 2026",
   "pointsSystem": "25-18-15-12-10-8-6-4-2-1",
@@ -2764,6 +2764,193 @@
           "points": 0
         }
       ]
+    },
+    "18": {
+      "round": 18,
+      "officialRound": 16,
+      "name": "Bahrain Grand Prix in Malaysia",
+      "date": "2026-10-04",
+      "circuit": "Sepang International Circuit",
+      "provisional": true,
+      "results": [
+        {
+          "pos": 1,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 25
+        },
+        {
+          "pos": 2,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 18
+        },
+        {
+          "pos": 3,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 15
+        },
+        {
+          "pos": 4,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 12
+        },
+        {
+          "pos": 5,
+          "driver": "Isack Hadjar",
+          "code": "HAD",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 10
+        },
+        {
+          "pos": 6,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 7,
+          "driver": "Liam Lawson",
+          "code": "LAW",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 8,
+          "driver": "Fernando Alonso",
+          "code": "ALO",
+          "team": "Aston Martin",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 9,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 10,
+          "driver": "Arvid Lindblad",
+          "code": "LIN",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 1
+        },
+        {
+          "pos": 11,
+          "driver": "Nico Hulkenberg",
+          "code": "HUL",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 12,
+          "driver": "Lance Stroll",
+          "code": "STR",
+          "team": "Aston Martin",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 13,
+          "driver": "Franco Colapinto",
+          "code": "COL",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 14,
+          "driver": "Oliver Bearman",
+          "code": "BEA",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 15,
+          "driver": "Esteban Ocon",
+          "code": "OCO",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 16,
+          "driver": "Pierre Gasly",
+          "code": "GAS",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 17,
+          "driver": "Carlos Sainz",
+          "code": "SAI",
+          "team": "Williams",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 18,
+          "driver": "Gabriel Bortoleto",
+          "code": "BOR",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 19,
+          "driver": "Sergio Perez",
+          "code": "PER",
+          "team": "Cadillac",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": null,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "DNF",
+          "points": 0
+        },
+        {
+          "pos": null,
+          "driver": "Alexander Albon",
+          "code": "ALB",
+          "team": "Williams",
+          "status": "DNF",
+          "points": 0
+        },
+        {
+          "pos": null,
+          "driver": "Valtteri Bottas",
+          "code": "BOT",
+          "team": "Cadillac",
+          "status": "DNF",
+          "points": 0
+        }
+      ]
     }
-  }
+  },
+  "officialAsOfRound": 16
 }

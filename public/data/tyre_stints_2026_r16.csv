@@ -1,0 +1,91 @@
+driver,driver_code,stint_number,compound,start_lap,end_lap,source,confidence,note
+Max VERSTAPPEN,VER,1,INTERMEDIATE,1,9,RaceFans pit-stop table,confirmed,Starting intermediate (supplied confirmed list).
+Max VERSTAPPEN,VER,2,,10,33,RaceFans pit-stop table,unknown,Slick after the lap 9 intermediate stop; exact compound not found - left empty.
+Max VERSTAPPEN,VER,3,,34,43,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Max VERSTAPPEN,VER,4,,44,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Kimi ANTONELLI,ANT,1,INTERMEDIATE,1,9,RaceFans pit-stop table,confirmed,Starting intermediate (supplied confirmed list).
+Kimi ANTONELLI,ANT,2,,10,33,RaceFans pit-stop table,unknown,Slick after the lap 9 intermediate stop; exact compound not found - left empty.
+Kimi ANTONELLI,ANT,3,,34,44,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Kimi ANTONELLI,ANT,4,,45,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Lewis HAMILTON,HAM,1,SOFT,1,31,RaceFans pit-stop table,confirmed,Starting soft (supplied confirmed list).
+Lewis HAMILTON,HAM,2,,32,43,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Lewis HAMILTON,HAM,3,,44,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Charles LECLERC,LEC,1,SOFT,1,3,RaceFans pit-stop table,confirmed,Starting soft (supplied confirmed list).
+Charles LECLERC,LEC,2,,4,9,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Charles LECLERC,LEC,3,,10,28,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Charles LECLERC,LEC,4,,29,43,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Charles LECLERC,LEC,5,,44,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Isack HADJAR,HAD,1,INTERMEDIATE,1,9,RaceFans pit-stop table,confirmed,Starting intermediate (supplied confirmed list).
+Isack HADJAR,HAD,2,,10,31,RaceFans pit-stop table,unknown,Slick after the lap 9 intermediate stop; exact compound not found - left empty.
+Isack HADJAR,HAD,3,,32,44,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Isack HADJAR,HAD,4,,45,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Oscar PIASTRI,PIA,1,INTERMEDIATE,1,9,RaceFans pit-stop table,confirmed,Starting intermediate: switched onto inters before the start (supplied confirmed notes).
+Oscar PIASTRI,PIA,2,,10,33,RaceFans pit-stop table,unknown,Slick after the lap 9 intermediate stop; exact compound not found - left empty.
+Oscar PIASTRI,PIA,3,,34,45,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Oscar PIASTRI,PIA,4,,46,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Liam LAWSON,LAW,1,,1,9,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Liam LAWSON,LAW,2,,10,30,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Liam LAWSON,LAW,3,,31,45,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Liam LAWSON,LAW,4,,46,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Fernando ALONSO,ALO,1,MEDIUM,1,9,RaceFans pit-stop table,confirmed,Starting medium (supplied confirmed list).
+Fernando ALONSO,ALO,2,,10,31,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Fernando ALONSO,ALO,3,,32,45,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Fernando ALONSO,ALO,4,,46,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Lando NORRIS,NOR,1,MEDIUM,1,9,RaceFans pit-stop table,confirmed,Starting medium (supplied confirmed list).
+Lando NORRIS,NOR,2,,10,34,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Lando NORRIS,NOR,3,,35,45,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Lando NORRIS,NOR,4,,46,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Arvid LINDBLAD,LIN,1,,1,9,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Arvid LINDBLAD,LIN,2,,10,28,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Arvid LINDBLAD,LIN,3,,29,43,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Arvid LINDBLAD,LIN,4,,44,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Nico HULKENBERG,HUL,1,INTERMEDIATE,1,8,RaceFans pit-stop table,confirmed,Starting intermediate: switched onto inters before the start (supplied confirmed notes).
+Nico HULKENBERG,HUL,2,,9,32,RaceFans pit-stop table,unknown,Slick after the lap 8 intermediate stop; exact compound not found - left empty.
+Nico HULKENBERG,HUL,3,,33,45,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Nico HULKENBERG,HUL,4,,46,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Lance STROLL,STR,1,INTERMEDIATE,1,9,RaceFans pit-stop table,confirmed,Starting intermediate: switched onto inters before the start (supplied confirmed notes).
+Lance STROLL,STR,2,,10,28,RaceFans pit-stop table,unknown,Slick after the lap 9 intermediate stop; exact compound not found - left empty.
+Lance STROLL,STR,3,,29,43,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Lance STROLL,STR,4,,44,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Franco COLAPINTO,COL,1,SOFT,1,9,RaceFans pit-stop table,confirmed,Starting soft (supplied confirmed list).
+Franco COLAPINTO,COL,2,,10,31,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Franco COLAPINTO,COL,3,,32,42,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Franco COLAPINTO,COL,4,,43,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Oliver BEARMAN,BEA,1,SOFT,1,10,RaceFans pit-stop table,confirmed,Starting soft (supplied confirmed list).
+Oliver BEARMAN,BEA,2,,11,24,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Oliver BEARMAN,BEA,3,,25,38,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Oliver BEARMAN,BEA,4,,39,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Esteban OCON,OCO,1,,1,9,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Esteban OCON,OCO,2,,10,29,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Esteban OCON,OCO,3,,30,41,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Esteban OCON,OCO,4,,42,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Pierre GASLY,GAS,1,SOFT,1,9,RaceFans pit-stop table,confirmed,Starting soft (supplied confirmed list).
+Pierre GASLY,GAS,2,,10,25,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Pierre GASLY,GAS,3,,26,37,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Pierre GASLY,GAS,4,,38,45,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Pierre GASLY,GAS,5,,46,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Carlos SAINZ,SAI,1,,1,9,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Carlos SAINZ,SAI,2,,10,26,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Carlos SAINZ,SAI,3,,27,42,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Carlos SAINZ,SAI,4,,43,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Gabriel BORTOLETO,BOR,1,INTERMEDIATE,1,9,RaceFans pit-stop table,confirmed,Starting intermediate: switched onto inters before the start (supplied confirmed notes).
+Gabriel BORTOLETO,BOR,2,,10,15,RaceFans pit-stop table,unknown,Slick after the lap 9 intermediate stop; exact compound not found - left empty.
+Gabriel BORTOLETO,BOR,3,,16,34,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Gabriel BORTOLETO,BOR,4,,35,44,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Gabriel BORTOLETO,BOR,5,,45,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Sergio PEREZ,PER,1,INTERMEDIATE,1,1,RaceFans pit-stop table,confirmed,Starting intermediate: switched onto inters before the start (supplied confirmed notes).
+Sergio PEREZ,PER,2,,2,9,RaceFans pit-stop table,unknown,Between the lap 1 and lap 9 stops; compound not confirmed - left empty.
+Sergio PEREZ,PER,3,,10,18,RaceFans pit-stop table,unknown,Slick after the lap 9 intermediate stop; exact compound not found - left empty.
+Sergio PEREZ,PER,4,,19,21,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Sergio PEREZ,PER,5,,22,39,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Sergio PEREZ,PER,6,,40,44,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Sergio PEREZ,PER,7,,45,55,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+George RUSSELL,RUS,1,INTERMEDIATE,1,9,RaceFans pit-stop table,confirmed,Starting intermediate (supplied confirmed list).
+George RUSSELL,RUS,2,,10,32,RaceFans pit-stop table,unknown,Slick after the lap 9 intermediate stop; exact compound not found - left empty.
+George RUSSELL,RUS,3,SOFT,33,44,RaceFans pit-stop table; compound supplied but unconfirmed,partial,Compound supplied for this stint with no confirmed source - held at confidence=partial.
+George RUSSELL,RUS,4,,45,49,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty. Final stint; retired after 49 laps per the official classification (supplied notes say about lap 50 - recorded as a conflict).
+Alexander ALBON,ALB,1,,1,9,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Alexander ALBON,ALB,2,,10,16,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Alexander ALBON,ALB,3,,17,29,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty.
+Alexander ALBON,ALB,4,,30,41,RaceFans pit-stop table,unknown,Compound not found in any available source - left empty. Final stint; retired after 41 laps per the official classification (supplied notes say about lap 43 - recorded as a conflict).
+Valtteri BOTTAS,BOT,1,SOFT,1,7,RaceFans pit-stop table,confirmed,Starting soft (supplied confirmed list). Final stint; retired after 7 laps per the official classification (supplied notes say about lap 9 - recorded as a conflict).

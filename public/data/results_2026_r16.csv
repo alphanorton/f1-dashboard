@@ -1,0 +1,23 @@
+pos,driver,code,team,laps,time_or_gap,status,points,fastest_lap,lap_number,S1,S2,S3,tyre_stints
+1,Max Verstappen,VER,Red Bull Racing,55,1:47:14.808,Finished,25,1:38.220,55,0:25.516,0:32.883,0:39.821,INT start-L9 + UNK L10-L33 + UNK L34-L43 + UNK L44-L55
+2,Kimi Antonelli,ANT,Mercedes,55,+2.307s,Finished,18,1:38.589,52,0:25.032,0:33.399,0:40.158,INT start-L9 + UNK L10-L33 + UNK L34-L44 + UNK L45-L55
+3,Lewis Hamilton,HAM,Ferrari,55,+4.919s,Finished,15,1:38.610,53,0:24.992,0:33.301,0:40.317,SOF start-L31 + UNK L32-L43 + UNK L44-L55
+4,Charles Leclerc,LEC,Ferrari,55,+7.258s,Finished,12,1:39.336,54,0:25.310,0:33.485,0:40.541,SOF start-L3 + UNK L4-L9 + UNK L10-L28 + UNK L29-L43 + UNK L44-L55
+5,Isack Hadjar,HAD,Red Bull Racing,55,+8.571s,Finished,10,1:39.792,52,0:25.578,0:33.881,0:40.333,INT start-L9 + UNK L10-L31 + UNK L32-L44 + UNK L45-L55
+6,Oscar Piastri,PIA,McLaren,55,+9.454s,Finished,8,1:39.485,53,0:25.454,0:33.689,0:40.342,INT start-L9 + UNK L10-L33 + UNK L34-L45 + UNK L46-L55
+7,Liam Lawson,LAW,Racing Bulls,55,+12.753s,Finished,6,1:40.254,53,0:25.427,0:34.196,0:40.631,UNK start-L9 + UNK L10-L30 + UNK L31-L45 + UNK L46-L55
+8,Fernando Alonso,ALO,Aston Martin,55,+13.372s,Finished,4,1:40.353,54,0:25.593,0:33.997,0:40.763,MED start-L9 + UNK L10-L31 + UNK L32-L45 + UNK L46-L55
+9,Lando Norris,NOR,McLaren,55,+13.993s,Finished,2,1:39.970,54,0:25.296,0:34.290,0:40.384,MED start-L9 + UNK L10-L34 + UNK L35-L45 + UNK L46-L55
+10,Arvid Lindblad,LIN,Racing Bulls,55,+15.928s,Finished,1,1:40.315,55,0:25.431,0:34.084,0:40.800,UNK start-L9 + UNK L10-L28 + UNK L29-L43 + UNK L44-L55
+11,Nico Hulkenberg,HUL,Audi,55,+17.404s,Finished,0,1:41.394,54,0:25.848,0:34.327,0:41.219,INT start-L8 + UNK L9-L32 + UNK L33-L45 + UNK L46-L55
+12,Lance Stroll,STR,Aston Martin,55,+18.052s,Finished,0,1:41.248,53,0:25.682,0:34.592,0:40.974,INT start-L9 + UNK L10-L28 + UNK L29-L43 + UNK L44-L55
+13,Franco Colapinto,COL,Alpine,55,+18.997s,Finished,0,1:40.988,33,0:25.464,0:34.562,0:40.962,SOF start-L9 + UNK L10-L31 + UNK L32-L42 + UNK L43-L55
+14,Oliver Bearman,BEA,Haas F1 Team,55,+22.305s,Finished,0,1:40.366,40,0:25.536,0:33.919,0:40.911,SOF start-L10 + UNK L11-L24 + UNK L25-L38 + UNK L39-L55
+15,Esteban Ocon,OCO,Haas F1 Team,55,+22.532s,Finished,0,1:42.062,53,0:25.732,0:34.958,0:41.372,UNK start-L9 + UNK L10-L29 + UNK L30-L41 + UNK L42-L55
+16,Pierre Gasly,GAS,Alpine,55,+23.315s,Finished,0,1:41.514,41,0:25.539,0:34.599,0:41.376,SOF start-L9 + UNK L10-L25 + UNK L26-L37 + UNK L38-L45 + UNK L46-L55
+17,Carlos Sainz,SAI,Williams,55,+25.431s,Finished,0,1:41.738,28,0:25.345,0:35.245,0:41.148,UNK start-L9 + UNK L10-L26 + UNK L27-L42 + UNK L43-L55
+18,Gabriel Bortoleto,BOR,Audi,55,+28.233s,Finished,0,1:41.382,37,0:26.002,0:34.256,0:41.124,INT start-L9 + UNK L10-L15 + UNK L16-L34 + UNK L35-L44 + UNK L45-L55
+19,Sergio Perez,PER,Cadillac,55,+29.310s,Finished,0,1:42.688,20,0:26.033,0:35.140,0:41.515,INT start-L1 + UNK L2-L9 + UNK L10-L18 + UNK L19-L21 + UNK L22-L39 + UNK L40-L44 + UNK L45-L55
+,George Russell,RUS,Mercedes,49,DNF,DNF,0,1:40.715,34,0:25.580,0:34.175,0:40.960,INT start-L9 + UNK L10-L32 + SOF L33-L44 + UNK L45-L49
+,Alexander Albon,ALB,Williams,41,DNF,DNF,0,1:42.284,31,0:25.738,0:34.924,0:41.622,UNK start-L9 + UNK L10-L16 + UNK L17-L29 + UNK L30-L41
+,Valtteri Bottas,BOT,Cadillac,7,DNF,DNF,0,1:59.953,7,0:29.895,0:41.399,0:48.659,SOF start-L7

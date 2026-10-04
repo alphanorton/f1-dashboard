@@ -1,0 +1,60 @@
+{
+  "season": 2026,
+  "officialRound": 16,
+  "projectRound": 18,
+  "grand_prix": "FORMULA 1 GULF AIR BAHRAIN GRAND PRIX IN MALAYSIA 2026",
+  "date": "2026-10-04",
+  "circuit": "Sepang International Circuit",
+  "driver": "Max Verstappen",
+  "driver_code": "VER",
+  "team": "Red Bull Racing",
+  "fastest_lap": {
+    "time": "1:38.220",
+    "lap_number": 55,
+    "lap": "final lap of the race",
+    "average_speed_kph": 203.164,
+    "average_speed_source": "formula1.com fastest-laps page for meeting 1308",
+    "fastest_of_race": true,
+    "tyre_compound": "",
+    "tyre_compound_note": "یافت نشد - the tyre on this lap is not stated by any of the checked sources.",
+    "S1": "",
+    "S2": "",
+    "S3": "",
+    "sectors_note": "یافت نشد - sector times for this lap are not published on the official fastest-laps page, on RaceFans or on SpeedWeek, and FastF1 could not load the session. The three fields are left empty; no value was reconstructed by subtraction."
+  },
+  "best_sector_of_race": {
+    "note": "Fastest sector times across the whole race, NOT the sectors of Verstappen fastest lap. Unconfirmed single source, recorded as separate information only.",
+    "S1": 24.992,
+    "S1_driver": "Lewis Hamilton",
+    "S2": 32.883,
+    "S2_driver": "Max Verstappen",
+    "S3": 39.821,
+    "S3_driver": "Max Verstappen",
+    "source": "f1-fansite",
+    "confidence": "unconfirmed"
+  },
+  "sources": [
+    "formula1.com/en/results/2026/races/1308/bahrain/fastest-laps - 1:38.220, lap 55, 203.164 km/h",
+    "RaceFans - 1:38.220 on lap 55, fastest lap of the race",
+    "SpeedWeek - 1:38.220 on lap 55, fastest lap of the race"
+  ],
+  "conflicts": [
+    {
+      "item": "fastest lap time",
+      "values": [
+        "1:38.220 (formula1.com, RaceFans, SpeedWeek)",
+        "1:38.511 (f1-fansite)"
+      ],
+      "resolution": "1:38.220 used - it is carried by three sources including the official results page; the f1-fansite figure is recorded but not used."
+    }
+  ],
+  "notFound": [
+    {
+      "item": "sector times S1/S2/S3 of Verstappen fastest lap 1:38.220 (lap 55)",
+      "source_checked": "formula1.com fastest-laps page, RaceFans, SpeedWeek",
+      "result": "یافت نشد",
+      "detail": "The official page publishes lap number, time of day, lap time and average speed only. The three fields are left empty rather than reconstructed by subtraction."
+    }
+  ],
+  "generatedAt": "2026-10-04T16:54:13.197Z"
+}

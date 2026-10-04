@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "source": "Formula1.com Official & FIA Entry / ESPN 2026",
-  "asOfDate": "2026-09-26",
+  "asOfDate": "2026-10-04",
   "totalRounds": 25,
   "races": [
     {
@@ -16,7 +16,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "George Russell (Mercedes)",
-      "podium": ["George Russell (Mercedes)", "Kimi Antonelli (Mercedes)", "Charles Leclerc (Ferrari)"],
+      "podium": [
+        "George Russell (Mercedes)",
+        "Kimi Antonelli (Mercedes)",
+        "Charles Leclerc (Ferrari)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -31,7 +35,11 @@
       "isSprint": true,
       "status": "completed",
       "winner": "Kimi Antonelli (Mercedes)",
-      "podium": ["Kimi Antonelli (Mercedes)", "George Russell (Mercedes)", "Lewis Hamilton (Ferrari)"],
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "George Russell (Mercedes)",
+        "Lewis Hamilton (Ferrari)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -46,7 +54,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "Kimi Antonelli (Mercedes)",
-      "podium": ["Kimi Antonelli (Mercedes)", "Oscar Piastri (McLaren)", "Charles Leclerc (Ferrari)"]
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "Oscar Piastri (McLaren)",
+        "Charles Leclerc (Ferrari)"
+      ]
     },
     {
       "round": 4,
@@ -88,7 +100,11 @@
       "isSprint": true,
       "status": "completed",
       "winner": "Kimi Antonelli (Mercedes)",
-      "podium": ["Kimi Antonelli (Mercedes)", "Lando Norris (McLaren)", "Oscar Piastri (McLaren)"],
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "Lando Norris (McLaren)",
+        "Oscar Piastri (McLaren)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -103,7 +119,11 @@
       "isSprint": true,
       "status": "completed",
       "winner": "Kimi Antonelli (Mercedes)",
-      "podium": ["Kimi Antonelli (Mercedes)", "Lewis Hamilton (Ferrari)", "Max Verstappen (Red Bull Racing)"],
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "Lewis Hamilton (Ferrari)",
+        "Max Verstappen (Red Bull Racing)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -118,7 +138,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "Kimi Antonelli (Mercedes)",
-      "podium": ["Kimi Antonelli (Mercedes)", "Lewis Hamilton (Ferrari)", "Isack Hadjar (Red Bull Racing)"],
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "Lewis Hamilton (Ferrari)",
+        "Isack Hadjar (Red Bull Racing)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available (Final result after FIA's September revision of pit-lane speeding penalties: Hadjar 3rd, Gasly 7th)"
     },
     {
@@ -133,7 +157,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "Lewis Hamilton (Ferrari)",
-      "podium": ["Lewis Hamilton (Ferrari)", "George Russell (Mercedes)", "Lando Norris (McLaren)"],
+      "podium": [
+        "Lewis Hamilton (Ferrari)",
+        "George Russell (Mercedes)",
+        "Lando Norris (McLaren)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -148,7 +176,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "George Russell (Mercedes)",
-      "podium": ["George Russell (Mercedes)", "Max Verstappen (Red Bull Racing)", "Kimi Antonelli (Mercedes)"],
+      "podium": [
+        "George Russell (Mercedes)",
+        "Max Verstappen (Red Bull Racing)",
+        "Kimi Antonelli (Mercedes)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -163,7 +195,11 @@
       "isSprint": true,
       "status": "completed",
       "winner": "Charles Leclerc (Ferrari)",
-      "podium": ["Charles Leclerc (Ferrari)", "George Russell (Mercedes)", "Lewis Hamilton (Ferrari)"],
+      "podium": [
+        "Charles Leclerc (Ferrari)",
+        "George Russell (Mercedes)",
+        "Lewis Hamilton (Ferrari)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -178,7 +214,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "Kimi Antonelli (Mercedes)",
-      "podium": ["Kimi Antonelli (Mercedes)", "Charles Leclerc (Ferrari)", "Max Verstappen (Red Bull Racing)"],
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "Charles Leclerc (Ferrari)",
+        "Max Verstappen (Red Bull Racing)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -193,7 +233,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "Lando Norris (McLaren)",
-      "podium": ["Lando Norris (McLaren)", "Max Verstappen (Red Bull Racing)", "Kimi Antonelli (Mercedes)"],
+      "podium": [
+        "Lando Norris (McLaren)",
+        "Max Verstappen (Red Bull Racing)",
+        "Kimi Antonelli (Mercedes)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available"
     },
     {
@@ -208,7 +252,11 @@
       "isSprint": true,
       "status": "completed",
       "winner": "Lando Norris (McLaren)",
-      "podium": ["Lando Norris (McLaren)", "Kimi Antonelli (Mercedes)", "George Russell (Mercedes)"],
+      "podium": [
+        "Lando Norris (McLaren)",
+        "Kimi Antonelli (Mercedes)",
+        "George Russell (Mercedes)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available (Lawson drives for Red Bull Racing, Tsunoda for Racing Bulls, Hadjar absent)"
     },
     {
@@ -223,7 +271,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "Kimi Antonelli (Mercedes)",
-      "podium": ["Kimi Antonelli (Mercedes)", "George Russell (Mercedes)", "Max Verstappen (Red Bull Racing)"],
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "George Russell (Mercedes)",
+        "Max Verstappen (Red Bull Racing)"
+      ],
       "resultsNote": "Full P1-P22 classification with status available (Lawson drives for Red Bull Racing, Tsunoda for Racing Bulls, Hadjar absent)"
     },
     {
@@ -238,7 +290,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "Kimi Antonelli (Mercedes)",
-      "podium": ["Kimi Antonelli (Mercedes)", "Max Verstappen (Red Bull Racing)", "Lando Norris (McLaren)"],
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "Max Verstappen (Red Bull Racing)",
+        "Lando Norris (McLaren)"
+      ],
       "notes": "The first race and first win at the new Madring circuit — 57 laps, a 4.351-second margin. Lewis Hamilton retired on lap 7 due to a brake problem.",
       "resultsNote": "Full P1-P22 classification with status available (Lawson drives for Red Bull Racing, Tsunoda for Racing Bulls, Hadjar absent)"
     },
@@ -254,7 +310,11 @@
       "isSprint": false,
       "status": "completed",
       "winner": "George Russell (Mercedes)",
-      "podium": ["George Russell (Mercedes)", "Max Verstappen (Red Bull Racing)", "Isack Hadjar (Red Bull Racing)"],
+      "podium": [
+        "George Russell (Mercedes)",
+        "Max Verstappen (Red Bull Racing)",
+        "Isack Hadjar (Red Bull Racing)"
+      ],
       "notes": "George Russell took his third win of 2026 over 51 laps at the 6.003 km Baku City Circuit, with Max Verstappen second and Isack Hadjar promoted to the final podium spot. Both Alpine cars and both Aston Martins failed to finish.",
       "resultsNote": "Full P1-P22 classification with status available (Lawson back at Racing Bulls, Hadjar returns for Red Bull Racing, Tsunoda absent)"
     },
@@ -268,9 +328,15 @@
       "date": "2026-10-04",
       "weekendDates": "02 - 04 Oct",
       "isSprint": false,
-      "status": "next",
-      "notes": "Next race — Round 18. Official event name: FORMULA 1 GULF AIR BAHRAIN GRAND PRIX IN MALAYSIA 2026, hosted at Sepang International Circuit, Malaysia. Malaysia is the host; Bahrain remains the Grand Prix identity. 15:00 local start.",
-      "podium": []
+      "status": "completed",
+      "notes": "Provisional classification. Race start delayed 1.5 hours by rain (16:33 local) and the distance was reduced from 56 to 55 laps. Max Verstappen won from pole (1:35.130) with a total race time of 1:47:14.808. George Russell retired with an engine failure behind the safety car, Alexander Albon and Valtteri Bottas also retired.",
+      "podium": [
+        "Max Verstappen (Red Bull Racing)",
+        "Kimi Antonelli (Mercedes)",
+        "Lewis Hamilton (Ferrari)"
+      ],
+      "officialRound": 16,
+      "winner": "Max Verstappen (Red Bull Racing)"
     },
     {
       "round": 19,
@@ -282,7 +348,7 @@
       "date": "2026-10-11",
       "weekendDates": "09 - 11 Oct",
       "isSprint": true,
-      "status": "upcoming",
+      "status": "next",
       "podium": []
     },
     {

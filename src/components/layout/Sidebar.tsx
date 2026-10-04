@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Map, Settings, Trophy, Calendar, CircleDot, ChevronLeft } from 'lucide-react';
+import { LayoutDashboard, Map, Settings, Trophy, Calendar, CircleDot, ChevronLeft, Gauge } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/hooks/useAppStore';
 
@@ -10,6 +10,7 @@ const navigation = [
   { name: 'Standings', href: '/standings', icon: Trophy },
   { name: 'Track Map', href: '/track-map', icon: Map },
   { name: 'Tyre Strategy', href: '/tyres', icon: CircleDot },
+  { name: 'Fastest Laps', href: '/fastest-laps', icon: Gauge },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];
 

@@ -10,6 +10,7 @@ import { Standings } from '@/pages/Standings';
 import { GrandPrix } from '@/pages/GrandPrix';
 import { Circuits } from '@/pages/Circuits';
 import { TireStrategy } from '@/pages/TireStrategy';
+import { FastestLaps } from '@/pages/FastestLaps';
 import { Settings } from '@/pages/Settings';
 import { TestPage } from '@/pages/TestPage';
 import { useAppStore } from '@/hooks/useAppStore';
@@ -42,6 +43,7 @@ function App() {
                   <Route path="/standings" element={<Standings />} />
                   <Route path="/track-map" element={<TrackMapPage />} />
                   <Route path="/tyres" element={<TireStrategy />} />
+                  <Route path="/fastest-laps" element={<FastestLaps />} />
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/test" element={<TestPage />} />
                 </Routes>
