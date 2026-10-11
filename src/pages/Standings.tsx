@@ -4,32 +4,33 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Trophy, Award, TrendingUp, Car, Zap, ChevronRight, Medal, Target } from 'lucide-react';
 import { useCachedData } from '@/hooks/useCachedData';
+import { getTeamColor2026, getTeamTextColor2026 } from '@/lib/teamColors';
 
 interface Driver {
   position: number;
-  driverNumber: number;
+  driverNumber: number | null;
   code: string;
   name: string;
-  nationality: string;
+  nationality: string | null;
   team: string;
   points: number;
-  wins: number;
-  podiums: number;
-  gap: number;
+  wins: number | null;
+  podiums: number | null;
+  gap: number | null;
 }
 
 interface Constructor {
   position: number;
   name: string;
   shortName: string;
-  carName: string;
-  engine: string;
-  powerUnit: string;
+  carName: string | null;
+  engine: string | null;
+  powerUnit: string | null;
   drivers: string[];
   points: number;
-  wins: number;
-  podiums: number;
-  gap: number;
+  wins: number | null;
+  podiums: number | null;
+  gap: number | null;
   updates: string[];
 }
 
@@ -41,6 +42,18 @@ interface StandingsData {
   remainingRaces: number;
   drivers: Driver[];
   constructors: Constructor[];
+}
+
+// A column that the season table does not carry is shown as an em dash rather than guessed at.
+// Returns null when no entry has a value, so the summary cards can say so instead of rendering NaN.
+function leaderBy<T>(rows: T[], pick: (row: T) => number | null): { row: T; value: number } | null {
+  let best: { row: T; value: number } | null = null;
+  for (const row of rows) {
+    const value = pick(row);
+    if (value === null || value === undefined) continue;
+    if (!best || value > best.value) best = { row, value };
+  }
+  return best;
 }
 
 export function Standings() {
@@ -75,6 +88,10 @@ export function Standings() {
       </div>
     );
   }
+
+  const mostWins = leaderBy(data.drivers, (d) => d.wins);
+  const mostPodiums = leaderBy(data.drivers, (d) => d.podiums);
+  const mostTeamWins = leaderBy(data.constructors, (c) => c.wins);
 
   return (
     <div className="space-y-6">
@@ -134,11 +151,12 @@ export function Standings() {
                       const isLeader = driver.position === 1;
                       
                       return (
-                        <tr 
+                        <tr
                           key={driver.position}
-                          className={`hover:bg-gray-800/40 transition-colors ${
+                          className={`team-row-bar hover:bg-gray-800/40 transition-colors ${
                             isLeader ? 'bg-amber-950/20' : ''
                           }`}
+                          style={{ '--team-color': getTeamColor2026(driver.team) } as React.CSSProperties}
                         >
                           <td className="py-3 px-4 text-center">
                             <div className="flex items-center justify-center">
@@ -158,7 +176,7 @@ export function Standings() {
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-2">
                               <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-gray-800 text-gray-300 border border-gray-700 font-mono">
-                                {driver.driverNumber}
+                                {driver.driverNumber ?? driver.code}
                               </span>
                               <div>
                                 <p className="font-bold text-white text-sm">{driver.name}</p>
@@ -167,7 +185,7 @@ export function Standings() {
                             </div>
                           </td>
                           <td className="py-3 px-4 hidden md:table-cell">
-                            <span className="text-gray-300 text-xs">{driver.team}</span>
+                            <span className="text-xs" style={{ color: getTeamTextColor2026(driver.team) }}>{driver.team}</span>
                           </td>
                           <td className="py-3 px-4 text-center">
                             <span className={`font-black text-base ${isLeader ? 'text-amber-400' : 'text-white'}`}>
@@ -175,16 +193,18 @@ export function Standings() {
                             </span>
                           </td>
                           <td className="py-3 px-4 text-center hidden sm:table-cell">
-                            <span className="text-gray-300 font-medium">{driver.wins}</span>
+                            <span className="text-gray-300 font-medium">{driver.wins ?? '—'}</span>
                           </td>
                           <td className="py-3 px-4 text-center hidden lg:table-cell">
-                            <span className="text-gray-400">{driver.podiums}</span>
+                            <span className="text-gray-400">{driver.podiums ?? '—'}</span>
                           </td>
                           <td className="py-3 px-4 text-center hidden sm:table-cell">
-                            {driver.gap > 0 ? (
-                              <span className="text-gray-500 text-xs font-mono">−{driver.gap}</span>
-                            ) : (
+                            {driver.gap === null ? (
+                              <span className="text-gray-600 text-xs">—</span>
+                            ) : driver.gap === 0 ? (
                               <span className="text-amber-400 text-xs font-bold">Leader</span>
+                            ) : (
+                              <span className="text-gray-500 text-xs font-mono">−{driver.gap}</span>
                             )}
                           </td>
                         </tr>
@@ -215,12 +235,14 @@ export function Standings() {
                   <Award className="h-4 w-4" />
                   <span className="text-xs font-medium">Most wins</span>
                 </div>
-                <p className="text-lg font-black text-white">
-                  {data.drivers.reduce((max, d) => d.wins > max.wins ? d : max, data.drivers[0]).name}
-                </p>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  {Math.max(...data.drivers.map(d => d.wins))} wins
-                </p>
+                {mostWins ? (
+                  <>
+                    <p className="text-lg font-black text-white">{mostWins.row.name}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{mostWins.value} wins</p>
+                  </>
+                ) : (
+                  <p className="text-lg font-black text-gray-600">—</p>
+                )}
               </CardContent>
             </Card>
 
@@ -230,12 +252,14 @@ export function Standings() {
                   <Medal className="h-4 w-4" />
                   <span className="text-xs font-medium">Most podiums</span>
                 </div>
-                <p className="text-lg font-black text-white">
-                  {data.drivers.reduce((max, d) => d.podiums > max.podiums ? d : max, data.drivers[0]).name}
-                </p>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  {Math.max(...data.drivers.map(d => d.podiums))} podiums
-                </p>
+                {mostPodiums ? (
+                  <>
+                    <p className="text-lg font-black text-white">{mostPodiums.row.name}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{mostPodiums.value} podiums</p>
+                  </>
+                ) : (
+                  <p className="text-lg font-black text-gray-600">—</p>
+                )}
               </CardContent>
             </Card>
 
@@ -245,7 +269,9 @@ export function Standings() {
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-xs font-medium">Points gap</span>
                 </div>
-                <p className="text-lg font-black text-white">{data.drivers[1].gap}</p>
+                <p className="text-lg font-black text-white">
+                  {data.drivers[1]?.gap != null && data.drivers[1].gap > 0 ? data.drivers[1].gap : '—'}
+                </p>
                 <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
               </CardContent>
             </Card>
@@ -296,12 +322,12 @@ export function Standings() {
                           </td>
                           <td className="py-3 px-4">
                             <div>
-                              <p className="font-bold text-white text-sm">{team.name}</p>
+                              <p className="font-bold text-sm" style={{ color: getTeamTextColor2026(team.shortName) }}>{team.name}</p>
                               <p className="text-xs text-gray-400">{team.shortName}</p>
                             </div>
                           </td>
                           <td className="py-3 px-4 hidden lg:table-cell">
-                            <span className="text-gray-300 text-xs font-mono">{team.carName}</span>
+                            <span className="text-gray-300 text-xs font-mono">{team.carName ?? '—'}</span>
                           </td>
                           <td className="py-3 px-4 text-center">
                             <span className={`font-black text-base ${isLeader ? 'text-amber-400' : 'text-white'}`}>
@@ -309,10 +335,12 @@ export function Standings() {
                             </span>
                           </td>
                           <td className="py-3 px-4 text-center hidden sm:table-cell">
-                            {team.gap > 0 ? (
-                              <span className="text-gray-500 text-xs font-mono">−{team.gap}</span>
-                            ) : (
+                            {team.gap === null ? (
+                              <span className="text-gray-600 text-xs">—</span>
+                            ) : team.gap === 0 ? (
                               <span className="text-amber-400 text-xs font-bold">Leader</span>
+                            ) : (
+                              <span className="text-gray-500 text-xs font-mono">−{team.gap}</span>
                             )}
                           </td>
                           <td className="py-3 px-4 text-center">
@@ -348,12 +376,14 @@ export function Standings() {
                   <Award className="h-4 w-4" />
                   <span className="text-xs font-medium">Most wins</span>
                 </div>
-                <p className="text-lg font-black text-white">
-                  {data.constructors.reduce((max, t) => t.wins > max.wins ? t : max).name}
-                </p>
-                <p className="text-xs text-gray-400 mt-0.5">
-                  {Math.max(...data.constructors.map(t => t.wins))} wins
-                </p>
+                {mostTeamWins ? (
+                  <>
+                    <p className="text-lg font-black text-white">{mostTeamWins.row.shortName}</p>
+                    <p className="text-xs text-gray-400 mt-0.5">{mostTeamWins.value} wins</p>
+                  </>
+                ) : (
+                  <p className="text-lg font-black text-gray-600">—</p>
+                )}
               </CardContent>
             </Card>
 
@@ -363,7 +393,9 @@ export function Standings() {
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-xs font-medium">Points gap</span>
                 </div>
-                <p className="text-lg font-black text-white">{data.constructors[1].gap}</p>
+                <p className="text-lg font-black text-white">
+                  {data.constructors[1]?.gap != null && data.constructors[1].gap > 0 ? data.constructors[1].gap : '—'}
+                </p>
                 <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
               </CardContent>
             </Card>
@@ -412,20 +444,20 @@ export function Standings() {
                   <Car className="h-4 w-4" />
                   <span className="text-xs font-medium">Car</span>
                 </div>
-                <span className="text-white font-bold font-mono">{selectedConstructor.carName}</span>
+                <span className="text-white font-bold font-mono">{selectedConstructor.carName ?? '—'}</span>
               </div>
               <div className="bg-gray-800/60 p-3 rounded-lg border border-gray-700/60">
                 <div className="flex items-center gap-1.5 text-blue-400 mb-1">
                   <Zap className="h-4 w-4" />
                   <span className="text-xs font-medium">Power unit</span>
                 </div>
-                <span className="text-white font-medium text-sm">{selectedConstructor.powerUnit}</span>
+                <span className="text-white font-medium text-sm">{selectedConstructor.powerUnit ?? '—'}</span>
               </div>
             </div>
 
             <div className="bg-gray-800/40 p-3 rounded-lg border border-gray-800">
               <span className="text-xs text-gray-400 block mb-1">Engine specification:</span>
-              <span className="text-xs text-gray-300">{selectedConstructor.engine}</span>
+              <span className="text-xs text-gray-300">{selectedConstructor.engine ?? '—'}</span>
             </div>
 
             {/* Drivers */}
@@ -448,11 +480,11 @@ export function Standings() {
               </div>
               <div className="bg-gray-800/60 p-3 rounded-lg border border-gray-700/60 text-center">
                 <span className="text-xs text-gray-400 block mb-1">Wins</span>
-                <span className="text-xl font-black text-emerald-400">{selectedConstructor.wins}</span>
+                <span className="text-xl font-black text-emerald-400">{selectedConstructor.wins ?? '—'}</span>
               </div>
               <div className="bg-gray-800/60 p-3 rounded-lg border border-gray-700/60 text-center">
                 <span className="text-xs text-gray-400 block mb-1">Podiums</span>
-                <span className="text-xl font-black text-blue-400">{selectedConstructor.podiums}</span>
+                <span className="text-xl font-black text-blue-400">{selectedConstructor.podiums ?? '—'}</span>
               </div>
             </div>
 

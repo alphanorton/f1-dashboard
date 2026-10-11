@@ -1,0 +1,1029 @@
+{
+  "season": 2026,
+  "officialRound": 17,
+  "projectRound": 19,
+  "name": "Singapore Grand Prix",
+  "circuit": "Marina Bay Street Circuit",
+  "locality": "Singapore",
+  "country": "Singapore",
+  "date": "2026-10-11",
+  "weekendDates": "09 - 11 Oct",
+  "isSprint": true,
+  "distanceKm": 4.927,
+  "raceLaps": 62,
+  "winnerTime": "1:42:00.785",
+  "pointsSystem": "25-18-15-12-10-8-6-4-2-1",
+  "source": "Supplied 2026 Singapore Grand Prix classification and standings",
+  "fastestLapPoints": null,
+  "pole": {
+    "code": "VER",
+    "driver": "Max Verstappen",
+    "team": "Red Bull Racing",
+    "time": "1:31.373"
+  },
+  "ledEveryLap": true,
+  "personalBestLap": {
+    "code": "VER",
+    "driver": "Max Verstappen",
+    "lap_time": "1:36.201",
+    "lap_number": null
+  },
+  "classification": [
+    {
+      "pos": 1,
+      "driver": "Max Verstappen",
+      "code": "VER",
+      "team": "Red Bull Racing",
+      "time_or_gap": "1:42:00.785",
+      "status": "Finished",
+      "points": 25,
+      "laps": 62
+    },
+    {
+      "pos": 2,
+      "driver": "Charles Leclerc",
+      "code": "LEC",
+      "team": "Ferrari",
+      "time_or_gap": "+7.335",
+      "status": "Finished",
+      "points": 18,
+      "laps": 62
+    },
+    {
+      "pos": 3,
+      "driver": "Kimi Antonelli",
+      "code": "ANT",
+      "team": "Mercedes",
+      "time_or_gap": "+24.573",
+      "status": "Finished",
+      "points": 15,
+      "laps": 62
+    },
+    {
+      "pos": 4,
+      "driver": "Lando Norris",
+      "code": "NOR",
+      "team": "McLaren",
+      "time_or_gap": "+40.506",
+      "status": "Finished",
+      "points": 12,
+      "laps": 62
+    },
+    {
+      "pos": 5,
+      "driver": "Oscar Piastri",
+      "code": "PIA",
+      "team": "McLaren",
+      "time_or_gap": "+49.644",
+      "status": "Finished",
+      "points": 10,
+      "laps": 62
+    },
+    {
+      "pos": 6,
+      "driver": "Lewis Hamilton",
+      "code": "HAM",
+      "team": "Ferrari",
+      "time_or_gap": "+53.188",
+      "status": "Finished",
+      "points": 8,
+      "laps": 62
+    },
+    {
+      "pos": 7,
+      "driver": "Liam Lawson",
+      "code": "LAW",
+      "team": "Racing Bulls",
+      "time_or_gap": "+1:21.666",
+      "status": "Finished",
+      "points": 6,
+      "laps": 62
+    },
+    {
+      "pos": 8,
+      "driver": "Nico Hülkenberg",
+      "code": "HUL",
+      "team": "Audi",
+      "time_or_gap": "+1:23.386",
+      "status": "Finished",
+      "points": 4,
+      "laps": 62
+    },
+    {
+      "pos": 9,
+      "driver": "George Russell",
+      "code": "RUS",
+      "team": "Mercedes",
+      "time_or_gap": "+1:24.677",
+      "status": "Finished",
+      "points": 2,
+      "laps": 62
+    },
+    {
+      "pos": 10,
+      "driver": "Isack Hadjar",
+      "code": "HAD",
+      "team": "Red Bull Racing",
+      "time_or_gap": "+1:30.862",
+      "status": "Finished",
+      "points": 1,
+      "laps": 62
+    },
+    {
+      "pos": 11,
+      "driver": "Pierre Gasly",
+      "code": "GAS",
+      "team": "Alpine",
+      "time_or_gap": "+1 lap",
+      "status": "Finished",
+      "points": 0,
+      "laps": 61
+    },
+    {
+      "pos": 12,
+      "driver": "Oliver Bearman",
+      "code": "BEA",
+      "team": "Haas",
+      "time_or_gap": "+1 lap",
+      "status": "Finished",
+      "points": 0,
+      "laps": 61
+    },
+    {
+      "pos": 13,
+      "driver": "Esteban Ocon",
+      "code": "OCO",
+      "team": "Haas",
+      "time_or_gap": "+1 lap",
+      "status": "Finished",
+      "points": 0,
+      "laps": 61
+    },
+    {
+      "pos": 14,
+      "driver": "Carlos Sainz",
+      "code": "SAI",
+      "team": "Williams",
+      "time_or_gap": "+1 lap",
+      "status": "Finished",
+      "points": 0,
+      "laps": 61
+    },
+    {
+      "pos": 15,
+      "driver": "Arvid Lindblad",
+      "code": "LIN",
+      "team": "Racing Bulls",
+      "time_or_gap": "+1 lap",
+      "status": "Finished",
+      "points": 0,
+      "laps": 61
+    },
+    {
+      "pos": 16,
+      "driver": "Fernando Alonso",
+      "code": "ALO",
+      "team": "Aston Martin",
+      "time_or_gap": "+1 lap",
+      "status": "Finished",
+      "points": 0,
+      "laps": 61
+    },
+    {
+      "pos": 17,
+      "driver": "Sergio Pérez",
+      "code": "PER",
+      "team": "Cadillac",
+      "time_or_gap": "+2 laps",
+      "status": "Finished",
+      "points": 0,
+      "laps": 60
+    },
+    {
+      "pos": 18,
+      "driver": "Alexander Albon",
+      "code": "ALB",
+      "team": "Williams",
+      "time_or_gap": "DNF (59 laps)",
+      "status": "DNF",
+      "points": 0,
+      "laps": 59
+    },
+    {
+      "pos": 19,
+      "driver": "Valtteri Bottas",
+      "code": "BOT",
+      "team": "Cadillac",
+      "time_or_gap": "+3 laps",
+      "status": "Finished",
+      "points": 0,
+      "laps": 59
+    },
+    {
+      "pos": null,
+      "driver": "Lance Stroll",
+      "code": "STR",
+      "team": "Aston Martin",
+      "time_or_gap": "DNF",
+      "status": "DNF",
+      "points": 0,
+      "laps": null
+    },
+    {
+      "pos": null,
+      "driver": "Franco Colapinto",
+      "code": "COL",
+      "team": "Alpine",
+      "time_or_gap": "DNF",
+      "status": "DNF",
+      "points": 0,
+      "laps": null
+    },
+    {
+      "pos": null,
+      "driver": "Gabriel Bortoleto",
+      "code": "BOR",
+      "team": "Audi",
+      "time_or_gap": "DNF",
+      "status": "DNF",
+      "points": 0,
+      "laps": null
+    }
+  ],
+  "driverStandings": [
+    {
+      "position": 1,
+      "code": "ANT",
+      "driver": "Kimi Antonelli",
+      "team": "Mercedes",
+      "points": 340,
+      "gap": 0
+    },
+    {
+      "position": 2,
+      "code": "RUS",
+      "driver": "George Russell",
+      "team": "Mercedes",
+      "points": 238,
+      "gap": 102
+    },
+    {
+      "position": 3,
+      "code": "HAM",
+      "driver": "Lewis Hamilton",
+      "team": "Ferrari",
+      "points": 229,
+      "gap": 111
+    },
+    {
+      "position": 4,
+      "code": "VER",
+      "driver": "Max Verstappen",
+      "team": "Red Bull Racing",
+      "points": 221,
+      "gap": 119
+    },
+    {
+      "position": 5,
+      "code": "LEC",
+      "driver": "Charles Leclerc",
+      "team": "Ferrari",
+      "points": 215,
+      "gap": 125
+    },
+    {
+      "position": 6,
+      "code": "NOR",
+      "driver": "Lando Norris",
+      "team": "McLaren",
+      "points": 201,
+      "gap": 139
+    },
+    {
+      "position": 7,
+      "code": "PIA",
+      "driver": "Oscar Piastri",
+      "team": "McLaren",
+      "points": 138,
+      "gap": 202
+    },
+    {
+      "position": 8,
+      "code": "HAD",
+      "driver": "Isack Hadjar",
+      "team": "Red Bull Racing",
+      "points": 97,
+      "gap": 243
+    },
+    {
+      "position": 9,
+      "code": "LAW",
+      "driver": "Liam Lawson",
+      "team": "Racing Bulls",
+      "points": 75,
+      "gap": 265
+    },
+    {
+      "position": 10,
+      "code": "GAS",
+      "driver": "Pierre Gasly",
+      "team": "Alpine",
+      "points": 41,
+      "gap": 299
+    },
+    {
+      "position": 11,
+      "code": "LIN",
+      "driver": "Arvid Lindblad",
+      "team": "Racing Bulls",
+      "points": 38,
+      "gap": 302
+    },
+    {
+      "position": 12,
+      "code": "COL",
+      "driver": "Franco Colapinto",
+      "team": "Alpine",
+      "points": 27,
+      "gap": 313
+    },
+    {
+      "position": 13,
+      "code": "BEA",
+      "driver": "Oliver Bearman",
+      "team": "Haas",
+      "points": 23,
+      "gap": 317
+    },
+    {
+      "position": 14,
+      "code": "HUL",
+      "driver": "Nico Hülkenberg",
+      "team": "Audi",
+      "points": 13,
+      "gap": 327
+    },
+    {
+      "position": 15,
+      "code": "BOR",
+      "driver": "Gabriel Bortoleto",
+      "team": "Audi",
+      "points": 10,
+      "gap": 330
+    },
+    {
+      "position": 16,
+      "code": "OCO",
+      "driver": "Esteban Ocon",
+      "team": "Haas",
+      "points": 7,
+      "gap": 333
+    },
+    {
+      "position": 17,
+      "code": "ALO",
+      "driver": "Fernando Alonso",
+      "team": "Aston Martin",
+      "points": 7,
+      "gap": 333
+    },
+    {
+      "position": 18,
+      "code": "SAI",
+      "driver": "Carlos Sainz",
+      "team": "Williams",
+      "points": 7,
+      "gap": 333
+    },
+    {
+      "position": 19,
+      "code": "ALB",
+      "driver": "Alexander Albon",
+      "team": "Williams",
+      "points": 5,
+      "gap": 335
+    },
+    {
+      "position": 20,
+      "code": "STR",
+      "driver": "Lance Stroll",
+      "team": "Aston Martin",
+      "points": 0,
+      "gap": 340
+    },
+    {
+      "position": 21,
+      "code": "BOT",
+      "driver": "Valtteri Bottas",
+      "team": "Cadillac",
+      "points": 0,
+      "gap": 340
+    },
+    {
+      "position": 22,
+      "code": "PER",
+      "driver": "Sergio Pérez",
+      "team": "Cadillac",
+      "points": 0,
+      "gap": 340
+    }
+  ],
+  "teamStandings": [
+    {
+      "position": 1,
+      "team": "Mercedes",
+      "fullName": "Mercedes-AMG Petronas F1 Team",
+      "points": 578,
+      "gap": 0
+    },
+    {
+      "position": 2,
+      "team": "Ferrari",
+      "fullName": "Scuderia Ferrari HP",
+      "points": 444,
+      "gap": 134
+    },
+    {
+      "position": 3,
+      "team": "McLaren",
+      "fullName": "McLaren F1 Team",
+      "points": 339,
+      "gap": 239
+    },
+    {
+      "position": 4,
+      "team": "Red Bull Racing",
+      "fullName": "Oracle Red Bull Racing",
+      "points": 318,
+      "gap": 260
+    },
+    {
+      "position": 5,
+      "team": "Racing Bulls",
+      "fullName": "Visa Cash App RB F1 Team",
+      "points": 113,
+      "gap": 465
+    },
+    {
+      "position": 6,
+      "team": "Alpine",
+      "fullName": "BWT Alpine F1 Team",
+      "points": 68,
+      "gap": 510
+    },
+    {
+      "position": 7,
+      "team": "Haas",
+      "fullName": "MoneyGram Haas F1 Team",
+      "points": 30,
+      "gap": 548
+    },
+    {
+      "position": 8,
+      "team": "Audi",
+      "fullName": "Audi F1 Team",
+      "points": 23,
+      "gap": 555
+    },
+    {
+      "position": 9,
+      "team": "Williams",
+      "fullName": "Williams Racing",
+      "points": 12,
+      "gap": 566
+    },
+    {
+      "position": 10,
+      "team": "Aston Martin",
+      "fullName": "Aston Martin Aramco F1 Team",
+      "points": 7,
+      "gap": 571
+    },
+    {
+      "position": 11,
+      "team": "Cadillac",
+      "fullName": "Cadillac F1 Team",
+      "points": 0,
+      "gap": 578
+    }
+  ],
+  "raceTeamPoints": [
+    {
+      "team": "Mercedes",
+      "points": 17
+    },
+    {
+      "team": "Ferrari",
+      "points": 26
+    },
+    {
+      "team": "McLaren",
+      "points": 22
+    },
+    {
+      "team": "Red Bull Racing",
+      "points": 26
+    },
+    {
+      "team": "Racing Bulls",
+      "points": 6
+    },
+    {
+      "team": "Alpine",
+      "points": 0
+    },
+    {
+      "team": "Haas",
+      "points": 0
+    },
+    {
+      "team": "Audi",
+      "points": 4
+    },
+    {
+      "team": "Williams",
+      "points": 0
+    },
+    {
+      "team": "Aston Martin",
+      "points": 0
+    },
+    {
+      "team": "Cadillac",
+      "points": 0
+    }
+  ],
+  "fastestLaps": [
+    {
+      "session": "race",
+      "code": "LEC",
+      "driver": "Charles Leclerc",
+      "team": "Ferrari",
+      "lap_time": "1:35.202",
+      "lap_number": 41,
+      "points": null
+    },
+    {
+      "session": "sprint",
+      "code": "HAM",
+      "driver": "Lewis Hamilton",
+      "team": "Ferrari",
+      "lap_time": "1:45.457",
+      "lap_number": 20,
+      "points": null
+    },
+    {
+      "session": "practice1",
+      "code": "RUS",
+      "driver": "George Russell",
+      "team": "Mercedes",
+      "lap_time": "1:32.274",
+      "lap_number": null,
+      "points": null
+    }
+  ],
+  "sectors": {
+    "unit": "seconds",
+    "note": "Top speed 316 km/h (Lando Norris, McLaren). Sector times for the fastest lap and for the other drivers were not available in the sources.",
+    "race": [
+      {
+        "code": "VER",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "LEC",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "ANT",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "NOR",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "PIA",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "HAM",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "LAW",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "HUL",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "RUS",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "HAD",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "GAS",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "BEA",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "OCO",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "SAI",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "LIN",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "ALO",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "PER",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "ALB",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "BOT",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "STR",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "COL",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "BOR",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      }
+    ],
+    "qualifying": [
+      {
+        "code": "VER",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "LEC",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "ANT",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "NOR",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "PIA",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "HAM",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "LAW",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "HUL",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "RUS",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "HAD",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "GAS",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "BEA",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "OCO",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "SAI",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "LIN",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "ALO",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "PER",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "ALB",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "BOT",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "STR",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "COL",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "code": "BOR",
+        "s1": null,
+        "s2": null,
+        "s3": null
+      }
+    ],
+    "sprint_qualifying": [
+      {
+        "s1": 26.832,
+        "s2": null,
+        "s3": 25.675
+      },
+      {
+        "s1": null,
+        "s2": 38.445,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      },
+      {
+        "s1": null,
+        "s2": null,
+        "s3": null
+      }
+    ],
+    "practice_1_sector_leaders": [
+      {
+        "code": "RUS",
+        "sector": "S1",
+        "time": null,
+        "driver": "George Russell"
+      },
+      {
+        "code": "NOR",
+        "sector": "S2",
+        "time": null,
+        "driver": "Lando Norris"
+      },
+      {
+        "code": "RUS",
+        "sector": "S3",
+        "time": null,
+        "driver": "George Russell"
+      }
+    ]
+  },
+  "championship": {
+    "leader": {
+      "code": "ANT",
+      "driver": "Kimi Antonelli",
+      "points": 340
+    },
+    "runnerUp": {
+      "code": "RUS",
+      "driver": "George Russell",
+      "points": 238
+    },
+    "gap": 102,
+    "third": {
+      "code": "HAM",
+      "driver": "Lewis Hamilton",
+      "points": 229,
+      "gap": 111
+    },
+    "remainingRaces": 6,
+    "remainingSprints": 0,
+    "maxPointsPerRace": 25,
+    "maxPointsRemaining": 150,
+    "clenchThresholdNow": 150,
+    "decided": false,
+    "afterClench": {
+      "round": 20,
+      "name": "United States Grand Prix",
+      "remainingRaces": 5,
+      "maxPointsRemaining": 125,
+      "requiredSwing": 24
+    },
+    "clench": {
+      "round": 20,
+      "name": "United States Grand Prix",
+      "circuit": "Circuit of the Americas",
+      "locality": "Austin, Texas",
+      "date": "2026-10-25",
+      "weekendDates": "23 - 25 Oct"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "source": "Formula1.com Official & FIA Entry / ESPN 2026",
-  "asOfDate": "2026-10-04",
+  "asOfDate": "2026-10-11",
   "totalRounds": 25,
   "races": [
     {
@@ -348,8 +348,16 @@
       "date": "2026-10-11",
       "weekendDates": "09 - 11 Oct",
       "isSprint": true,
-      "status": "next",
-      "podium": []
+      "status": "completed",
+      "podium": [
+        "Max Verstappen (Red Bull Racing)",
+        "Charles Leclerc (Ferrari)",
+        "Kimi Antonelli (Mercedes)"
+      ],
+      "officialRound": 17,
+      "winner": "Max Verstappen (Red Bull Racing)",
+      "notes": "62 laps of the 4.927 km Marina Bay Street Circuit. Max Verstappen won from pole (1:31.373) with a total race time of 1:42:00.785 after leading all 62 laps. Charles Leclerc took the fastest lap of the race (1:35.202, lap 41); no point was available for it and its sector times were not supplied. Lando Norris set the highest speed of the race at 316 km/h. Alexander Albon retired after 59 laps and Lance Stroll, Franco Colapinto and Gabriel Bortoleto did not finish.",
+      "resultsNote": "Full classification available. Gaps published as intervals; the three unclassified drivers carry a null position."
     },
     {
       "round": 20,
@@ -361,7 +369,7 @@
       "date": "2026-10-25",
       "weekendDates": "23 - 25 Oct",
       "isSprint": false,
-      "status": "upcoming",
+      "status": "next",
       "podium": []
     },
     {

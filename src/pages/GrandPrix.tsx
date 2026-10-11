@@ -564,9 +564,14 @@ export function GrandPrix() {
                                 {r.status}
                               </span>
                             )}
-                            <span className="text-xs text-gray-400 font-mono">
-                              {r.points > 0 ? `+${r.points} pts` : '—'}
-                            </span>
+                            <div className="text-right">
+                              {r.gap && (
+                                <p className="text-[11px] font-mono text-gray-300">{r.gap}</p>
+                              )}
+                              <p className="text-xs text-gray-400 font-mono">
+                                {r.points > 0 ? `+${r.points} pts` : '—'}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       );

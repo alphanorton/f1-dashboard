@@ -1,8 +1,8 @@
 {
   "season": 2026,
   "source": "OpenF1 race session laps (api.openf1.org), cross-checked against Jolpica-Ergast results and the official formula1.com fastest-lap list",
-  "asOfDate": "2026-10-04",
-  "generatedAt": "2026-10-04T17:04:04.357Z",
+  "asOfDate": "2026-10-11",
+  "generatedAt": "2026-10-11T15:28:43.410Z",
   "tolerance": {
     "lapTime": 0.001,
     "sectorSum": 0.002
@@ -264,6 +264,23 @@
       "s3": 39.821,
       "source": "formula1.com fastest-laps page (lap time, lap number); OpenF1 /laps (sector durations)",
       "verified": true
+    },
+    {
+      "round": 17,
+      "projectRound": 19,
+      "grand_prix": "Singapore Grand Prix",
+      "circuit": "marina_bay",
+      "date": "2026-10-11",
+      "driver_name": "Charles LECLERC",
+      "driver_code": "LEC",
+      "team": "Ferrari",
+      "lap_number": 41,
+      "lap_time": 95.202,
+      "s1": null,
+      "s2": null,
+      "s3": null,
+      "source": "Supplied 2026 Singapore Grand Prix classification (single source, not cross-checked)",
+      "verified": false
     }
   ],
   "needs_review": [
@@ -286,6 +303,15 @@
       "openf1_lap_duration": 98.22,
       "rejected_alternative": "1:38.511 (f1-fansite)",
       "driver_code": "VER"
+    },
+    {
+      "round": 17,
+      "grand_prix": "Singapore Grand Prix",
+      "reason": "Lap time and lap number come from the supplied classification only. Sector times for the fastest lap were not supplied, so s1/s2/s3 are null rather than split from the lap time.",
+      "driver_code": "LEC",
+      "lap_time": 95.202,
+      "official_lap_time": "1:35.202",
+      "lap_number": 41
     }
   ]
 }

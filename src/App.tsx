@@ -8,6 +8,7 @@ import { Dashboard } from '@/pages/Dashboard';
 import { TrackMapPage } from '@/pages/TrackMapPage';
 import { Standings } from '@/pages/Standings';
 import { GrandPrix } from '@/pages/GrandPrix';
+import { Singapore2026 } from '@/pages/Singapore2026';
 import { Circuits } from '@/pages/Circuits';
 import { TireStrategy } from '@/pages/TireStrategy';
 import { FastestLaps } from '@/pages/FastestLaps';
@@ -39,6 +40,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/grand-prix" element={<GrandPrix />} />
+                  <Route path="/singapore-2026" element={<Singapore2026 />} />
                   <Route path="/circuits" element={<Circuits />} />
                   <Route path="/standings" element={<Standings />} />
                   <Route path="/track-map" element={<TrackMapPage />} />

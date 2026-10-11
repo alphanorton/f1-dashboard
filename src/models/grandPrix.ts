@@ -17,6 +17,8 @@ export interface GrandPrixRace {
   podium?: string[];
   notes?: string;
   resultsNote?: string;
+  /** Round number on the official calendar, when it differs from this project's round key. */
+  officialRound?: number;
 }
 
 export interface GrandPrixCalendar {
@@ -34,6 +36,10 @@ export interface RaceResultEntry {
   team: string;
   points: number;
   status: string;
+  /** Interval to the winner, exactly as published ("+7.335", "+1 lap", "DNF (59 laps)"). Null when not supplied. */
+  gap?: string | null;
+  /** Laps completed. Null when the published interval does not determine it. */
+  laps?: number | null;
 }
 
 export interface RaceResults {
@@ -42,12 +48,20 @@ export interface RaceResults {
   asOfDate: string;
   source: string;
   pointsSystem: string;
+  officialAsOfRound?: number;
   races: Record<string, {
     round: number;
     name: string;
     date: string;
     circuit: string;
     results: RaceResultEntry[];
+    officialRound?: number;
+    provisional?: boolean;
+    distanceKm?: number;
+    raceLaps?: number;
+    winnerTime?: string;
+    poleTime?: string;
+    resultsNote?: string;
   }>;
 }
 

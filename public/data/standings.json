@@ -1,13 +1,13 @@
 {
   "season": 2026,
-  "asOfRound": 18,
-  "asOfRace": "Bahrain Grand Prix in Malaysia",
-  "asOfLocation": "Kuala Lumpur, Malaysia",
+  "asOfRound": 19,
+  "asOfRace": "Singapore Grand Prix",
+  "asOfLocation": "Singapore, Singapore",
   "asOfStatus": "Completed",
-  "nextRound": 19,
-  "nextGrandPrix": "Singapore Grand Prix",
-  "lastUpdated": "2026-10-04",
-  "remainingRaces": 7,
+  "nextRound": 20,
+  "nextGrandPrix": "United States Grand Prix",
+  "lastUpdated": "2026-10-11",
+  "remainingRaces": 6,
   "drivers": [
     {
       "position": 1,
@@ -16,11 +16,11 @@
       "name": "Kimi Antonelli",
       "nationality": "Italy",
       "team": "Mercedes",
-      "points": 320,
-      "wins": 8,
-      "podiums": 13,
+      "points": 340,
+      "wins": null,
+      "podiums": null,
       "gap": 0,
-      "sprintPoints": 26
+      "sprintPoints": null
     },
     {
       "position": 2,
@@ -29,11 +29,11 @@
       "name": "George Russell",
       "nationality": "United Kingdom",
       "team": "Mercedes",
-      "points": 236,
-      "wins": 3,
-      "podiums": 8,
-      "gap": -84,
-      "sprintPoints": 34
+      "points": 238,
+      "wins": null,
+      "podiums": null,
+      "gap": 102,
+      "sprintPoints": null
     },
     {
       "position": 3,
@@ -42,50 +42,50 @@
       "name": "Lewis Hamilton",
       "nationality": "United Kingdom",
       "team": "Ferrari",
-      "points": 214,
-      "wins": 1,
-      "podiums": 6,
-      "gap": -106,
-      "sprintPoints": 20
+      "points": 229,
+      "wins": null,
+      "podiums": null,
+      "gap": 111,
+      "sprintPoints": null
     },
     {
       "position": 4,
-      "driverNumber": 16,
-      "code": "LEC",
-      "name": "Charles Leclerc",
-      "nationality": "Monaco",
-      "team": "Ferrari",
-      "points": 191,
-      "wins": 1,
-      "podiums": 4,
-      "gap": -129,
-      "sprintPoints": 28
-    },
-    {
-      "position": 5,
-      "driverNumber": 4,
-      "code": "NOR",
-      "name": "Lando Norris",
-      "nationality": "United Kingdom",
-      "team": "McLaren",
-      "points": 188,
-      "wins": 2,
-      "podiums": 5,
-      "gap": -132,
-      "sprintPoints": 32
-    },
-    {
-      "position": 6,
       "driverNumber": 1,
       "code": "VER",
       "name": "Max Verstappen",
       "nationality": "Netherlands",
       "team": "Red Bull Racing",
-      "points": 188,
-      "wins": 1,
-      "podiums": 8,
-      "gap": -132,
-      "sprintPoints": 12
+      "points": 221,
+      "wins": null,
+      "podiums": null,
+      "gap": 119,
+      "sprintPoints": null
+    },
+    {
+      "position": 5,
+      "driverNumber": 16,
+      "code": "LEC",
+      "name": "Charles Leclerc",
+      "nationality": "Monaco",
+      "team": "Ferrari",
+      "points": 215,
+      "wins": null,
+      "podiums": null,
+      "gap": 125,
+      "sprintPoints": null
+    },
+    {
+      "position": 6,
+      "driverNumber": 4,
+      "code": "NOR",
+      "name": "Lando Norris",
+      "nationality": "United Kingdom",
+      "team": "McLaren",
+      "points": 201,
+      "wins": null,
+      "podiums": null,
+      "gap": 139,
+      "sprintPoints": null
     },
     {
       "position": 7,
@@ -94,11 +94,11 @@
       "name": "Oscar Piastri",
       "nationality": "Australia",
       "team": "McLaren",
-      "points": 128,
-      "wins": 0,
-      "podiums": 2,
-      "gap": -192,
-      "sprintPoints": 21
+      "points": 138,
+      "wins": null,
+      "podiums": null,
+      "gap": 202,
+      "sprintPoints": null
     },
     {
       "position": 8,
@@ -107,11 +107,11 @@
       "name": "Isack Hadjar",
       "nationality": "France",
       "team": "Red Bull Racing",
-      "points": 96,
-      "wins": 0,
-      "podiums": 2,
-      "gap": -224,
-      "sprintPoints": 0
+      "points": 97,
+      "wins": null,
+      "podiums": null,
+      "gap": 243,
+      "sprintPoints": null
     },
     {
       "position": 9,
@@ -120,11 +120,11 @@
       "name": "Liam Lawson",
       "nationality": "New Zealand",
       "team": "Racing Bulls",
-      "points": 65,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -255,
-      "sprintPoints": 3
+      "points": 75,
+      "wins": null,
+      "podiums": null,
+      "gap": 265,
+      "sprintPoints": null
     },
     {
       "position": 10,
@@ -134,10 +134,10 @@
       "nationality": "France",
       "team": "Alpine",
       "points": 41,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -279,
-      "sprintPoints": 2
+      "wins": null,
+      "podiums": null,
+      "gap": 299,
+      "sprintPoints": null
     },
     {
       "position": 11,
@@ -147,10 +147,10 @@
       "nationality": "United Kingdom",
       "team": "Racing Bulls",
       "points": 38,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -282,
-      "sprintPoints": 1
+      "wins": null,
+      "podiums": null,
+      "gap": 302,
+      "sprintPoints": null
     },
     {
       "position": 12,
@@ -160,10 +160,10 @@
       "nationality": "Argentina",
       "team": "Alpine",
       "points": 27,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -293,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 313,
+      "sprintPoints": null
     },
     {
       "position": 13,
@@ -172,37 +172,37 @@
       "name": "Oliver Bearman",
       "nationality": "United Kingdom",
       "team": "Haas",
-      "points": 20,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -300,
-      "sprintPoints": 1
+      "points": 23,
+      "wins": null,
+      "podiums": null,
+      "gap": 317,
+      "sprintPoints": null
     },
     {
       "position": 14,
+      "driverNumber": 27,
+      "code": "HUL",
+      "name": "Nico Hülkenberg",
+      "nationality": "Germany",
+      "team": "Audi",
+      "points": 13,
+      "wins": null,
+      "podiums": null,
+      "gap": 327,
+      "sprintPoints": null
+    },
+    {
+      "position": 15,
       "driverNumber": 5,
       "code": "BOR",
       "name": "Gabriel Bortoleto",
       "nationality": "Brazil",
       "team": "Audi",
       "points": 10,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -310,
-      "sprintPoints": 0
-    },
-    {
-      "position": 15,
-      "driverNumber": 27,
-      "code": "HUL",
-      "name": "Nico Hülkenberg",
-      "nationality": "Germany",
-      "team": "Audi",
-      "points": 7,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -313,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 330,
+      "sprintPoints": null
     },
     {
       "position": 16,
@@ -212,10 +212,10 @@
       "nationality": "France",
       "team": "Haas",
       "points": 7,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -313,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 333,
+      "sprintPoints": null
     },
     {
       "position": 17,
@@ -225,10 +225,10 @@
       "nationality": "Spain",
       "team": "Aston Martin",
       "points": 7,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -313,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 333,
+      "sprintPoints": null
     },
     {
       "position": 18,
@@ -238,10 +238,10 @@
       "nationality": "Spain",
       "team": "Williams",
       "points": 7,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -313,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 333,
+      "sprintPoints": null
     },
     {
       "position": 19,
@@ -251,62 +251,49 @@
       "nationality": "Thailand",
       "team": "Williams",
       "points": 5,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -315,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 335,
+      "sprintPoints": null
     },
     {
       "position": 20,
-      "driverNumber": 22,
-      "code": "TSU",
-      "name": "Yuki Tsunoda",
-      "nationality": "Japan",
-      "team": "Racing Bulls",
-      "points": 1,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -319,
-      "sprintPoints": 0
-    },
-    {
-      "position": 21,
       "driverNumber": 18,
       "code": "STR",
       "name": "Lance Stroll",
       "nationality": "Canada",
       "team": "Aston Martin",
       "points": 0,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -320,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 340,
+      "sprintPoints": null
     },
     {
-      "position": 22,
+      "position": 21,
       "driverNumber": 77,
       "code": "BOT",
       "name": "Valtteri Bottas",
       "nationality": "Finland",
       "team": "Cadillac",
       "points": 0,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -320,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 340,
+      "sprintPoints": null
     },
     {
-      "position": 23,
+      "position": 22,
       "driverNumber": 11,
       "code": "PER",
       "name": "Sergio Pérez",
       "nationality": "Mexico",
       "team": "Cadillac",
       "points": 0,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -320,
-      "sprintPoints": 0
+      "wins": null,
+      "podiums": null,
+      "gap": 340,
+      "sprintPoints": null
     }
   ],
   "constructors": [
@@ -321,9 +308,9 @@
         "Kimi Antonelli",
         "George Russell"
       ],
-      "points": 556,
-      "wins": 11,
-      "podiums": 20,
+      "points": 578,
+      "wins": null,
+      "podiums": null,
       "gap": 0,
       "updates": [
         "Optimized aerodynamics package Australia (March)",
@@ -344,10 +331,10 @@
         "Lewis Hamilton",
         "Charles Leclerc"
       ],
-      "points": 405,
-      "wins": 2,
-      "podiums": 9,
-      "gap": -151,
+      "points": 444,
+      "wins": null,
+      "podiums": null,
+      "gap": 134,
       "updates": [
         "New front wing + shorter nose Australia",
         "067/11 Phase B engine with 15 more hp Miami",
@@ -367,10 +354,10 @@
         "Lando Norris",
         "Oscar Piastri"
       ],
-      "points": 316,
-      "wins": 2,
-      "podiums": 7,
-      "gap": -240,
+      "points": 339,
+      "wins": null,
+      "podiums": null,
+      "gap": 239,
       "updates": [
         "New aero wheels + optimized brake duct Japan",
         "Wider diffuser Monaco (June)",
@@ -391,10 +378,10 @@
         "Isack Hadjar",
         "Liam Lawson"
       ],
-      "points": 298,
-      "wins": 0,
-      "podiums": 9,
-      "gap": -258,
+      "points": 318,
+      "wins": null,
+      "podiums": null,
+      "gap": 260,
       "updates": [
         "RB22B chassis with evolved active suspension China (March)",
         "RBPT-02 Phase C engine with 20 more hp Miami",
@@ -415,10 +402,10 @@
         "Liam Lawson",
         "Yuki Tsunoda"
       ],
-      "points": 90,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -466,
+      "points": 113,
+      "wins": null,
+      "podiums": null,
+      "gap": 465,
       "updates": [
         "New RB22-inspired front wing Miami",
         "Optimized Venturi tunnel Belgium"
@@ -436,9 +423,9 @@
         "Franco Colapinto"
       ],
       "points": 68,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -488,
+      "wins": null,
+      "podiums": null,
+      "gap": 510,
       "updates": [
         "Engine change: from Renault E-Tech RE26 to Mercedes M17 (winter 2025)",
         "All-new A526 chassis with zero-pod design Australia",
@@ -456,10 +443,10 @@
         "Oliver Bearman",
         "Esteban Ocon"
       ],
-      "points": 27,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -529,
+      "points": 30,
+      "wins": null,
+      "podiums": null,
+      "gap": 548,
       "updates": [
         "SF-26-inspired nose and front wing Spain (Barcelona)"
       ]
@@ -475,10 +462,10 @@
         "Gabriel Bortoleto",
         "Nico Hülkenberg"
       ],
-      "points": 17,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -539,
+      "points": 23,
+      "wins": null,
+      "podiums": null,
+      "gap": 555,
       "updates": [
         "First Audi F1 car with their own engine",
         "Engine reliability package Canada (overheating issues resolved)",
@@ -497,9 +484,9 @@
         "Alexander Albon"
       ],
       "points": 12,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -544,
+      "wins": null,
+      "podiums": null,
+      "gap": 566,
       "updates": [
         "New FW48 chassis with more advanced carbon fiber Japan",
         "Lighter rear wing Spain (Barcelona)"
@@ -517,9 +504,9 @@
         "Lance Stroll"
       ],
       "points": 7,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -549,
+      "wins": null,
+      "podiums": null,
+      "gap": 571,
       "updates": [
         "New Honda RA626H engine with advanced hybrid technology (first year)",
         "Suspension and gearbox update Miami",
@@ -538,9 +525,9 @@
         "Sergio Pérez"
       ],
       "points": 0,
-      "wins": 0,
-      "podiums": 0,
-      "gap": -556,
+      "wins": null,
+      "podiums": null,
+      "gap": 578,
       "updates": [
         "New team! Cadillac's first season in F1",
         "C1 car inspired by the Haas VF-25 design",
@@ -548,6 +535,6 @@
       ]
     }
   ],
-  "officialAsOfRound": 16,
-  "officialNextRound": 17
+  "officialAsOfRound": 17,
+  "officialNextRound": 18
 }

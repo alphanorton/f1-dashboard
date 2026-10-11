@@ -179,3 +179,19 @@ input[type="range"]::-moz-range-thumb {
   background: linear-gradient(90deg, transparent, rgba(225, 6, 0, 0.7), transparent);
   height: 1px;
 }
+
+/* Team colour bar on the start edge of a table row. The bar is an out-of-flow ::before pinned to
+   the row box, so column widths, row heights and text spacing are untouched. Logical inset/border
+   properties keep it on the row's start edge whichever direction the document runs in. */
+.team-row-bar {
+  position: relative;
+}
+
+.team-row-bar::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 3px;
+  background-color: var(--team-color);
+}
