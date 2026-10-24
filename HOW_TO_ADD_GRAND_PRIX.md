@@ -266,3 +266,15 @@ Property 'xxx' is missing in type 'GrandPrixRace'
 ---
 
 **موفق باشید!** 🏎️💨
+
+---
+
+## Tyre Strategy (preset)
+
+برای اضافه کردن استراتژی تایر یک مسابقه، بدون تغییر کد:
+
+```
+npm run tyre:add -- stints.csv --season 2026 --gp "Singapore Grand Prix" --date 2026-10-18 --circuit "Marina Bay" --meeting-key 1310 --session-key 11800
+```
+
+ستون‌های CSV: `driver, driver_code, driver_number, team, stint_number, compound, start_lap, end_lap` (اختیاری: `confidence, source, note`). اگر compound نامشخص است خالی بگذارید؛ در صفحه «Unknown» نمایش داده می‌شود.

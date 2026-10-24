@@ -216,25 +216,25 @@ export function LiveTiming() {
 
       {/* Race Info */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="border-gray-700 bg-gray-800/50">
+        <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <p className="text-xs text-gray-400 mb-1">Status</p>
             <p className="text-2xl font-bold text-white">✓ Finished</p>
           </CardContent>
         </Card>
-        <Card className="border-gray-700 bg-gray-800/50">
+        <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <p className="text-xs text-gray-400 mb-1">Leader time</p>
             <p className="text-2xl font-bold text-green-400">1:27.891</p>
           </CardContent>
         </Card>
-        <Card className="border-gray-700 bg-gray-800/50">
+        <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <p className="text-xs text-gray-400 mb-1">Safety Car</p>
-            <p className="text-2xl font-bold text-gray-500">---</p>
+            <p className="text-2xl font-bold text-gray-400">---</p>
           </CardContent>
         </Card>
-        <Card className="border-gray-700 bg-gray-800/50">
+        <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <p className="text-xs text-gray-400 mb-1">Flag</p>
             <p className="text-2xl font-bold text-white">🏁 Finished</p>
@@ -243,7 +243,7 @@ export function LiveTiming() {
       </div>
 
       {/* Live Timing Table */}
-      <Card className="border-gray-700 bg-gray-800/50">
+      <Card className="border-gray-700/50 bg-surface">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-yellow-400" />
@@ -266,7 +266,7 @@ export function LiveTiming() {
             {LIVE_TIMING_DATA.map((driver) => (
               <div
                 key={driver.position}
-                className={`grid grid-cols-12 gap-2 p-2 rounded ${getTeamColor(driver.team)} bg-gray-900 hover:bg-gray-800 transition-colors`}
+                className={`grid grid-cols-12 gap-2 p-2 rounded ${getTeamColor(driver.team)} bg-surface hover:bg-muted/60 transition-colors`}
               >
                 {/* Position */}
                 <div className="col-span-1 flex items-center justify-center">
@@ -320,7 +320,7 @@ export function LiveTiming() {
       </Card>
 
       {/* Sector Times */}
-      <Card className="border-gray-700 bg-gray-800/50">
+      <Card className="border-gray-700/50 bg-surface">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Clock className="h-5 w-5 text-blue-400" />
@@ -330,7 +330,7 @@ export function LiveTiming() {
         <CardContent>
           <div className="space-y-3">
             {LIVE_TIMING_DATA.slice(0, 3).map((driver) => (
-              <div key={driver.position} className="p-3 rounded-lg bg-gray-900 border border-gray-700">
+              <div key={driver.position} className="p-3 rounded-lg bg-surface border border-gray-700">
                 <p className="font-bold text-white mb-2">{driver.name}</p>
                 <div className="grid grid-cols-3 gap-2 text-sm">
                   <div className="text-center">
@@ -353,17 +353,17 @@ export function LiveTiming() {
       </Card>
 
       {/* Pit Stops Summary */}
-      <Card className="border-gray-700 bg-gray-800/50">
+      <Card className="border-gray-700/50 bg-surface">
         <CardHeader>
           <CardTitle>Pit stops</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {LIVE_TIMING_DATA.slice(0, 5).map((driver) => (
-              <div key={driver.number} className="p-3 rounded-lg bg-gray-900 border border-gray-700 text-center">
+              <div key={driver.number} className="p-3 rounded-lg bg-surface border border-gray-700 text-center">
                 <p className="text-xs text-gray-400 mb-1">{driver.name.split(' ')[1]}</p>
                 <p className="text-2xl font-bold text-white">{driver.pits}</p>
-                <p className="text-xs text-gray-500">stops</p>
+                <p className="text-xs text-gray-400">stops</p>
               </div>
             ))}
           </div>
@@ -380,17 +380,17 @@ export function LiveTiming() {
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
-            <div className="p-3 rounded-lg bg-gray-900/50 border border-gray-700">
+            <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
               <p className="text-sm text-white">
                 <span className="font-bold text-yellow-400">P1:</span> Verstappen pulling away (+3.4s to Norris)
               </p>
             </div>
-            <div className="p-3 rounded-lg bg-gray-900/50 border border-gray-700">
+            <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
               <p className="text-sm text-white">
                 <span className="font-bold text-orange-400">P2-P4:</span> McLaren vs Ferrari battle (+1.9s)
               </p>
             </div>
-            <div className="p-3 rounded-lg bg-gray-900/50 border border-gray-700">
+            <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
               <p className="text-sm text-white">
                 <span className="font-bold text-green-400">P7-P8:</span> Mercedes teammates close (+4.2s)
               </p>

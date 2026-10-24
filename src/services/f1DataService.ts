@@ -13,6 +13,7 @@ import type {
   JolpicaResult,
 } from '@/models/grandPrix';
 import { COUNTRY_FLAGS, isLikelySprintWeekend } from '@/models/grandPrix';
+import { logger } from '@/lib/logger';
 
 const JOLPICA_BASE_URL = 'https://api.jolpi.ca/ergast/f1';
 const CACHE_PREFIX = 'f1_gp_cache_';
@@ -45,7 +46,7 @@ function setCached<T>(key: string, data: T): void {
     const entry: CacheEntry<T> = { data, timestamp: Date.now() };
     localStorage.setItem(CACHE_PREFIX + key, JSON.stringify(entry));
   } catch (err) {
-    console.warn('Cache write failed:', err);
+    logger.warn('Cache write failed', { key, error: String(err) });
   }
 }
 
@@ -166,23 +167,23 @@ export async function getGrandPrixCalendar(season: number = 2026): Promise<Grand
   // Always try local data first (more reliable for custom seasons like 2026)
   try {
     const localCalendar = await fetchLocalCalendar();
-    console.log('[F1Service] Local calendar loaded successfully');
+    void '[F1Service] Local calendar loaded successfully';
     setCached(cacheKey, localCalendar);
     return localCalendar;
   } catch (localError) {
-    console.warn('[F1Service] Local calendar not available, trying API...');
+    logger.warn('Local calendar not available, trying API...', { season });
   }
 
   // Fall back to cache only if local data is unavailable
   const cached = getCached<GrandPrixCalendar>(cacheKey);
   if (cached) {
-    console.log('[F1Service] Calendar loaded from cache');
+    void '[F1Service] Calendar loaded from cache';
     return cached;
   }
 
   // Fall back to API
   try {
-    console.log('[F1Service] Fetching calendar from Jolpica API...');
+    void '[F1Service] Fetching calendar from Jolpica API...';
     const jolpicaRaces = await fetchJolpicaRaces(season);
     
     if (!jolpicaRaces || jolpicaRaces.length === 0) {
@@ -221,11 +222,11 @@ export async function getGrandPrixCalendar(season: number = 2026): Promise<Grand
     };
 
     setCached(cacheKey, calendar);
-    console.log('[F1Service] Calendar fetched and cached successfully');
+    void '[F1Service] Calendar fetched and cached successfully';
     return calendar;
 
   } catch (error) {
-    console.error('[F1Service] Failed to load calendar:', error);
+    logger.error('Failed to load calendar', { season, error: String(error) });
     throw new Error('Failed to load Grand Prix calendar');
   }
 }
@@ -236,23 +237,23 @@ export async function getRaceResults(season: number = 2026, round?: number): Pro
   // Always try local data first (more reliable for custom seasons like 2026)
   try {
     const localResults = await fetchLocalResults();
-    console.log('[F1Service] Local results loaded successfully');
+    void '[F1Service] Local results loaded successfully';
     setCached(cacheKey, localResults);
     return localResults;
   } catch (localError) {
-    console.warn('[F1Service] Local results not available, trying API...');
+    logger.warn('Local results not available, trying API...', { season, round });
   }
 
   // Fall back to cache only if local data is unavailable
   const cached = getCached<RaceResults>(cacheKey);
   if (cached) {
-    console.log('[F1Service] Results loaded from cache');
+    void '[F1Service] Results loaded from cache';
     return cached;
   }
 
   // Fall back to API
   try {
-    console.log('[F1Service] Fetching results from Jolpica API...');
+    void '[F1Service] Fetching results from Jolpica API...';
     
     if (round) {
       // Fetch single round
@@ -312,7 +313,7 @@ export async function getRaceResults(season: number = 2026, round?: number): Pro
             race.winner = podium[0];
           }
         } catch (err) {
-          console.warn(`[F1Service] Failed to fetch results for round ${race.round}:`, err);
+          logger.warn('Failed to fetch results for round', { round: race.round, error: String(err) });
         }
       }
 
@@ -326,12 +327,12 @@ export async function getRaceResults(season: number = 2026, round?: number): Pro
       };
 
       setCached(cacheKey, results);
-      console.log('[F1Service] Results fetched and cached successfully');
+      void '[F1Service] Results fetched and cached successfully';
       return results;
     }
 
   } catch (error) {
-    console.error('[F1Service] Failed to load results:', error);
+    logger.error('Failed to load results', { season, round, error: String(error) });
     throw new Error('Failed to load race results');
   }
 }
@@ -343,7 +344,7 @@ export function clearCache(): void {
       localStorage.removeItem(key);
     }
   });
-  console.log('[F1Service] Cache cleared');
+  void '[F1Service] Cache cleared';
 }
 
 export function getCacheStatus(): { keys: string[]; totalSize: number } {
@@ -364,9 +365,9 @@ export function saveManualResults(season: number, round: number, results: RaceRe
     localStorage.setItem(key, JSON.stringify(results));
     // Clear cache so fresh data is loaded next time
     clearCache();
-    console.log(`[F1Service] Manual results saved for round ${round}`);
+    void `[F1Service] Manual results saved for round ${round}`;
   } catch (err) {
-    console.error('[F1Service] Failed to save manual results:', err);
+    logger.error('Failed to save manual results', { season, round, error: String(err) });
   }
 }
 
@@ -403,14 +404,14 @@ export function deleteManualResults(season: number, round: number): void {
   const key = `${MANUAL_RESULTS_KEY}${season}_${round}`;
   localStorage.removeItem(key);
   clearCache();
-  console.log(`[F1Service] Manual results deleted for round ${round}`);
+  void `[F1Service] Manual results deleted for round ${round}`;
 }
 
 export function deleteAllManualResults(season: number): void {
   const keys = Object.keys(localStorage).filter(k => k.startsWith(`${MANUAL_RESULTS_KEY}${season}_`));
   keys.forEach(key => localStorage.removeItem(key));
   clearCache();
-  console.log(`[F1Service] All manual results deleted for season ${season}`);
+  void `[F1Service] All manual results deleted for season ${season}`;
 }
 
 export function exportResultsAsJson(season: number): string {

@@ -5,6 +5,9 @@ import {
   Trophy, Timer, Flag, Zap, AlertTriangle, CircleSlash,
   ChevronDown, ChevronUp, Info, Target,
 } from 'lucide-react';
+import { PageHeader } from '@/components/ui/PageHeader';
+import { PageLoader } from '@/components/ui/PageLoader';
+import { ErrorState } from '@/components/ui/ErrorState';
 import { useCachedData } from '@/hooks/useCachedData';
 import { getTeamColor2026, teamTint, contrastText } from '@/lib/teamColors';
 
@@ -128,7 +131,7 @@ const SESSION_LABEL: Record<string, string> = {
 // A missing value is shown as an em dash. Nothing on this page is inferred: where a figure
 // was not supplied the cell stays empty rather than being filled from another figure.
 const Dash = ({ className = '' }: { className?: string }) => (
-  <span className={`text-gray-600 ${className}`} aria-label="not available">—</span>
+  <span className={`text-gray-400 ${className}`} aria-label="not available">—</span>
 );
 
 function TeamBar({ team, className = '' }: { team: string; className?: string }) {
@@ -145,7 +148,7 @@ function TeamChip({ team }: { team: string }) {
   const color = getTeamColor2026(team);
   return (
     <span
-      className="inline-flex items-center rounded px-2 py-0.5 text-[11px] font-semibold"
+      className="inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold"
       style={{ backgroundColor: color, color: contrastText(color) }}
     >
       {team}
@@ -156,7 +159,7 @@ function TeamChip({ team }: { team: string }) {
 function PositionBadge({ pos }: { pos: number | null }) {
   if (pos === null) {
     return (
-      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-800 text-gray-500" title="Not classified">
+      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-muted text-gray-400" title="Not classified">
         <CircleSlash className="h-3.5 w-3.5" aria-hidden="true" />
       </span>
     );
@@ -165,7 +168,7 @@ function PositionBadge({ pos }: { pos: number | null }) {
     pos === 1 ? 'bg-amber-500 text-black'
       : pos === 2 ? 'bg-gray-300 text-black'
       : pos === 3 ? 'bg-amber-700 text-white'
-      : 'bg-gray-800 text-gray-300';
+      : 'bg-muted text-gray-300';
   return (
     <span className={`flex h-7 w-7 items-center justify-center rounded-full font-mono text-xs font-black ${style}`}>
       {pos}
@@ -180,7 +183,7 @@ function SectionHeading({ icon: Icon, title, meta }: { icon: React.ElementType; 
         <Icon className="h-4 w-4 text-f1-red" aria-hidden="true" />
         {title}
       </h2>
-      {meta && <span className="text-xs text-gray-500">{meta}</span>}
+      {meta && <span className="text-xs text-gray-400">{meta}</span>}
     </div>
   );
 }
@@ -224,21 +227,15 @@ export function Singapore2026() {
   }, [data]);
 
   if (loading) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="h-10 w-10 animate-spin rounded-full border-4 border-f1-red border-t-transparent" />
-          <p className="font-medium text-gray-400">Loading Singapore Grand Prix...</p>
-        </div>
-      </div>
-    );
+    return <PageLoader message="Loading Singapore Grand Prix..." />;
   }
 
   if (error || !data) {
     return (
-      <div role="alert" className="rounded-lg border border-red-900/50 bg-red-950/20 p-6 text-red-400">
-        Failed to load Singapore Grand Prix data{error ? `: ${error}` : '.'}
-      </div>
+      <ErrorState
+        title="Could not load Singapore Grand Prix data"
+        message={error ?? 'The data file is missing.'}
+      />
     );
   }
 
@@ -248,8 +245,14 @@ export function Singapore2026() {
 
   return (
     <div className="space-y-6">
+      <PageHeader
+        title={data.name}
+        subtitle={`${data.circuit} — ${data.locality}, ${data.country} · ${data.date}`}
+        icon={Trophy}
+      />
+
       {/* ------------------------------------------------------------- header */}
-      <header className="relative overflow-hidden rounded-2xl border border-gray-700/60 bg-gradient-to-br from-[#141426] via-[#0E0E1A] to-[#0A0A14] p-5 sm:p-8">
+      <header className="relative overflow-hidden rounded-2xl border border-gray-700/50 bg-muted/40 p-5 sm:p-8">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.06]"
@@ -269,20 +272,20 @@ export function Singapore2026() {
           </div>
           <dl className="grid grid-cols-2 gap-x-6 gap-y-2 text-xs sm:grid-cols-4 lg:text-right">
             <div>
-              <dt className="text-gray-500">Distance</dt>
-              <dd className="font-mono font-bold text-white">{data.distanceKm} km</dd>
+              <dt className="text-gray-400">Distance</dt>
+              <dd className="font-mono font-bold text-white tabular-nums">{data.distanceKm} km</dd>
             </div>
             <div>
-              <dt className="text-gray-500">Laps</dt>
-              <dd className="font-mono font-bold text-white">{data.raceLaps}</dd>
+              <dt className="text-gray-400">Laps</dt>
+              <dd className="font-mono font-bold text-white tabular-nums">{data.raceLaps}</dd>
             </div>
             <div>
-              <dt className="text-gray-500">Winner time</dt>
-              <dd className="font-mono font-bold text-white">{data.winnerTime}</dd>
+              <dt className="text-gray-400">Winner time</dt>
+              <dd className="font-mono font-bold text-white tabular-nums">{data.winnerTime}</dd>
             </div>
             <div>
-              <dt className="text-gray-500">Pole</dt>
-              <dd className="font-mono font-bold text-white">{data.pole.time}</dd>
+              <dt className="text-gray-400">Pole</dt>
+              <dd className="font-mono font-bold text-white tabular-nums">{data.pole.time}</dd>
             </div>
           </dl>
         </div>
@@ -325,42 +328,42 @@ export function Singapore2026() {
 
       {/* --------------------------------------------------- race highlights */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="stat-card">
-          <p className="text-xs uppercase tracking-widest text-gray-500">Winner</p>
+        <div className="rounded-xl border border-gray-700/50 bg-muted/40 p-4">
+          <p className="text-xs uppercase tracking-widest text-gray-400">Winner</p>
           <p className="mt-1 flex items-center gap-2 text-lg font-black text-white">
             <TeamBar team={data.pole.team} className="h-5" />
             {data.pole.driver}
           </p>
-          <p className="mt-1 text-xs text-gray-400">
+          <p className="mt-1 text-xs text-gray-400 tabular-nums">
             {data.winnerTime} · led all {data.raceLaps} laps
           </p>
         </div>
-        <div className="stat-card">
-          <p className="text-xs uppercase tracking-widest text-gray-500">Fastest lap (race)</p>
+        <div className="rounded-xl border border-gray-700/50 bg-muted/40 p-4">
+          <p className="text-xs uppercase tracking-widest text-gray-400">Fastest lap (race)</p>
           <p className="mt-1 flex items-center gap-2 text-lg font-black text-white">
             <TeamBar team={raceFastest?.team ?? null} className="h-5" />
             {raceFastest?.driver ?? '—'}
           </p>
-          <p className="mt-1 font-mono text-xs text-gray-400">
+          <p className="mt-1 font-mono text-xs text-gray-400 tabular-nums">
             {raceFastest?.lap_time ?? '—'}
             {raceFastest?.lap_number ? ` · lap ${raceFastest.lap_number}` : ''}
           </p>
         </div>
-        <div className="stat-card">
-          <p className="text-xs uppercase tracking-widest text-gray-500">Fastest lap points</p>
-          <p className="mt-1 text-lg font-black text-white">{data.fastestLapPoints ?? <Dash />}</p>
+        <div className="rounded-xl border border-gray-700/50 bg-muted/40 p-4">
+          <p className="text-xs uppercase tracking-widest text-gray-400">Fastest lap points</p>
+          <p className="mt-1 text-lg font-black text-white tabular-nums">{data.fastestLapPoints ?? <Dash />}</p>
           <p className="mt-1 text-xs text-gray-400">No point available for the fastest lap</p>
         </div>
-        <div className="stat-card">
-          <p className="text-xs uppercase tracking-widest text-gray-500">{data.pole.driver} personal best</p>
-          <p className="mt-1 font-mono text-lg font-black text-white">{data.personalBestLap.lap_time}</p>
+        <div className="rounded-xl border border-gray-700/50 bg-muted/40 p-4">
+          <p className="text-xs uppercase tracking-widest text-gray-400">{data.pole.driver} personal best</p>
+          <p className="mt-1 font-mono text-lg font-black text-white tabular-nums">{data.personalBestLap.lap_time}</p>
           <p className="mt-1 text-xs text-gray-400">Personal best, not the fastest lap of the race</p>
         </div>
       </div>
 
       {/* --------------------------------------------------------- standings */}
       <Tabs defaultValue="classification" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-gray-900 sm:w-[560px] sm:grid-cols-4">
+        <TabsList className="grid w-full grid-cols-2 bg-muted sm:w-[560px] sm:grid-cols-4">
           <TabsTrigger value="classification" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Race result
           </TabsTrigger>
@@ -406,7 +409,7 @@ export function Singapore2026() {
                         </td>
                         <td className="px-4 py-2.5">
                           <div className="flex items-center gap-2">
-                            <span className="rounded border border-gray-700 bg-gray-800 px-1.5 py-0.5 font-mono text-[11px] font-bold text-gray-300">
+                            <span className="rounded border border-gray-700 bg-surface px-1.5 py-0.5 font-mono text-xs font-bold text-gray-300 tabular-nums">
                               {r.code}
                             </span>
                             <span className={`font-medium ${r.status === 'DNF' ? 'text-gray-400' : 'text-white'}`}>
@@ -420,7 +423,7 @@ export function Singapore2026() {
                           {r.laps ?? <Dash />}
                         </td>
                         <td className="px-4 py-2.5 text-center font-mono font-bold text-white">
-                          {r.points > 0 ? `+${r.points}` : <span className="text-gray-600">0</span>}
+                          {r.points > 0 ? `+${r.points}` : <span className="text-gray-400">0</span>}
                         </td>
                       </tr>
                     ))}
@@ -441,15 +444,15 @@ export function Singapore2026() {
                       <div className="flex items-center gap-1.5">
                         <span className="truncate text-sm font-semibold text-white">{r.driver}</span>
                         {r.status === 'DNF' && (
-                          <span className="shrink-0 rounded bg-red-900/40 px-1.5 py-0.5 text-[10px] font-bold text-red-400">DNF</span>
+                          <span className="shrink-0 rounded bg-red-900/40 px-1.5 py-0.5 text-xs font-bold text-red-400">DNF</span>
                         )}
                       </div>
                       <p className="truncate text-xs text-gray-400">{r.team}</p>
-                      <p className="mt-0.5 font-mono text-xs text-gray-300">{r.time_or_gap}</p>
+                      <p className="mt-0.5 font-mono text-xs text-gray-300 tabular-nums">{r.time_or_gap}</p>
                     </div>
                     <div className="shrink-0 text-right">
-                      <p className="font-mono text-sm font-bold text-white">{r.points > 0 ? `+${r.points}` : '0'}</p>
-                      <p className="text-[11px] text-gray-500">{r.laps !== null ? `${r.laps} laps` : 'laps —'}</p>
+                      <p className="font-mono text-sm font-bold text-white tabular-nums">{r.points > 0 ? `+${r.points}` : '0'}</p>
+                      <p className="text-xs text-gray-400 tabular-nums">{r.laps !== null ? `${r.laps} laps` : 'laps —'}</p>
                     </div>
                   </li>
                 ))}
@@ -491,7 +494,7 @@ export function Singapore2026() {
                         </td>
                         <td className="px-4 py-2.5">
                           <div className="flex items-center gap-2">
-                            <span className="rounded border border-gray-700 bg-gray-800 px-1.5 py-0.5 font-mono text-[11px] font-bold text-gray-300">
+                            <span className="rounded border border-gray-700 bg-surface px-1.5 py-0.5 font-mono text-xs font-bold text-gray-300 tabular-nums">
                               {d.code}
                             </span>
                             <span className={`font-medium ${d.position === 1 ? 'text-amber-300' : 'text-white'}`}>{d.driver}</span>
@@ -547,7 +550,7 @@ export function Singapore2026() {
                             <TeamBar team={t.team} className="h-6" />
                             <div className="min-w-0">
                               <p className={`truncate font-medium ${t.position === 1 ? 'text-amber-300' : 'text-white'}`}>{t.team}</p>
-                              <p className="truncate text-xs text-gray-500">{t.fullName}</p>
+                              <p className="truncate text-xs text-gray-400">{t.fullName}</p>
                             </div>
                           </div>
                         </td>
@@ -560,7 +563,7 @@ export function Singapore2026() {
                           {t.gap === 0 ? <span className="font-bold text-amber-400">Leader</span> : `−${t.gap}`}
                         </td>
                         <td className="px-4 py-2.5 text-center">
-                          <span className="rounded bg-gray-800 px-2 py-0.5 font-mono text-xs font-bold text-gray-200">
+                          <span className="rounded bg-muted px-2 py-0.5 font-mono text-xs font-bold text-gray-200 tabular-nums">
                             {racePointsByTeam.get(t.team) ?? 0}
                           </span>
                         </td>
@@ -599,7 +602,7 @@ export function Singapore2026() {
                     {data.fastestLaps.map((f) => (
                       <tr key={f.session} className="transition-colors hover:bg-muted/40">
                         <td className="px-4 py-2.5">
-                          <span className="inline-flex items-center gap-1.5 rounded bg-gray-800 px-2 py-0.5 text-xs font-semibold text-gray-200">
+                          <span className="inline-flex items-center gap-1.5 rounded bg-muted px-2 py-0.5 text-xs font-semibold text-gray-200">
                             {f.session === 'race' && <Flag className="h-3 w-3" aria-hidden="true" />}
                             {f.session === 'sprint' && <Zap className="h-3 w-3" aria-hidden="true" />}
                             {SESSION_LABEL[f.session] ?? f.session}
@@ -607,7 +610,7 @@ export function Singapore2026() {
                         </td>
                         <td className="px-4 py-2.5">
                           <div className="flex items-center gap-2">
-                            <span className="rounded border border-gray-700 bg-gray-800 px-1.5 py-0.5 font-mono text-[11px] font-bold text-gray-300">
+                            <span className="rounded border border-gray-700 bg-surface px-1.5 py-0.5 font-mono text-xs font-bold text-gray-300 tabular-nums">
                               {f.code}
                             </span>
                             <span className="font-medium text-white">{f.driver}</span>
@@ -618,7 +621,7 @@ export function Singapore2026() {
                           {f.lap_number ?? <Dash />}
                         </td>
                         <td className="px-4 py-2.5 text-right font-mono font-bold text-white">{f.lap_time}</td>
-                        <td className="px-4 py-2.5 text-center font-mono text-gray-500">
+                        <td className="px-4 py-2.5 text-center font-mono text-gray-400">
                           {f.points ?? <Dash />}
                         </td>
                       </tr>
@@ -664,7 +667,7 @@ export function Singapore2026() {
                           <td className="px-4 py-2.5">
                             <div className="flex items-center gap-2">
                               <TeamBar team={driverRow.team} className="h-5" />
-                              <span className="rounded border border-gray-700 bg-gray-800 px-1.5 py-0.5 font-mono text-[11px] font-bold text-gray-300">
+                              <span className="rounded border border-gray-700 bg-surface px-1.5 py-0.5 font-mono text-xs font-bold text-gray-300 tabular-nums">
                                 {driverRow.code}
                               </span>
                               <span className="font-medium text-white">{driverRow.driver}</span>
@@ -680,7 +683,7 @@ export function Singapore2026() {
                                 {value !== null ? (
                                   <span className="font-mono font-bold text-white">{value.toFixed(3)}</span>
                                 ) : fastestOwner ? (
-                                  <span className="inline-flex items-center gap-1 text-[11px] text-purple-300">
+                                  <span className="inline-flex items-center gap-1 text-xs text-purple-300">
                                     <Info className="h-3 w-3 shrink-0" aria-hidden="true" />
                                     fastest: {fastestOwner.split(' ').slice(-1)[0]} <Dash />
                                   </span>
@@ -696,7 +699,7 @@ export function Singapore2026() {
                   </tbody>
                 </table>
               </div>
-              <p className="border-t border-gray-800 px-4 py-3 text-xs text-gray-500 sm:px-6">
+              <p className="border-t border-gray-800 px-4 py-3 text-xs text-gray-400 sm:px-6">
                 {data.sectors.note}
               </p>
               <div className="px-4 pb-4 sm:px-6">
@@ -719,8 +722,8 @@ export function Singapore2026() {
             </CardContent>
           </Card>
 
-          <div className="flex items-start gap-2 rounded-lg border border-gray-800 bg-muted/30 px-4 py-3 text-xs text-gray-500">
-            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gray-600" aria-hidden="true" />
+          <div className="flex items-start gap-2 rounded-lg border border-gray-800 bg-muted/30 px-4 py-3 text-xs text-gray-400">
+            <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
             <p>
               Sector times for the remaining drivers were not available in the sources. The table lists only the figures
               that were provided; empty cells are not estimates.

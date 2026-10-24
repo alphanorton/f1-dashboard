@@ -3,7 +3,7 @@ export interface TyreCompoundMeta {
   solid: string;
 }
 
-export const TYRE_COMPOUND_ORDER = ['SOFT', 'MEDIUM', 'HARD', 'INTERMEDIATE', 'WET', 'UNKNOWN'] as const;
+export const TYRE_COMPOUND_ORDER = ['SOFT', 'MEDIUM', 'HARD', 'INTERMEDIATE', 'WET'] as const;
 
 export type TyreCompoundKey = (typeof TYRE_COMPOUND_ORDER)[number];
 
@@ -13,13 +13,12 @@ export const TYRE_COMPOUND_META: Record<TyreCompoundKey, TyreCompoundMeta> = {
   HARD: { label: 'Hard', solid: 'bg-white' },
   INTERMEDIATE: { label: 'Intermediate', solid: 'bg-emerald-400' },
   WET: { label: 'Wet', solid: 'bg-blue-400' },
-  UNKNOWN: { label: 'Unknown', solid: 'bg-gray-500' },
 };
 
-export function tyreCompoundKey(compound: string | null | undefined): TyreCompoundKey {
-  if (!compound) return 'UNKNOWN';
+export function tyreCompoundKey(compound: string | null | undefined): TyreCompoundKey | null {
+  if (!compound) return null;
   const key = compound.toUpperCase();
-  return (TYRE_COMPOUND_ORDER as readonly string[]).includes(key) ? (key as TyreCompoundKey) : 'UNKNOWN';
+  return (TYRE_COMPOUND_ORDER as readonly string[]).includes(key) ? (key as TyreCompoundKey) : null;
 }
 
 export function tyreStintLapCount(lapStart: number, lapEnd: number | null): number {
@@ -81,7 +80,7 @@ export interface TyreStintRow {
   stintNumber: number;
   lapStart: number | null;
   lapEnd: number | null;
-  compoundKey: TyreCompoundKey;
+  compoundKey: TyreCompoundKey | null;
   compoundRaw: string;
   ageAtStart: number | null;
   lapCount: number | null;

@@ -44,8 +44,8 @@ test('default race session key returns null for empty session list', () => {
   assert.equal(tyreDefaultRaceSessionKey([], Date.now()), null);
 });
 
-test('compound order covers five compounds plus unknown', () => {
-  assert.deepEqual([...TYRE_COMPOUND_ORDER], ['SOFT', 'MEDIUM', 'HARD', 'INTERMEDIATE', 'WET', 'UNKNOWN']);
+test('compound normalization supports five compounds plus an internal missing-data sentinel', () => {
+  assert.deepEqual([...TYRE_COMPOUND_ORDER], ['SOFT', 'MEDIUM', 'HARD', 'INTERMEDIATE', 'WET']);
 });
 
 test('compound key maps known compounds case-insensitively', () => {
@@ -57,11 +57,11 @@ test('compound key maps known compounds case-insensitively', () => {
   assert.equal(tyreCompoundKey('WET'), 'WET');
 });
 
-test('compound key maps null empty and unknown compounds to UNKNOWN', () => {
-  assert.equal(tyreCompoundKey(null), 'UNKNOWN');
-  assert.equal(tyreCompoundKey(undefined), 'UNKNOWN');
-  assert.equal(tyreCompoundKey(''), 'UNKNOWN');
-  assert.equal(tyreCompoundKey('SUPERGLUE'), 'UNKNOWN');
+test('compound key returns null for missing or unsupported compounds instead of inventing a label', () => {
+  assert.equal(tyreCompoundKey(null), null);
+  assert.equal(tyreCompoundKey(undefined), null);
+  assert.equal(tyreCompoundKey(''), null);
+  assert.equal(tyreCompoundKey('SUPERGLUE'), null);
 });
 
 test('stint lap count handles null lap_end and inverted ranges', () => {
@@ -85,7 +85,7 @@ test('normalize preserves missing lap_start instead of fabricating 1', () => {
   assert.equal(row.lapCount, null);
 });
 
-test('normalize keeps raw unknown compound and null age', () => {
+test('normalize preserves unsupported raw compound for diagnostics without mapping it to a tyre', () => {
   const row = tyreNormalizeStint({
     driver_number: 1,
     stint_number: 2,
@@ -94,7 +94,7 @@ test('normalize keeps raw unknown compound and null age', () => {
     compound: 'SUPERGLUE',
     tyre_age_at_start: null,
   });
-  assert.equal(row.compoundKey, 'UNKNOWN');
+  assert.equal(row.compoundKey, null);
   assert.equal(row.compoundRaw, 'SUPERGLUE');
   assert.equal(row.ageAtStart, null);
   assert.equal(row.lapCount, null);

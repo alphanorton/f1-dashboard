@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { PageHeader } from '@/components/ui/PageHeader';
+import { PageLoader } from '@/components/ui/PageLoader';
 import { 
   Trophy, Flag, Calendar as CalendarIcon, MapPin, 
   Search, Zap, AlertCircle, CheckCircle2, Clock, 
@@ -60,14 +62,7 @@ export function GrandPrix() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-gray-400 font-medium">Loading 2026 Grand Prix Calendar...</p>
-        </div>
-      </div>
-    );
+    return <PageLoader message="Loading 2026 Grand Prix Calendar..." />;
   }
 
   if (error || !data) {
@@ -105,35 +100,24 @@ export function GrandPrix() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="grand-prix-page space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
-        <div>
-          <div className="flex items-center gap-3">
-            <span className="p-2.5 rounded-xl bg-red-600/10 border border-red-600/30 text-red-500">
-              <Flag className="h-7 w-7" />
-            </span>
-            <div>
-              <h1 className="text-3xl font-black text-white tracking-tight font-f1">
-                2026 Grand Prix Calendar
-              </h1>
-              <p className="text-sm text-gray-400 mt-0.5">
-                {data.source} • {data.totalRounds} rounds • Last updated: {data.asOfDate}
-              </p>
-            </div>
+      <PageHeader
+        title="2026 Grand Prix Calendar"
+        subtitle={`${data.source} • ${data.totalRounds} rounds • Last updated: ${data.asOfDate}`}
+        icon={Flag}
+        actions={
+          <div className="flex items-center gap-2 self-start md:self-auto bg-muted/40 border border-gray-700/50 px-3 py-1.5 rounded-lg text-xs text-gray-400">
+            <Clock className="h-4 w-4 text-red-500" />
+            <span>Live data from Jolpica F1 API</span>
           </div>
-        </div>
-
-        <div className="flex items-center gap-2 self-start md:self-auto bg-gray-900/80 border border-gray-800 px-3 py-1.5 rounded-lg text-xs text-gray-400">
-          <Clock className="h-4 w-4 text-red-500" />
-          <span>Live data from Jolpica F1 API</span>
-        </div>
-      </div>
+        }
+      />
 
       {/* Hero Next Race Card */}
       {nextRace && (
-        <div className="relative overflow-hidden rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-950/40 via-gray-900 to-gray-900 p-6 shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="gp-hero relative overflow-hidden rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-950/50 via-gray-900 to-gray-950 p-6 shadow-2xl">
+          <div className="gp-hero-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-red-600/15 blur-3xl pointer-events-none" />
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="space-y-3">
               <div className="flex items-center gap-2">
@@ -171,7 +155,7 @@ export function GrandPrix() {
             <div className="flex flex-col sm:flex-row gap-3">
               <button 
                 onClick={() => setSelectedRace(nextRace)}
-                className="px-5 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-sm transition-all shadow-lg shadow-red-600/20 flex items-center justify-center gap-2"
+                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-f1-red px-5 py-3 text-sm font-bold text-white transition-all shadow-lg shadow-f1-red/20 hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 <span>View Details & Circuit</span>
                 <ChevronRight className="h-4 w-4" />
@@ -183,25 +167,25 @@ export function GrandPrix() {
 
       {/* KPI Stats Overview */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <Card className="border-gray-800 bg-gray-900/60 backdrop-blur">
+        <Card className="gp-stat-card border-gray-700/50 bg-muted/40">
           <CardContent className="p-5 flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-gray-400">Total Grand Prix</p>
-              <p className="text-2xl lg:text-3xl font-black text-white mt-1">{data.totalRounds}</p>
-              <p className="text-[11px] text-gray-500 mt-0.5">FIA approved calendar</p>
+              <p className="text-2xl lg:text-3xl font-black text-white mt-1 tabular-nums">{data.totalRounds}</p>
+              <p className="text-xs text-gray-400 mt-0.5">FIA approved calendar</p>
             </div>
-            <div className="p-3 rounded-xl bg-gray-800 border border-gray-700 text-gray-300">
+            <div className="p-3 rounded-xl bg-surface border border-gray-700/50 text-gray-300">
               <Flag className="h-6 w-6 text-red-500" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-gray-800 bg-gray-900/60 backdrop-blur">
+        <Card className="gp-stat-card border-gray-700/50 bg-muted/40">
           <CardContent className="p-5 flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-gray-400">Completed</p>
-              <p className="text-2xl lg:text-3xl font-black text-emerald-400 mt-1">{completedCount}</p>
-              <p className="text-[11px] text-emerald-500/80 mt-0.5">{completedCount} races finished</p>
+              <p className="text-2xl lg:text-3xl font-black text-emerald-400 mt-1 tabular-nums">{completedCount}</p>
+              <p className="text-xs text-emerald-500/80 mt-0.5">{completedCount} races finished</p>
             </div>
             <div className="p-3 rounded-xl bg-emerald-950/50 border border-emerald-800/40 text-emerald-400">
               <CheckCircle2 className="h-6 w-6" />
@@ -209,12 +193,12 @@ export function GrandPrix() {
           </CardContent>
         </Card>
 
-        <Card className="border-gray-800 bg-gray-900/60 backdrop-blur">
+        <Card className="gp-stat-card border-gray-700/50 bg-muted/40">
           <CardContent className="p-5 flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-gray-400">Remaining</p>
-              <p className="text-2xl lg:text-3xl font-black text-blue-400 mt-1">{upcomingCount}</p>
-              <p className="text-[11px] text-blue-500/80 mt-0.5">Races to go</p>
+              <p className="text-2xl lg:text-3xl font-black text-blue-400 mt-1 tabular-nums">{upcomingCount}</p>
+              <p className="text-xs text-blue-500/80 mt-0.5">Races to go</p>
             </div>
             <div className="p-3 rounded-xl bg-blue-950/50 border border-blue-800/40 text-blue-400">
               <Clock className="h-6 w-6" />
@@ -222,12 +206,12 @@ export function GrandPrix() {
           </CardContent>
         </Card>
 
-        <Card className="border-gray-800 bg-gray-900/60 backdrop-blur">
+        <Card className="gp-stat-card border-gray-700/50 bg-muted/40">
           <CardContent className="p-5 flex items-center justify-between">
             <div>
               <p className="text-xs font-medium text-gray-400">Sprint Races</p>
-              <p className="text-2xl lg:text-3xl font-black text-amber-400 mt-1">{sprintCount}</p>
-              <p className="text-[11px] text-amber-500/80 mt-0.5">Sprint weekends</p>
+              <p className="text-2xl lg:text-3xl font-black text-amber-400 mt-1 tabular-nums">{sprintCount}</p>
+              <p className="text-xs text-amber-500/80 mt-0.5">Sprint weekends</p>
             </div>
             <div className="p-3 rounded-xl bg-amber-950/50 border border-amber-800/40 text-amber-400">
               <Zap className="h-6 w-6" />
@@ -237,65 +221,81 @@ export function GrandPrix() {
       </div>
 
       {/* Filters & Search */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-gray-900/40 p-4 rounded-xl border border-gray-800">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 bg-muted/40 p-4 rounded-xl border border-gray-700/50">
         <div className="relative flex-1 max-w-md">
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <Input 
+            aria-label="Search Grand Prix, country or circuit"
             placeholder="Search Grand Prix, country or circuit..." 
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="pr-9 bg-gray-800/80 border-gray-700 text-white placeholder:text-gray-500 focus-visible:ring-red-500 text-sm"
+            className="pr-9 bg-gray-800/80 border-gray-700 text-white placeholder:text-gray-400 focus-visible:ring-red-500 text-sm"
           />
         </div>
 
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
+        <div role="tablist" aria-label="Filter races" className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
           <button
+            type="button"
+            role="tab"
+            aria-selected={filter === 'all'}
             onClick={() => setFilter('all')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+            className={`min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red ${
               filter === 'all' 
-                ? 'bg-red-600 text-white shadow-sm shadow-red-600/50' 
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                ? 'bg-f1-red text-white shadow-sm shadow-f1-red/30' 
+                : 'bg-surface text-gray-300 hover:bg-muted/60 border border-gray-700/50'
             }`}
           >
             All ({data.races.length})
           </button>
           <button
+            type="button"
+            role="tab"
+            aria-selected={filter === 'upcoming'}
             onClick={() => setFilter('upcoming')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+            className={`min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red ${
               filter === 'upcoming' 
-                ? 'bg-red-600 text-white' 
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                ? 'bg-f1-red text-white' 
+                : 'bg-surface text-gray-300 hover:bg-muted/60 border border-gray-700/50'
             }`}
           >
             Upcoming ({upcomingCount})
           </button>
           <button
+            type="button"
+            role="tab"
+            aria-selected={filter === 'completed'}
             onClick={() => setFilter('completed')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+            className={`min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red ${
               filter === 'completed' 
-                ? 'bg-red-600 text-white' 
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                ? 'bg-f1-red text-white' 
+                : 'bg-surface text-gray-300 hover:bg-muted/60 border border-gray-700/50'
             }`}
           >
             Completed ({completedCount})
           </button>
           <button
+            type="button"
+            role="tab"
+            aria-selected={filter === 'sprint'}
             onClick={() => setFilter('sprint')}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+            className={`min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red ${
               filter === 'sprint' 
-                ? 'bg-red-600 text-white' 
-                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                ? 'bg-f1-red text-white' 
+                : 'bg-surface text-gray-300 hover:bg-muted/60 border border-gray-700/50'
             }`}
           >
             Sprint ({sprintCount})
           </button>
           {cancelledCount > 0 && (
             <button
+              type="button"
+              role="tab"
+              aria-selected={filter === 'cancelled'}
               onClick={() => setFilter('cancelled')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
+              className={`min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red ${
                 filter === 'cancelled' 
-                  ? 'bg-red-600 text-white' 
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  ? 'bg-f1-red text-white' 
+                  : 'bg-surface text-gray-300 hover:bg-muted/60 border border-gray-700/50'
               }`}
             >
               Cancelled ({cancelledCount})
@@ -305,7 +305,7 @@ export function GrandPrix() {
       </div>
 
       {/* Grid of Grand Prix Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="gp-race-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredRaces.map((race) => {
           const isNext = race.status === 'next';
           const isDone = race.status === 'completed';
@@ -314,8 +314,17 @@ export function GrandPrix() {
           return (
             <div
               key={race.round}
+              role="button"
+              tabIndex={0}
+              aria-label={`Open ${race.name} details`}
               onClick={() => setSelectedRace(race)}
-              className={`group cursor-pointer relative rounded-xl border transition-all duration-200 p-5 ${
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  setSelectedRace(race);
+                }
+              }}
+              className={`gp-race-card group cursor-pointer relative rounded-xl border transition-all duration-300 p-5 ${
                 isNext
                   ? 'bg-gray-900 border-red-500/80 shadow-lg shadow-red-950/40 ring-1 ring-red-500/40'
                   : isCancel
@@ -326,11 +335,11 @@ export function GrandPrix() {
               {/* Card Top Row: Round & Status Badges */}
               <div className="flex items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-gray-800 text-gray-300 border border-gray-700 font-mono">
+                  <span className="px-2 py-0.5 rounded text-xs font-bold bg-gray-800 text-gray-300 border border-gray-700 font-mono">
                     R{race.round.toString().padStart(2, '0')}
                   </span>
                   {race.isSprint && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
                       <Zap className="h-3 w-3" />
                       Sprint
                     </span>
@@ -339,22 +348,22 @@ export function GrandPrix() {
 
                 <div>
                   {isNext && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-red-600 text-white">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-600 text-white">
                       Next Race
                     </span>
                   )}
                   {isDone && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">
                       Completed
                     </span>
                   )}
                   {isCancel && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-rose-950/60 text-rose-400 border border-rose-800/40">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-rose-950/60 text-rose-400 border border-rose-800/40">
                       Cancelled
                     </span>
                   )}
                   {race.status === 'upcoming' && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-950/60 text-blue-400 border border-blue-800/40">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-950/60 text-blue-400 border border-blue-800/40">
                       Upcoming
                     </span>
                   )}
@@ -379,11 +388,11 @@ export function GrandPrix() {
               {/* Circuit Info & Date */}
               <div className="mt-4 pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
                 <div className="flex items-center gap-1.5">
-                  <CalendarIcon className="h-3.5 w-3.5 text-gray-500" />
+                  <CalendarIcon className="h-3.5 w-3.5 text-gray-400" />
                   <span>{race.weekendDates}</span>
                 </div>
-                <div className="flex items-center gap-1.5 font-mono text-[11px] text-gray-400">
-                  <MapPin className="h-3.5 w-3.5 text-gray-500" />
+                <div className="flex items-center gap-1.5 font-mono text-xs text-gray-400">
+                  <MapPin className="h-3.5 w-3.5 text-gray-400" />
                   <span>{race.locality}</span>
                 </div>
               </div>
@@ -392,13 +401,13 @@ export function GrandPrix() {
               {isDone && race.winner && (
                 <div className="mt-2.5 pt-2 border-t border-gray-800/60 flex items-center gap-1.5 text-xs text-emerald-400">
                   <Trophy className="h-3.5 w-3.5 shrink-0" />
-                  <span className="text-gray-400 text-[11px]">Winner:</span>
+                  <span className="text-gray-400 text-xs">Winner:</span>
                   <span className="font-medium truncate">{race.winner}</span>
                 </div>
               )}
 
               {isCancel && (
-                <div className="mt-2.5 pt-2 border-t border-gray-800/60 text-[11px] text-rose-400/90 truncate">
+                <div className="mt-2.5 pt-2 border-t border-gray-800/60 text-xs text-rose-400/90 truncate">
                   ⚠️ {race.notes || 'Race cancelled'}
                 </div>
               )}
@@ -434,11 +443,11 @@ export function GrandPrix() {
                 )}
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-red-600 text-white font-mono">
+                    <span className="px-2 py-0.5 rounded text-xs font-bold bg-red-600 text-white font-mono">
                       Round {selectedRace.round}
                     </span>
                     {selectedRace.isSprint && (
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                      <span className="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
                         ⚡ Sprint Weekend
                       </span>
                     )}
@@ -463,7 +472,7 @@ export function GrandPrix() {
               <div className="bg-gray-800/60 p-3 rounded-lg border border-gray-700/60">
                 <span className="text-xs text-gray-400 block">Location</span>
                 <span className="text-white font-medium">{selectedRace.locality}</span>
-                <span className="text-xs text-gray-500 block">{selectedRace.country}</span>
+                <span className="text-xs text-gray-400 block">{selectedRace.country}</span>
               </div>
               <div className="bg-gray-800/60 p-3 rounded-lg border border-gray-700/60">
                 <span className="text-xs text-gray-400 block">Weekend Dates</span>
@@ -499,7 +508,7 @@ export function GrandPrix() {
                         </span>
                         <span className="text-sm font-medium text-white">{p}</span>
                       </div>
-                      <span className="text-xs text-gray-500 font-mono">
+                      <span className="text-xs text-gray-400 font-mono">
                         {idx === 0 ? '+25 pts' : idx === 1 ? '+18 pts' : '+15 pts'}
                       </span>
                     </div>
@@ -538,10 +547,10 @@ export function GrandPrix() {
                           }`}
                         >
                           <div className="flex items-center gap-2.5 min-w-0">
-                            <span className={`w-6 h-6 rounded flex items-center justify-center text-[11px] font-bold font-mono shrink-0 ${
+                            <span className={`w-6 h-6 rounded flex items-center justify-center text-xs font-bold font-mono shrink-0 ${
                               isDNF ? 'bg-red-900/60 text-red-400' :
-                              isNC ? 'bg-gray-800/60 text-gray-500' :
-                              isDNS ? 'bg-gray-800/60 text-gray-500' :
+                              isNC ? 'bg-gray-800/60 text-gray-400' :
+                              isDNS ? 'bg-gray-800/60 text-gray-400' :
                               r.pos === 1 ? 'bg-amber-500 text-black' :
                               r.pos === 2 ? 'bg-gray-300 text-black' :
                               r.pos === 3 ? 'bg-amber-700 text-white' :
@@ -550,23 +559,23 @@ export function GrandPrix() {
                               {r.pos ?? '—'}
                             </span>
                             <div className="min-w-0">
-                              <span className={`text-sm font-medium truncate block ${isDNS ? 'text-gray-500' : isNC ? 'text-gray-400' : 'text-white'}`}>{r.driver}</span>
-                              <span className="text-[10px] text-gray-500 truncate block">{r.team}</span>
+                              <span className={`text-sm font-medium truncate block ${isDNS ? 'text-gray-400' : isNC ? 'text-gray-400' : 'text-white'}`}>{r.driver}</span>
+                              <span className="text-xs text-gray-400 truncate block">{r.team}</span>
                             </div>
                           </div>
                           <div className="flex items-center gap-2 shrink-0">
                             {(isDNF || isNC || isDNS) && (
-                              <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                              <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${
                                 isDNF ? 'bg-red-900/50 text-red-400 border border-red-800/50' :
-                                isDNS ? 'bg-gray-800 text-gray-500 border border-gray-700' :
-                                'bg-gray-800/60 text-gray-500 border border-gray-700/60'
+                                isDNS ? 'bg-gray-800 text-gray-400 border border-gray-700' :
+                                'bg-gray-800/60 text-gray-400 border border-gray-700/60'
                               }`}>
                                 {r.status}
                               </span>
                             )}
                             <div className="text-right">
                               {r.gap && (
-                                <p className="text-[11px] font-mono text-gray-300">{r.gap}</p>
+                                <p className="text-xs font-mono text-gray-300">{r.gap}</p>
                               )}
                               <p className="text-xs text-gray-400 font-mono">
                                 {r.points > 0 ? `+${r.points} pts` : '—'}

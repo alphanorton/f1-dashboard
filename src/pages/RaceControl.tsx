@@ -74,7 +74,7 @@ export function RaceControl() {
       case 'blue':
         return 'bg-blue-900/20 border-blue-700 text-blue-400';
       default:
-        return 'bg-gray-900 border-gray-700 text-gray-400';
+        return 'bg-surface border-gray-700 text-gray-400';
     }
   };
 
@@ -90,7 +90,7 @@ export function RaceControl() {
       </div>
 
       {/* Race Selector */}
-      <Card className="border-gray-700 bg-gray-800/50">
+      <Card className="border-gray-700/50 bg-surface">
         <CardContent className="p-4">
           <div className="flex items-center gap-4">
             <Radio className="h-5 w-5 text-f1-red" />
@@ -110,7 +110,7 @@ export function RaceControl() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="border-gray-700 bg-gray-800/50">
+        <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -122,7 +122,7 @@ export function RaceControl() {
           </CardContent>
         </Card>
 
-        <Card className="border-gray-700 bg-gray-800/50">
+        <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -134,7 +134,7 @@ export function RaceControl() {
           </CardContent>
         </Card>
 
-        <Card className="border-gray-700 bg-gray-800/50">
+        <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -146,7 +146,7 @@ export function RaceControl() {
           </CardContent>
         </Card>
 
-        <Card className="border-gray-700 bg-gray-800/50">
+        <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
@@ -170,7 +170,7 @@ export function RaceControl() {
         <CardContent>
           <div className="space-y-2">
             {PENALTIES_SUMMARY.map((penalty, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 rounded-lg bg-gray-900/50 border border-gray-700">
+              <div key={idx} className="flex items-center justify-between p-3 rounded-lg bg-surface/50 border border-gray-700">
                 <div className="flex items-center gap-3">
                   <span className={`px-3 py-1 rounded font-bold text-sm ${
                     penalty.applied ? 'bg-red-600 text-white' : 'bg-yellow-600 text-white'
@@ -192,7 +192,7 @@ export function RaceControl() {
       </Card>
 
       {/* Race Control Messages Timeline */}
-      <Card className="border-gray-700 bg-gray-800/50">
+      <Card className="border-gray-700/50 bg-surface">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Radio className="h-5 w-5 text-purple-400" />
@@ -217,7 +217,7 @@ export function RaceControl() {
                       <p className="text-xs text-gray-400 mt-1">Driver: {msg.driver}</p>
                     )}
                   </div>
-                  <span className="text-xs text-gray-500">{msg.time}</span>
+                  <span className="text-xs text-gray-400">{msg.time}</span>
                 </div>
               </div>
             ))}
@@ -226,7 +226,7 @@ export function RaceControl() {
       </Card>
 
       {/* Flag Guide */}
-      <Card className="border-gray-700 bg-gray-800/50">
+      <Card className="border-gray-700/50 bg-surface">
         <CardHeader>
           <CardTitle>Flag guide</CardTitle>
         </CardHeader>
@@ -264,7 +264,7 @@ export function RaceControl() {
               <p className="text-sm text-gray-300">Faster driver approaching</p>
             </div>
 
-            <div className="p-3 rounded-lg bg-gray-900 border border-gray-700">
+            <div className="p-3 rounded-lg bg-surface border border-gray-700">
               <div className="flex items-center gap-2 mb-2">
                 <Flag className="h-4 w-4 text-white" />
                 <p className="font-bold text-white">CHEQUERED FLAG 🏁</p>
@@ -272,7 +272,7 @@ export function RaceControl() {
               <p className="text-sm text-gray-300">Race complete</p>
             </div>
 
-            <div className="p-3 rounded-lg bg-gray-900 border border-gray-700">
+            <div className="p-3 rounded-lg bg-surface border border-gray-700">
               <div className="flex items-center gap-2 mb-2">
                 <Flag className="h-4 w-4 text-gray-400" />
                 <p className="font-bold text-gray-400">BLACK & WHITE ⚫⚪</p>
@@ -293,15 +293,15 @@ export function RaceControl() {
         </CardHeader>
         <CardContent>
           <div className="space-y-3 text-sm">
-            <div className="p-3 rounded-lg bg-gray-900/50 border border-gray-700">
+            <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
               <p className="font-bold text-white mb-1">🟡 Virtual Safety Car (VSC)</p>
               <p className="text-gray-300">Speeds limited - gaps must be maintained - pit stops allowed</p>
             </div>
-            <div className="p-3 rounded-lg bg-gray-900/50 border border-gray-700">
+            <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
               <p className="font-bold text-white mb-1">🚗 Safety Car (SC)</p>
               <p className="text-gray-300">Safety car on track - drivers line up behind it</p>
             </div>
-            <div className="p-3 rounded-lg bg-gray-900/50 border border-gray-700">
+            <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
               <p className="font-bold text-white mb-1">🔴 Red Flag</p>
               <p className="text-gray-300">Race stopped - return to pit lane - restart possible</p>
             </div>
