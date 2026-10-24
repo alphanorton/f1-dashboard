@@ -6,6 +6,7 @@ export default {
       colors: {
         f1: {
           red: '#E10600',
+          redText: '#FF5A5A',
           purple: '#9B51E0',
         },
         team: {
@@ -22,6 +23,13 @@ export default {
           sauber: '#52E252',
           rb: '#6692FF',
         },
+        neon: {
+          green: '#00FF85',
+          blue: '#00C2FF',
+          amber: '#FFB800',
+          purple: '#B65CFF',
+        },
+        carbon: '#07090D',
         surface: '#0E0E1A',
         muted: '#1A1A2E',
         textMuted: '#A0A0B0',

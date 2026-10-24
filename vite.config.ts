@@ -9,6 +9,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Extract Recharts into a shared chunk so multiple pages can reuse it
+          'recharts': ['recharts'],
+        },
+      },
+    },
+  },
   server: {
     port: 3132,
     host: true,
