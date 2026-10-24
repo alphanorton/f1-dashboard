@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { syncAllData, getLastSyncStatus, setLastSyncStatus, isCacheExpired } from '@/api/dataSync';
+import type { SyncStatus } from '@/api/dataSync';
 
 export interface SyncState {
   isSyncing: boolean;
-  lastSync: any;
+  lastSync: SyncStatus | null;
   syncError: string | null;
 }
 

@@ -5,7 +5,7 @@
       "Drivers": [
         {
           "driverId": "max_verstappen",
-          "permanentNumber": "1",
+          "permanentNumber": "3",
           "code": "VER",
           "givenName": "Max",
           "familyName": "Verstappen",
@@ -23,7 +23,7 @@
         },
         {
           "driverId": "norris",
-          "permanentNumber": "4",
+          "permanentNumber": "1",
           "code": "NOR",
           "givenName": "Lando",
           "familyName": "Norris",
@@ -191,15 +191,6 @@
           "familyName": "Hadjar",
           "dateOfBirth": "2004-09-28",
           "nationality": "French"
-        },
-        {
-          "driverId": "tsunoda",
-          "permanentNumber": "22",
-          "code": "TSU",
-          "givenName": "Yuki",
-          "familyName": "Tsunoda",
-          "dateOfBirth": "2000-05-11",
-          "nationality": "Japanese"
         },
         {
           "driverId": "bottas",

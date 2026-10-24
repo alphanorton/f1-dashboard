@@ -2,7 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { PageHeader } from '@/components/ui/PageHeader';
+import { PageLoader } from '@/components/ui/PageLoader';
 import { Search, MapPin, Flag, Gauge, Layers, Timer, TrendingUp, AlertTriangle, ArrowUp, X } from 'lucide-react';
+import { ErrorState } from '@/components/ui/ErrorState';
+import { EmptyState } from '@/components/ui/EmptyState';
 
 interface Corner {
   number: number;
@@ -44,32 +48,43 @@ export function Circuits() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
+  const [retryKey, setRetryKey] = useState(0);
+
   useEffect(() => {
+    let cancelled = false;
     fetch('/data/circuits.json')
       .then(res => res.json())
       .then((d: CircuitsData) => {
+        if (cancelled) return;
         setData(d);
         setLoading(false);
       })
-      .catch(err => {
-        console.error('Failed to load circuits:', err);
+      .catch(() => {
+        if (cancelled) return;
         setLoading(false);
       });
-  }, []);
+    return () => { cancelled = true; };
+  }, [retryKey]);
 
   if (!loading && !data) {
-    return <div role="alert" className="p-6 text-red-400">Failed to load circuits.</div>;
-  }
-
-  if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-gray-400 font-medium">Loading circuits...</p>
-        </div>
+      <div className="space-y-6">
+        <PageHeader title="2026 Circuits" subtitle="Circuit corner details, sectors and G-force data" icon={MapPin} />
+        <ErrorState
+          title="Could not load circuits"
+          message="The circuit data is unavailable right now."
+          onRetry={() => {
+            setData(null);
+            setLoading(true);
+            setRetryKey(k => k + 1);
+          }}
+        />
       </div>
     );
+  }
+
+  if (loading || !data) {
+    return <PageLoader message="Loading circuits..." />;
   }
 
   const filteredCircuits = data.circuits.filter(circuit =>
@@ -101,107 +116,123 @@ export function Circuits() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gray-800 pb-6">
-        <div>
-          <div className="flex items-center gap-3">
-            <span className="p-2.5 rounded-xl bg-blue-600/10 border border-blue-600/30 text-blue-500">
-              <MapPin className="h-7 w-7" />
-            </span>
-            <div>
-              <h1 className="text-3xl font-black text-white tracking-tight">
-                2026 Circuits
-              </h1>
-              <p className="text-sm text-gray-400 mt-0.5">
-                {data.circuits.length} circuits with corner details, sectors and G-force data
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="2026 Circuits"
+        subtitle={`${data.circuits.length} circuits with corner details, sectors and G-force data`}
+        icon={MapPin}
+      />
 
       {/* Search */}
       <div className="relative max-w-md">
+        <label htmlFor="circuit-search" className="sr-only">Search circuits</label>
         <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
         <Input
+          id="circuit-search"
           placeholder="Search circuit, country or city..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="pr-9 bg-gray-800/80 border-gray-700 text-white placeholder:text-gray-500"
+          className="pr-9 bg-surface border-gray-700 text-white placeholder:text-gray-400"
         />
       </div>
 
       {/* Circuits Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredCircuits.map((circuit) => {
-          const maxG = parseFloat(circuit.maxGForce.match(/[\d.]+/)?.[0] || '0');
-          
-          return (
-            <div
-              key={circuit.id}
-              onClick={() => setSelectedCircuit(circuit)}
-              className="group cursor-pointer relative rounded-xl border border-gray-800 bg-gray-900/70 hover:bg-gray-850 hover:border-gray-700 transition-all p-5"
-            >
-              {/* Header */}
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-lg font-bold text-white group-hover:text-red-400 transition-colors truncate">
-                    {circuit.name}
-                  </h3>
-                  <p className="text-xs text-gray-400 truncate">{circuit.city}, {circuit.country}</p>
-                </div>
-                <Flag className="h-5 w-5 text-gray-500 shrink-0 ml-2" />
-              </div>
+        {filteredCircuits.length === 0 ? (
+          <EmptyState
+            icon={Search}
+            title="No circuits match"
+            message={`No circuit, country or city contains "${search}".`}
+            action={
+              <button
+                type="button"
+                onClick={() => setSearch('')}
+                className="rounded-lg border border-gray-700/60 bg-surface px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red"
+              >
+                Clear search
+              </button>
+            }
+          />
+        ) : (
+          filteredCircuits.map((circuit) => {
+            const maxG = parseFloat(circuit.maxGForce.match(/[\d.]+/)?.[0] || '0');
 
-              {/* Location */}
-              <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
-                <MapPin className="h-3.5 w-3.5" />
-                <span>{circuit.city}, {circuit.country}</span>
-              </div>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-2 mb-3">
-                <div className="bg-gray-800/60 px-2 py-1.5 rounded border border-gray-700/60">
-                  <span className="text-[10px] text-gray-500 block">Track length</span>
-                  <span className="text-sm font-bold text-white">{circuit.length.toFixed(3)} km</span>
-                </div>
-                <div className="bg-gray-800/60 px-2 py-1.5 rounded border border-gray-700/60">
-                  <span className="text-[10px] text-gray-500 block">Laps</span>
-                  <span className="text-sm font-bold text-white">{circuit.laps}</span>
-                </div>
-                <div className="bg-gray-800/60 px-2 py-1.5 rounded border border-gray-700/60">
-                  <span className="text-[10px] text-gray-500 block">Turns</span>
-                  <span className="text-sm font-bold text-white">{circuit.turns}</span>
-                </div>
-                <div className="bg-gray-800/60 px-2 py-1.5 rounded border border-gray-700/60">
-                  <span className="text-[10px] text-gray-500 block">Sectors</span>
-                  <span className="text-sm font-bold text-white">{circuit.sectors}</span>
-                </div>
-                {circuit.raceDistance !== undefined && (
-                  <div className="bg-gray-800/60 px-2 py-1.5 rounded border border-gray-700/60">
-                    <span className="text-[10px] text-gray-500 block">Race distance</span>
-                    <span className="text-sm font-bold text-white">{circuit.raceDistance.toFixed(3)} km</span>
+            return (
+              <div
+                key={circuit.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`View details for ${circuit.name}`}
+                onClick={() => setSelectedCircuit(circuit)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedCircuit(circuit);
+                  }
+                }}
+                className="group cursor-pointer relative rounded-xl border border-gray-700/50 bg-muted/40 hover:border-gray-500 transition-all p-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red"
+              >
+                {/* Header */}
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg font-bold text-white group-hover:text-red-400 transition-colors truncate">
+                      {circuit.name}
+                    </h3>
+                    <p className="text-xs text-gray-400 truncate">{circuit.city}, {circuit.country}</p>
                   </div>
-                )}
-              </div>
+                  <Flag className="h-5 w-5 text-gray-400 shrink-0 ml-2" />
+                </div>
 
-              {/* Max G-Force Badge */}
-              <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold ${
-                maxG >= 5.5 ? 'bg-red-500/20 text-red-300 border border-red-500/40' :
-                maxG >= 5.0 ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40' :
-                'bg-blue-500/20 text-blue-300 border border-blue-500/40'
-              }`}>
-                <TrendingUp className="h-3 w-3" />
-                <span>{circuit.maxGForceHistorical ? 'Highest documented G:' : 'Max:'} {circuit.maxGForce}</span>
-              </div>
+                {/* Location */}
+                <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
+                  <MapPin className="h-3.5 w-3.5" />
+                  <span>{circuit.city}, {circuit.country}</span>
+                </div>
 
-              {/* Corner count indicator */}
-              <div className="mt-3 pt-3 border-t border-gray-800/60 flex items-center justify-between text-xs text-gray-500">
-                <span>{circuit.corners.length > 0 ? `${circuit.corners.length} corners with details` : 'Corner details not available'}</span>
-                <span className="text-red-400">→</span>
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="bg-surface px-2 py-1.5 rounded border border-gray-700/50">
+                    <span className="text-xs text-gray-400 block">Track length</span>
+                    <span className="text-sm font-bold text-white tabular-nums">{circuit.length.toFixed(3)} km</span>
+                  </div>
+                  <div className="bg-surface px-2 py-1.5 rounded border border-gray-700/50">
+                    <span className="text-xs text-gray-400 block">Laps</span>
+                    <span className="text-sm font-bold text-white tabular-nums">{circuit.laps}</span>
+                  </div>
+                  <div className="bg-surface px-2 py-1.5 rounded border border-gray-700/50">
+                    <span className="text-xs text-gray-400 block">Turns</span>
+                    <span className="text-sm font-bold text-white tabular-nums">{circuit.turns}</span>
+                  </div>
+                  <div className="bg-surface px-2 py-1.5 rounded border border-gray-700/50">
+                    <span className="text-xs text-gray-400 block">Sectors</span>
+                    <span className="text-sm font-bold text-white tabular-nums">{circuit.sectors}</span>
+                  </div>
+                  {circuit.raceDistance !== undefined && (
+                    <div className="bg-surface px-2 py-1.5 rounded border border-gray-700/50">
+                      <span className="text-xs text-gray-400 block">Race distance</span>
+                      <span className="text-sm font-bold text-white tabular-nums">{circuit.raceDistance.toFixed(3)} km</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Max G-Force Badge */}
+                <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${
+                  maxG >= 5.5 ? 'bg-red-500/20 text-red-300 border border-red-500/40' :
+                  maxG >= 5.0 ? 'bg-orange-500/20 text-orange-300 border border-orange-500/40' :
+                  'bg-blue-500/20 text-blue-300 border border-blue-500/40'
+                }`}>
+                  <TrendingUp className="h-3 w-3" />
+                  <span>{circuit.maxGForceHistorical ? 'Highest documented G:' : 'Max:'} {circuit.maxGForce}</span>
+                </div>
+
+                {/* Corner count indicator */}
+                <div className="mt-3 pt-3 border-t border-gray-700/50 flex items-center justify-between text-xs text-gray-400">
+                  <span>{circuit.corners.length > 0 ? `${circuit.corners.length} corners with details` : 'Corner details not available'}</span>
+                  <span className="text-red-400">→</span>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
 
       {/* Circuit Detail Modal */}
@@ -225,7 +256,7 @@ export function Circuits() {
               <div>
                 <h2 className="text-2xl font-black text-white">{selectedCircuit.name}</h2>
                 <p className="text-sm text-gray-400 mt-1">{selectedCircuit.city}, {selectedCircuit.country}</p>
-                <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-2">
+                <div className="flex items-center gap-1.5 text-xs text-gray-400 mt-2">
                   <MapPin className="h-3.5 w-3.5" />
                   <span>{selectedCircuit.city}, {selectedCircuit.country}</span>
                 </div>
@@ -347,7 +378,7 @@ export function Circuits() {
                           <td className="py-2 px-3 text-center">
                             <span className="font-mono text-amber-400 font-bold">{corner.gear}</span>
                           </td>
-                          <td className="py-2 px-3 text-right text-gray-500 hidden md:table-cell">
+                          <td className="py-2 px-3 text-right text-gray-400 hidden md:table-cell">
                             {corner.notes || '—'}
                           </td>
                         </tr>
@@ -358,7 +389,7 @@ export function Circuits() {
               </div>
             ) : (
               <div className="bg-gray-800/40 border border-gray-800 p-6 rounded-xl text-center">
-                <p className="text-sm text-gray-500">Detailed corner information is not available for this circuit</p>
+                <p className="text-sm text-gray-400">Detailed corner information is not available for this circuit</p>
               </div>
             )}
 

@@ -64,7 +64,7 @@ export function CircuitImage({ circuitId, name, trackMapUrl, className }: Circui
 
       {state === 'loaded' && (
         <p className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-1 text-[10px] text-gray-300">
-          Legacy F1 diagram - 2026 layout may differ
+          Circuit layout
         </p>
       )}
 
@@ -74,7 +74,7 @@ export function CircuitImage({ circuitId, name, trackMapUrl, className }: Circui
             <p className="font-f1 text-lg font-bold text-white">{name}</p>
             <p className="mt-2 text-sm text-gray-400">Track map image is unavailable right now</p>
             <p className="text-xs text-gray-600 mt-1">
-              The official Formula 1 map CDN did not respond. It will appear automatically once reachable.
+              No matching circuit map is available in the local project assets yet.
             </p>
           </div>
         </div>

@@ -1,0 +1,6 @@
+{
+  "_readme": "Add one entry per race. Drop the preset file next to this index (or run: node tyre-preset.cjs --help). Files listed here are loaded by the Tyre Strategy page and shown even when OpenF1 is offline or has no stint data.",
+  "presets": [
+    { "file": "2026_r16.json" }
+  ]
+}

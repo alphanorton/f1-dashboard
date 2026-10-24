@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import { cn } from '@/lib/utils';
 import type { LapTimeChartDataPoint } from '@/types';
+import type { TooltipProps } from 'recharts';
 
 interface LapTimeChartProps {
   data: LapTimeChartDataPoint[];
@@ -58,14 +59,14 @@ export function LapTimeChart({
     return `${minutes}:${seconds}`;
   };
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      const lap = validLaps.find(l => l.lap === parseInt(label));
+      const lap = validLaps.find(l => l.lap === Number(label));
       return (
         <div className="bg-surface border p-2 rounded shadow-lg min-w-[200px]">
           <p className="font-medium">Lap {label}</p>
           <p className="font-mono text-lg" style={{ color: payload[0].color }}>
-            {formatTime(payload[0].value)}
+            {formatTime(Number(payload[0].value))}
           </p>
           {lap && (
             <>

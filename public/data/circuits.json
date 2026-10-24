@@ -959,14 +959,14 @@
     },
     {
       "id": "madring",
-      "name": "Madring Circuit (Madrid)",
+      "name": "MADRING (Madrid)",
       "country": "Spain",
       "city": "Madrid",
-      "length": 5.47,
+      "length": 5.414,
       "laps": 57,
       "turns": 22,
-      "lapRecord": "1:28.xxx (New circuit - 2026)",
-      "maxGForce": "5.3G (La Monumental - Turn 11, banked 24%)",
+      "lapRecord": "1:35.587 (George Russell, Mercedes, 2026)",
+      "maxGForce": "24% banking (La Monumental, Turn 12)",
       "sectors": 3,
       "corners": [
         {
@@ -993,12 +993,12 @@
           "notes": "Under the bridge, best overtaking spot"
         },
         {
-          "number": 11,
+          "number": 12,
           "name": "La Monumental",
           "type": "right",
           "speed": "very_fast",
           "gear": 7,
-          "notes": "24% banking, 500 m, 45,000 spectators, inspired by the Las Ventas bullring"
+          "notes": "24% banking; official F1 circuit feature at Turn 12"
         },
         {
           "number": 13,
@@ -1010,9 +1010,9 @@
         }
       ],
       "capacity": 110000,
-      "trackMapUrl": "/data/track-maps/madring.svg",
-      "trackMapStatus": "local-svg",
-      "trackMapNote": "Local SVG track map"
+      "trackMapUrl": "https://media.formula1.com/image/upload/c_fit%2Ch_704/q_auto/v1740000001/common/f1/2026/track/2026trackmadringdetailed.webp",
+      "trackMapStatus": "official-remote",
+      "trackMapNote": "Official Formula 1 2026 MADRING circuit map; accessed from Formula1.com CDN"
     },
     {
       "id": "baku",

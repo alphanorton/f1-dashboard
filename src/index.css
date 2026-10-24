@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Vazirmatn:wght@300;400;500;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -78,11 +76,11 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .btn-primary {
-  @apply px-6 py-2.5 bg-f1-red text-white font-medium rounded-lg hover:bg-f1-red/90 active:bg-f1-red transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-f1-red focus:ring-offset-2 focus:ring-offset-surface;
+  @apply px-6 py-2.5 bg-f1-red text-white font-medium rounded-lg hover:bg-f1-red/90 active:bg-f1-red transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red focus-visible:ring-offset-2 focus-visible:ring-offset-surface;
 }
 
 .btn-secondary {
-  @apply px-6 py-2.5 bg-muted text-white font-medium rounded-lg border border-gray-700 hover:bg-muted/80 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-surface;
+  @apply px-6 py-2.5 bg-muted text-white font-medium rounded-lg border border-gray-700 hover:bg-muted/80 hover:border-gray-400 transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 focus-visible:ring-offset-surface;
 }
 
 .tab-trigger {
@@ -139,6 +137,16 @@ input[type="range"]::-moz-range-thumb {
   animation: slideIn 0.3s ease-out forwards;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-in,
+  .animate-spin,
+  .animate-pulse,
+  .animate-ping,
+  .animate-pulse-fast {
+    animation: none;
+  }
+}
+
 .stagger-1 { animation-delay: 50ms; }
 .stagger-2 { animation-delay: 100ms; }
 .stagger-3 { animation-delay: 150ms; }
@@ -163,7 +171,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .eyebrow {
-  @apply text-xs font-f1 font-bold uppercase tracking-[0.25em] text-f1-red;
+  @apply text-xs font-f1 font-bold uppercase tracking-[0.25em] text-[#FF5A5A];
 }
 
 .race-panel {
@@ -194,4 +202,274 @@ input[type="range"]::-moz-range-thumb {
   inset-inline-start: 0;
   width: 3px;
   background-color: var(--team-color);
+}
+/* Race-weekend visual system: motion stays subtle and respects reduced-motion. */
+@keyframes raceReveal {
+  from { opacity: 0; transform: translateY(14px) scale(.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes raceGlowDrift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: .7; }
+  50% { transform: translate3d(-14px, 10px, 0) scale(1.08); opacity: 1; }
+}
+@keyframes raceShine {
+  0% { transform: translateX(-130%) skewX(-16deg); }
+  100% { transform: translateX(230%) skewX(-16deg); }
+}
+@keyframes pointsPop {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dashboard-hero,
+.next-race-card,
+.dashboard-section,
+.gp-hero,
+.gp-race-card,
+.gp-stat-card,
+.standings-stat-card {
+  animation: raceReveal .55s cubic-bezier(.2,.75,.25,1) both;
+}
+.dashboard-section.dashboard-stagger-1 { animation-delay: 70ms; }
+.dashboard-section.dashboard-stagger-2 { animation-delay: 130ms; }
+.dashboard-section.dashboard-stagger-3 { animation-delay: 190ms; }
+.next-race-card { isolation: isolate; }
+.next-race-card::after,
+.gp-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(112deg, transparent 20%, rgba(255,255,255,.045) 43%, transparent 62%);
+  transform: translateX(-130%) skewX(-16deg);
+  animation: raceShine 1.3s .2s ease-out both;
+}
+.next-race-track { box-shadow: inset 0 0 35px rgba(0,0,0,.35); }
+.next-race-track img { filter: drop-shadow(0 0 8px rgba(225,6,0,.12)); }
+.race-info-tile { transition: transform .22s ease, border-color .22s ease, background-color .22s ease; }
+.race-info-tile:hover { transform: translateY(-2px); border-color: rgba(225,6,0,.4); }
+.team-row-bar { transition: background-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.standings-preview-row:hover { transform: translateX(3px); box-shadow: inset 3px 0 0 var(--team-color, #e10600); }
+.upcoming-race-tile { position: relative; overflow: hidden; }
+.upcoming-race-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: linear-gradient(180deg, #e10600, rgba(225,6,0,0));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .25s ease;
+}
+.upcoming-race-tile:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(0,0,0,.22); }
+.upcoming-race-tile:hover::before { transform: scaleY(1); }
+.grand-prix-page .gp-hero { isolation: isolate; }
+.gp-hero-glow { animation: raceGlowDrift 7s ease-in-out infinite; }
+.gp-hero button { transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
+.gp-hero button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(225,6,0,.22); }
+.gp-race-card { animation-delay: 40ms; }
+.gp-race-card:nth-child(3n + 2) { animation-delay: 90ms; }
+.gp-race-card:nth-child(3n) { animation-delay: 140ms; }
+.gp-stat-card:nth-child(2) { animation-delay: 60ms; }
+.gp-stat-card:nth-child(3) { animation-delay: 110ms; }
+.gp-stat-card:nth-child(4) { animation-delay: 160ms; }
+.gp-stat-card:hover { transform: translateY(-4px); box-shadow: 0 14px 32px rgba(0,0,0,.24); border-color: rgba(225,6,0,.32); }
+.gp-race-card:hover { transform: translateY(-5px); box-shadow: 0 18px 36px rgba(0,0,0,.3); }
+.gp-race-card:focus-visible { outline: 2px solid #e10600; outline-offset: 3px; }
+.gp-race-card h3 { transition: letter-spacing .25s ease, color .25s ease; }
+.gp-race-card:hover h3 { letter-spacing: .01em; }
+.grand-prix-page .grid.grid-cols-2 > .border,
+.grand-prix-page .grid.grid-cols-2 > div { transition: transform .2s ease, border-color .2s ease; }
+.grand-prix-page .grid.grid-cols-2 > .border:hover,
+.grand-prix-page .grid.grid-cols-2 > div:hover { transform: translateY(-2px); border-color: rgba(225,6,0,.35); }
+.standings-page .standings-table-row { animation: pointsPop .3s ease both; }
+.standings-page .standings-table-row:nth-child(1) { animation-delay: 15ms; }
+.standings-page .standings-table-row:nth-child(2) { animation-delay: 30ms; }
+.standings-page .standings-table-row:nth-child(3) { animation-delay: 45ms; }
+.standings-page .standings-table-row:nth-child(4) { animation-delay: 60ms; }
+.standings-page .standings-table-row:nth-child(5) { animation-delay: 75ms; }
+.standings-page .standings-table-row:nth-child(6) { animation-delay: 90ms; }
+.standings-page .standings-table-row:nth-child(n+7) { animation-delay: 105ms; }
+.standings-page .standings-table-row:hover { box-shadow: inset 3px 0 0 var(--team-color, #e10600); }
+.standings-page .standings-stat-card { transition: transform .2s ease, border-color .2s ease; }
+.standings-page .standings-stat-card:hover { transform: translateY(-3px); border-color: rgba(225,6,0,.35); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-hero, .next-race-card, .dashboard-section, .gp-hero,
+  .gp-race-card, .gp-stat-card, .standings-stat-card, .standings-page .standings-table-row {
+    animation: none !important;
+  }
+  .next-race-card::after, .gp-hero::after { animation: none !important; }
+  .gp-hero-glow { animation: none !important; }
+  .race-info-tile, .upcoming-race-tile, .gp-race-card, .team-row-bar { transition: none !important; }
+}
+
+
+/* ===== Telemetry-style motion + glass system =====
+   Tokens, glass cards, cursor-follow border glow, growing bars, status pulses, page transition.
+   Everything here is CSS-only except the cursor position (useSpotlight) and number ticking
+   (useCountUp). All of it is switched off under prefers-reduced-motion. */
+:root {
+  --neon-green: #00ff85;
+  --neon-blue: #00c2ff;
+  --neon-amber: #ffb800;
+  --neon-purple: #b65cff;
+  --carbon: #07090d;
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --ease-out-expo: cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Static carbon backdrop with two soft colour pools. Painted on the app wrapper itself (no extra
+   positioned layer), so it can never sit above content or block clicks. */
+.app-backdrop {
+  background-image:
+    radial-gradient(900px 520px at 8% -8%, rgba(225, 6, 0, .10), transparent 60%),
+    radial-gradient(800px 480px at 100% 0%, rgba(0, 194, 255, .06), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, .012) 0 2px, transparent 2px 6px);
+  background-attachment: fixed;
+}
+
+.glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .015)), rgba(14, 16, 24, .62);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-color: rgba(255, 255, 255, .09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06), 0 10px 30px rgba(0, 0, 0, .28);
+}
+
+/* Cursor-following border glow. Needs the .spotlight class on a card; --mx/--my come from useSpotlight. */
+.spotlight { position: relative; }
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 70, 60, .95), rgba(225, 6, 0, .0) 65%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+.spotlight:hover::before { opacity: 1; }
+
+/* Spring-like lift on hover (overshoot easing). */
+.lift { transition: transform .35s var(--ease-spring), box-shadow .35s ease; }
+.lift:hover { transform: translateY(-4px); box-shadow: 0 18px 38px rgba(0, 0, 0, .35); }
+
+/* Bars grow from the left. Uses fill-mode "backwards" so no transform is left on the element afterwards. */
+@keyframes barGrow { from { transform: scaleX(0); } }
+.bar-grow { transform-origin: left center; animation: barGrow 1s var(--ease-out-expo) .15s backwards; }
+
+/* Status pulses: purple = fastest lap, green = optimal / DRS open. */
+@keyframes ringPurple { 0% { box-shadow: 0 0 0 0 rgba(182, 92, 255, .55); } 70%, 100% { box-shadow: 0 0 0 10px rgba(182, 92, 255, 0); } }
+@keyframes ringGreen { 0% { box-shadow: 0 0 0 0 rgba(0, 255, 133, .5); } 70%, 100% { box-shadow: 0 0 0 10px rgba(0, 255, 133, 0); } }
+.pulse-purple { animation: ringPurple 2.2s ease-out infinite; }
+.pulse-green { animation: ringGreen 2.2s ease-out infinite; }
+.text-glow-purple { color: var(--neon-purple); text-shadow: 0 0 14px rgba(182, 92, 255, .45); }
+.text-glow-green { color: var(--neon-green); text-shadow: 0 0 14px rgba(0, 255, 133, .4); }
+
+/* Route change. Opacity + small slide, "backwards" fill so the page is left with no transform
+   (a lingering transform would trap fixed-position descendants and sticky headers). */
+@keyframes pageEnter { from { opacity: 0; transform: translateY(10px); } }
+.page-enter { animation: pageEnter .38s var(--ease-out-expo) backwards; }
+
+/* Children of a .stagger-group rise one after another. Set --i on each child (0,1,2,...). */
+@keyframes staggerRise { from { opacity: 0; transform: translateY(12px) scale(.985); } }
+.stagger-group > * { animation: staggerRise .55s var(--ease-out-expo) backwards; animation-delay: calc(var(--i, 0) * 60ms); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bar-grow, .pulse-purple, .pulse-green, .page-enter, .stagger-group > * { animation: none !important; }
+  .lift, .spotlight::before { transition: none !important; }
+  .lift:hover { transform: none; }
+}
+
+
+/* Focused motorsport broadcast treatment for Grand Prix and standings only. */
+.grand-prix-page .gp-hero {
+  background-image: radial-gradient(ellipse at 90% 0%, rgba(225,6,0,.22), transparent 45%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,.018) 0 1px, transparent 1px 9px);
+  box-shadow: 0 24px 70px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.045);
+}
+.grand-prix-page .gp-hero::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #e10600 18%, #ff5a5a 50%, #e10600 82%, transparent);
+  transform-origin: left;
+  animation: gpTrackSweep 2.4s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes gpTrackSweep { from { transform: scaleX(.05); opacity: .2; } to { transform: scaleX(1); opacity: 1; } }
+.grand-prix-page .gp-race-card {
+  isolation: isolate;
+  overflow: hidden;
+  background-image: linear-gradient(145deg, rgba(255,255,255,.025), transparent 55%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+}
+.grand-prix-page .gp-race-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(225,6,0,.18), transparent 55%);
+  transition: opacity .35s ease;
+}
+.grand-prix-page .gp-race-card:hover::before,
+.grand-prix-page .gp-race-card:focus-visible::before { opacity: 1; }
+.grand-prix-page .gp-race-card:hover { border-color: rgba(225,6,0,.55); }
+.grand-prix-page .gp-race-card > * { position: relative; }
+.grand-prix-page .gp-stat-card { position: relative; overflow: hidden; }
+.grand-prix-page .gp-stat-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 12% 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(225,6,0,.7), transparent);
+  transform: scaleX(.25);
+  opacity: .55;
+  transition: transform .3s ease, opacity .3s ease;
+}
+.grand-prix-page .gp-stat-card:hover::after { transform: scaleX(1); opacity: 1; }
+
+.standings-page .standings-stat-card {
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(145deg, rgba(255,255,255,.035), transparent 65%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+}
+.standings-page .standings-stat-card::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(225,6,0,.7), transparent);
+  transform: translateX(-110%);
+  transition: transform .45s cubic-bezier(.16,1,.3,1);
+}
+.standings-page .standings-stat-card:hover::after { transform: translateX(0); }
+.standings-page .standings-table-row {
+  transition: background-color .22s ease, transform .22s ease, box-shadow .22s ease;
+}
+.standings-page .standings-table-row:hover { transform: translateX(2px); background-color: rgba(255,255,255,.025); }
+.standings-page .standings-table-row td:first-child > div > span {
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;
+}
+.standings-page .standings-table-row:hover td:first-child > div > span {
+  transform: scale(1.08);
+  box-shadow: 0 0 18px rgba(225,6,0,.14);
+}
+.tyre-event-selector { animation: raceReveal .45s cubic-bezier(.2,.75,.25,1) both; }
+.tyre-event-selector select { color-scheme: dark; }
+@media (prefers-reduced-motion: reduce) {
+  .grand-prix-page .gp-hero::before { animation: none !important; }
+  .grand-prix-page .gp-race-card::before,
+  .grand-prix-page .gp-stat-card::after,
+  .standings-page .standings-stat-card::after { transition: none !important; }
+  .standings-page .standings-table-row,
+  .tyre-event-selector { animation: none !important; }
 }

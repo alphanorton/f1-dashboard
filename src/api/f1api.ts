@@ -4,6 +4,7 @@ import type {
   Position, Interval, Stint, PitStop, Weather, RaceControlMessage, SessionResult,
   Constructor, TeamProfile, MockTelemetryDataset, CircuitData
 } from '@/types';
+import type { JolpicaRace } from '@/models/grandPrix';
 
 // ==================== API Instances ====================
 const openf1Api: AxiosInstance = axios.create({
@@ -22,8 +23,9 @@ const jolpicaApi: AxiosInstance = axios.create({
 export async function fetchJolpicaSeasons(): Promise<Season[]> {
   try {
     const res = await jolpicaApi.get('/seasons.json?limit=100');
-    return res.data.MRData.SeasonTable.Seasons.map((s: any) => ({
-      year: parseInt(s.season),
+    const seasons = res.data.MRData?.SeasonTable?.Seasons ?? [];
+    return seasons.map((s: { season: string; url: string }) => ({
+      year: parseInt(s.season, 10),
       url: s.url,
     }));
   } catch (error) {
@@ -31,7 +33,7 @@ export async function fetchJolpicaSeasons(): Promise<Season[]> {
   }
 }
 
-export async function fetchJolpicaRaces(year: number): Promise<any[]> {
+export async function fetchJolpicaRaces(year: number): Promise<JolpicaRace[]> {
   try {
     const res = await jolpicaApi.get(`/${year}/races.json?limit=30`);
     return res.data.MRData.RaceTable.Races;
@@ -59,12 +61,16 @@ export async function fetchJolpicaSessions(year: number, round: number): Promise
 export async function fetchJolpicaRaceResults(year: number, round: number): Promise<SessionResult[]> {
   try {
     const res = await jolpicaApi.get(`/${year}/${round}/results.json`);
-    const results = res.data.MRData.RaceTable.Races[0]?.Results || [];
-    return results.map((r: any) => ({
-      driver_number: parseInt(r.number),
-      position: parseInt(r.position),
+    const results = res.data.MRData?.RaceTable?.Races?.[0]?.Results ?? [];
+    return results.map((r: {
+      number: string; position: string; points: string; laps: string;
+      Time?: { time?: string }; status: string;
+      Constructor: { name: string }; Driver: { code: string };
+    }) => ({
+      driver_number: parseInt(r.number, 10),
+      position: parseInt(r.position, 10),
       points: parseFloat(r.points),
-      laps_completed: parseInt(r.laps),
+      laps_completed: parseInt(r.laps, 10),
       gap: r.Time?.time || r.status,
       status: r.status,
       team_name: r.Constructor.name,
@@ -76,19 +82,37 @@ export async function fetchJolpicaRaceResults(year: number, round: number): Prom
   }
 }
 
-export async function fetchJolpicaDriverStandings(year: number): Promise<any[]> {
+interface JolpicaDriverStandingRow {
+  position: string;
+  constructorId?: string;
+  Driver: { driverId: string; code: string; givenName?: string; familyName?: string; points?: string; wins?: string };
+  points: string;
+  wins?: string;
+}
+
+interface JolpicaConstructorStandingRow {
+  position: string;
+  constructorId?: string;
+  Constructor: { constructorId: string; name: string; points?: string; wins?: string };
+  points: string;
+  wins?: string;
+}
+
+export async function fetchJolpicaDriverStandings(year: number): Promise<JolpicaDriverStandingRow[]> {
   try {
     const res = await jolpicaApi.get(`/${year}/driverStandings.json`);
-    return res.data.MRData.StandingsTable.StandingsLists[0]?.DriverStandings || [];
+    const standings = res.data.MRData?.StandingsTable?.StandingsLists?.[0]?.DriverStandings ?? [];
+    return standings;
   } catch (error) {
     throw error;
   }
 }
 
-export async function fetchJolpicaConstructorStandings(year: number): Promise<any[]> {
+export async function fetchJolpicaConstructorStandings(year: number): Promise<JolpicaConstructorStandingRow[]> {
   try {
     const res = await jolpicaApi.get(`/${year}/constructorStandings.json`);
-    return res.data.MRData.StandingsTable.StandingsLists[0]?.ConstructorStandings || [];
+    const standings = res.data.MRData?.StandingsTable?.StandingsLists?.[0]?.ConstructorStandings ?? [];
+    return standings;
   } catch (error) {
     throw error;
   }
@@ -136,7 +160,7 @@ export async function fetchOpenF1Drivers(sessionKey: number): Promise<Driver[]> 
 
 export async function fetchOpenF1Laps(sessionKey: number, driverNumber?: number): Promise<Lap[]> {
   try {
-    const params: any = { session_key: sessionKey };
+    const params: Record<string, number> = { session_key: sessionKey };
     if (driverNumber) params.driver_number = driverNumber;
     const res = await openf1Api.get('/laps', { params });
     return res.data;

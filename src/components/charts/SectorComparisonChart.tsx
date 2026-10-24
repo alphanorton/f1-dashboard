@@ -12,6 +12,7 @@ import {
 } from 'recharts';
 import { cn } from '@/lib/utils';
 import type { SectorComparisonDataPoint } from '@/types';
+import type { TooltipProps } from 'recharts';
 
 interface SectorComparisonChartProps {
   data: SectorComparisonDataPoint[];
@@ -51,16 +52,16 @@ export function SectorComparisonChart({
     index: i,
   }));
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       const lapData = formattedData.find(d => d.lap === label);
       return (
         <div className="bg-surface border p-2 rounded shadow-lg min-w-[220px]">
           <p className="font-medium">{label}</p>
-          {payload.map((entry: any, i: number) => (
+          {payload.map((entry, i: number) => (
             <p key={i} className="font-mono text-sm flex items-center gap-2" style={{ color: entry.color }}>
               <span className="w-3 h-3 rounded" style={{ backgroundColor: entry.color }} />
-              {entry.name}: {formatTime(entry.value)}
+              {entry.name}: {formatTime(Number(entry.value))}
             </p>
           ))}
           {lapData && (
@@ -156,15 +157,15 @@ export function SingleDriverSectorComparison({
     total: d.total,
   }));
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-surface border p-2 rounded shadow-lg">
           <p className="font-medium">{label}</p>
-          {payload.map((entry: any, i: number) => (
+          {payload.map((entry, i: number) => (
             <p key={i} className="font-mono text-sm flex items-center gap-2" style={{ color: entry.color }}>
               <span className="w-3 h-3 rounded" style={{ backgroundColor: entry.color }} />
-              {entry.name}: {formatTime(entry.value)}
+              {entry.name}: {formatTime(Number(entry.value))}
             </p>
           ))}
         </div>

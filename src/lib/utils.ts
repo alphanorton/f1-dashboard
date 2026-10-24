@@ -150,6 +150,15 @@ export function formatDate(dateString: string): string {
   }
 }
 
+// Single date-format helper for the whole app: Intl-based, no hardcoded locale calls elsewhere.
+const shortDateFormatter = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric' });
+
+export function formatShortDate(value: string | number | Date | null | undefined): string {
+  if (value == null || value === '') return '';
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? String(value) : shortDateFormatter.format(date);
+}
+
 export function formatDateTime(dateString: string): string {
   try {
     const date = new Date(dateString);
