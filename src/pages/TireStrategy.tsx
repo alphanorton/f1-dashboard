@@ -77,28 +77,89 @@ async function fetchLocalCalendar(year: number): Promise<OpenF1Meeting[]> {
 async function fetchMeetings(year: number): Promise<OpenF1Meeting[]> {
   const presets = (await loadTyrePresets()).filter((p) => p.season === year);
   const presetMeetings = presets.map(presetMeeting);
+  
+  let remoteMeetings: OpenF1Meeting[] = [];
+  try {
+    const response = await fetch(`https://api.openf1.org/v1/meetings?year=${year}`);
+    if (response.ok) {
+      remoteMeetings = (await response.json()) as OpenF1Meeting[];
+    }
+  } catch {
+    // Offline or network error
+  }
+
   const calendarMeetings = await fetchLocalCalendar(year);
+
+  const presetKeys = new Set(presetMeetings.map((m) => m.meeting_key));
   const presetNames = new Set(presetMeetings.map((m) => normalizedRaceName(m.meeting_name)));
-  const calendarOnly = calendarMeetings.filter((m) => !presetNames.has(normalizedRaceName(m.meeting_name)));
-  return [...calendarOnly, ...presetMeetings];
+
+  // Filter remote meetings that don't clash with preset keys or preset names
+  const filteredRemote = remoteMeetings.filter(
+    (m) => !presetKeys.has(m.meeting_key) && !presetNames.has(normalizedRaceName(m.meeting_name ?? m.meeting_official_name))
+  );
+
+  const knownNames = new Set([
+    ...presetMeetings.map((m) => normalizedRaceName(m.meeting_name)),
+    ...filteredRemote.map((m) => normalizedRaceName(m.meeting_name ?? m.meeting_official_name)),
+  ]);
+
+  // Calendar meetings not present in presets or remote
+  const calendarOnly = calendarMeetings.filter(
+    (m) => !knownNames.has(normalizedRaceName(m.meeting_name))
+  );
+
+  return [...presetMeetings, ...filteredRemote, ...calendarOnly];
 }
 
 async function fetchSessions(meetingKey: number): Promise<OpenF1Session[]> {
-  // Calendar-only rows are selectable offline but have no fabricated session identifiers.
+  // Negative keys are offline calendar entries without OpenF1 session records
   if (meetingKey < 0) return [];
-  const preset = (await loadTyrePresets()).find((p) => p.meeting_key === meetingKey);
+
+  const presets = await loadTyrePresets();
+  const preset = presets.find((p) => p.meeting_key === meetingKey);
   if (preset) return [presetSession(preset)];
+
+  try {
+    const response = await fetch(`https://api.openf1.org/v1/sessions?meeting_key=${meetingKey}`);
+    if (response.ok) {
+      return (await response.json()) as OpenF1Session[];
+    }
+  } catch {
+    // Offline or network error
+  }
   return [];
 }
 
 async function fetchDrivers(sessionKey: number): Promise<OpenF1Driver[]> {
-  const preset = (await loadTyrePresets()).find((p) => p.session_key === sessionKey);
-  return preset ? presetDrivers(preset) : [];
+  const presets = await loadTyrePresets();
+  const preset = presets.find((p) => p.session_key === sessionKey);
+  if (preset) return presetDrivers(preset);
+
+  try {
+    const response = await fetch(`https://api.openf1.org/v1/drivers?session_key=${sessionKey}`);
+    if (response.ok) {
+      return (await response.json()) as OpenF1Driver[];
+    }
+  } catch {
+    // Offline or network error
+  }
+  return [];
 }
 
 async function fetchStints(sessionKey: number): Promise<OpenF1Stint[]> {
-  const preset = (await loadTyrePresets()).find((p) => p.session_key === sessionKey);
-  return preset ? presetStints(preset) : [];
+  const presets = await loadTyrePresets();
+  const preset = presets.find((p) => p.session_key === sessionKey);
+  if (preset) return presetStints(preset);
+
+  try {
+    const response = await fetch(`https://api.openf1.org/v1/stints?session_key=${sessionKey}`);
+    if (response.ok) {
+      return (await response.json()) as OpenF1Stint[];
+    }
+  } catch {
+    // Offline or network error
+  }
+  return [];
 }
 
 interface OpenF1Meeting {

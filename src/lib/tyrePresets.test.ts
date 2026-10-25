@@ -1,3 +1,4 @@
+// @ts-ignore
 import { readFileSync } from 'node:fs';
 import {
   parsePreset, presetDrivers, presetMeeting, presetSession, presetStints, mergeMeetings,
