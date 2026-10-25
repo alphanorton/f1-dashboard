@@ -701,3 +701,235 @@ input[type="range"]::-moz-range-thumb {
   .dx-result, .dx-up, .dx-day, .dx-seg, .dx-stat { transition: none !important; }
   .dx-result:active, .dx-up:active { transform: none; }
 }
+
+
+/* =====================================================================
+   FX: standings podium, championship race, Grand Prix track + tilt cards
+   Everything below is decorative motion and is switched off (or shown in
+   its final state) under prefers-reduced-motion.
+   ===================================================================== */
+
+/* ---- Podium ---- */
+.fx-pod-stage {
+  --stage-h: 335px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1.12fr 1fr;
+  align-items: end;
+  gap: 8px;
+  height: var(--stage-h);
+  padding: 0 12px;
+  background:
+    radial-gradient(520px 200px at 50% 100%, rgba(255,255,255,.05), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 1px, transparent 1px 48px);
+}
+@media (min-width: 640px) {
+  .fx-pod-stage { --stage-h: 360px; gap: 14px; padding: 0 24px; }
+}
+.fx-pod-col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-width: 0;
+  height: 100%;
+}
+.fx-pod-card {
+  position: relative;
+  z-index: 2;
+  padding: 0 2px 10px;
+  text-align: center;
+  animation: fxCardIn .7s var(--ease-out-expo) calc(var(--d) + 420ms) both;
+}
+@keyframes fxCardIn { from { opacity: 0; transform: translateY(20px); } }
+
+.fx-pod-block {
+  position: relative;
+  height: calc(var(--stage-h) * var(--k));
+  border-radius: 12px 12px 0 0;
+  border-top: 3px solid var(--c);
+  background:
+    repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 2px, transparent 2px 9px),
+    linear-gradient(180deg, var(--c-a), var(--c-b) 88%),
+    #0d0f16;
+  box-shadow: 0 -20px 50px -14px var(--c-a), inset 0 1px 0 rgba(255,255,255,.14);
+  clip-path: inset(-70px -70px 0 -70px);
+  animation: fxPodRise .95s var(--ease-out-expo) var(--d) both;
+}
+@keyframes fxPodRise { from { clip-path: inset(100% -70px 0 -70px); } }
+.fx-pod-shine { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; pointer-events: none; }
+.fx-pod-col[data-p="1"] .fx-pod-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(112deg, transparent 25%, rgba(255,255,255,.22) 45%, transparent 62%);
+  transform: translateX(-130%) skewX(-16deg);
+  animation: raceShine 3.8s 1.9s ease-in-out infinite;
+}
+.fx-pod-num {
+  position: absolute;
+  inset: 12px 0 auto;
+  text-align: center;
+  font-size: clamp(22px, 7vw, 44px);
+  font-weight: 900;
+  letter-spacing: .06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,.28);
+  user-select: none;
+}
+
+/* spotlight over the leader */
+.fx-beam {
+  position: absolute;
+  top: 0;
+  bottom: 12%;
+  left: 50%;
+  width: 62%;
+  margin-left: -31%;
+  background: linear-gradient(180deg, var(--beam), transparent 88%);
+  clip-path: polygon(41% 0, 59% 0, 100% 100%, 0 100%);
+  mix-blend-mode: screen;
+  transform-origin: 50% 0;
+  pointer-events: none;
+  animation: fxBeamIn 1.4s 1.1s ease-out both, fxSway 7s 2.5s ease-in-out infinite alternate;
+}
+@keyframes fxBeamIn { from { opacity: 0; } to { opacity: .55; } }
+@keyframes fxSway { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
+
+/* confetti behind the leader */
+.fx-confetti { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+.fx-confetti span {
+  position: absolute;
+  top: -14px;
+  width: 6px;
+  height: 11px;
+  border-radius: 1.5px;
+  opacity: 0;
+  animation: fxFall var(--t) var(--dl) linear infinite;
+}
+@keyframes fxFall {
+  0%   { opacity: 0; transform: translate3d(0, 0, 0) rotate(0deg); }
+  10%  { opacity: .95; }
+  100% { opacity: 0; transform: translate3d(var(--dx), 330px, 0) rotate(calc(var(--rot) + 540deg)); }
+}
+
+/* ---- Championship race ---- */
+.fx-race { --row-h: 40px; overflow-y: clip; }
+@media (min-width: 640px) { .fx-race { --row-h: 44px; } }
+.fx-race-row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--row-h);
+  transition-property: transform, opacity;
+  transition-timing-function: cubic-bezier(.45, 0, .2, 1);
+  will-change: transform;
+}
+.fx-race-fill {
+  transform-origin: left center;
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(.45, 0, .2, 1);
+  will-change: transform;
+}
+.fx-chip { display: inline-block; font-size: 10px; font-weight: 800; animation: fxChip 1.3s ease-out forwards; }
+@keyframes fxChip {
+  0% { opacity: 0; transform: translateX(-6px); }
+  15% { opacity: 1; transform: translateX(0); }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ---- Hero track ---- */
+.fx-trace {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+  animation: fxDraw 2.6s .25s var(--ease-out-expo) both;
+}
+@keyframes fxDraw { from { stroke-dashoffset: 1; } }
+.fx-pulse {
+  stroke-dasharray: .045 .955;
+  stroke-dashoffset: 0;
+  animation: fxPulse 3.4s 2.8s linear infinite;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+@keyframes fxPulse { 0% { opacity: .95; stroke-dashoffset: 0; } 100% { opacity: .95; stroke-dashoffset: -1; } }
+.fx-sf { animation: fxSf 1.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes fxSf { 0%, 100% { transform: scale(1); opacity: .9; } 50% { transform: scale(1.7); opacity: .35; } }
+.fx-car { opacity: 0; animation: fxCarIn .5s 1.5s ease-out forwards; }
+@keyframes fxCarIn { to { opacity: 1; } }
+.fx-hero-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(600px 260px at 30% 50%, rgba(255,42,31,.35), transparent 70%);
+  opacity: 0;
+  animation: fxFlash .9s 2.4s ease-out both;
+}
+@keyframes fxFlash { 0% { opacity: 0; } 25% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ---- Grand Prix cards: tilt, glare, circuit watermark, scroll reveal ---- */
+.fx-tilt { --rx: 0deg; --ry: 0deg; --lift: 0px; }
+.grand-prix-page .gp-race-card.fx-tilt {
+  transform: perspective(900px) translateY(var(--lift)) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .18s ease-out, border-color .3s ease, background-color .3s ease, box-shadow .3s ease;
+  will-change: transform;
+  /* individual transform props (translate/scale) so the reveal never fights the tilt transform */
+  animation: fxRise .55s cubic-bezier(.2, .75, .25, 1) both;
+}
+.grand-prix-page .gp-race-card.fx-tilt:hover { --lift: -5px; }
+@keyframes fxRise { from { opacity: 0; translate: 0 14px; scale: .985; } }
+.fx-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease;
+  background: radial-gradient(280px circle at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,.13), transparent 62%);
+}
+.fx-tilt:hover .fx-glare { opacity: 1; }
+.fx-ghost-track {
+  position: absolute;
+  right: 10px;
+  top: 38px;
+  z-index: -1;
+  width: 104px;
+  height: 78px;
+  color: rgba(255,255,255,.10);
+  pointer-events: none;
+  transition: color .3s ease;
+}
+.fx-ghost-line { stroke-dasharray: 1 1; stroke-dashoffset: 0; }
+.group:hover .fx-ghost-track { color: rgba(255,90,90,.55); }
+.group:hover .fx-ghost-line { animation: fxDraw 1.4s var(--ease-out-expo) both; }
+
+/* Scroll-driven reveal (Chrome/Edge 115+, Safari 26+). Other browsers keep the timed reveal above. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .grand-prix-page .gp-race-card.fx-tilt {
+      animation: fxRiseScroll linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 75%;
+      animation-delay: 0s;
+    }
+    @keyframes fxRiseScroll {
+      from { opacity: 0; translate: 0 44px; scale: .93; }
+      to { opacity: 1; translate: 0 0; scale: 1; }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-pod-block, .fx-pod-card, .fx-beam, .fx-pod-col[data-p="1"] .fx-pod-shine::after,
+  .fx-trace, .fx-pulse, .fx-sf, .fx-hero-flash, .fx-chip,
+  .grand-prix-page .gp-race-card.fx-tilt, .group:hover .fx-ghost-line { animation: none !important; }
+  .fx-beam { opacity: .4; }
+  .fx-confetti, .fx-car, .fx-pulse, .fx-hero-flash { display: none; }
+  .fx-race-row, .fx-race-fill { transition: none !important; }
+  .grand-prix-page .gp-race-card.fx-tilt { transform: none; transition: none; }
+}

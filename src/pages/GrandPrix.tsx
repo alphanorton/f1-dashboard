@@ -12,8 +12,21 @@ import {
 import { getGrandPrixCalendar, getRaceResults } from '@/services/f1DataService';
 import type { GrandPrixCalendar, GrandPrixRace, RaceResults } from '@/models/grandPrix';
 import { getFlagUrl } from '@/lib/flags';
+import { TrackLoop } from '@/components/track/TrackLoop';
+import { TrackGhost } from '@/components/track/TrackGhost';
+import { StartLights } from '@/components/dashboard/StartLights';
+import { useTilt } from '@/hooks/useTilt';
+
+function daysUntil(dateStr: string): number | null {
+  const [y, m, d] = dateStr.split('-').map(Number);
+  if (!y || !m || !d) return null;
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  return Math.round((new Date(y, m - 1, d).getTime() - today) / 86400000);
+}
 
 export function GrandPrix() {
+  useTilt();
   const [data, setData] = useState<GrandPrixCalendar | null>(null);
   const [results, setResults] = useState<RaceResults | null>(null);
   const [loading, setLoading] = useState(true);
@@ -118,6 +131,7 @@ export function GrandPrix() {
       {nextRace && (
         <div className="gp-hero relative overflow-hidden rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-950/50 via-gray-900 to-gray-950 p-6 shadow-2xl">
           <div className="gp-hero-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-red-600/15 blur-3xl pointer-events-none" />
+          <span className="fx-hero-flash" aria-hidden="true" />
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="space-y-3">
               <div className="flex items-center gap-2">
@@ -150,9 +164,21 @@ export function GrandPrix() {
                   ⚡ {nextRace.notes}
                 </p>
               )}
-            </div>
 
-            <div className="flex flex-col sm:flex-row gap-3">
+              {(() => {
+                const days = daysUntil(nextRace.date);
+                if (days === null || days < 0) return null;
+                return (
+                  <div className="flex flex-wrap items-center gap-3">
+                    <StartLights />
+                    <span className="dx-time font-f1 text-xs font-bold uppercase tracking-[0.2em] text-[#FF5A5A]">
+                      {days === 0 ? 'Race day' : `${days} day${days === 1 ? '' : 's'} to lights out`}
+                    </span>
+                  </div>
+                );
+              })()}
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-1">
               <button 
                 onClick={() => setSelectedRace(nextRace)}
                 className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-f1-red px-5 py-3 text-sm font-bold text-white transition-all shadow-lg shadow-f1-red/20 hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
@@ -161,6 +187,9 @@ export function GrandPrix() {
                 <ChevronRight className="h-4 w-4" />
               </button>
             </div>
+            </div>
+
+            <TrackLoop circuit={nextRace.circuit} className="fx-hero-track h-auto w-full max-w-[300px] shrink-0 self-center sm:max-w-[360px] lg:max-w-[340px]" />
           </div>
         </div>
       )}
@@ -324,7 +353,7 @@ export function GrandPrix() {
                   setSelectedRace(race);
                 }
               }}
-              className={`gp-race-card group cursor-pointer relative rounded-xl border transition-all duration-300 p-5 ${
+              className={`gp-race-card fx-tilt group cursor-pointer relative rounded-xl border transition-all duration-300 p-5 ${
                 isNext
                   ? 'bg-gray-900 border-red-500/80 shadow-lg shadow-red-950/40 ring-1 ring-red-500/40'
                   : isCancel
@@ -332,6 +361,9 @@ export function GrandPrix() {
                   : 'bg-gray-900/70 border-gray-800 hover:border-gray-700 hover:bg-gray-850'
               }`}
             >
+              <span className="fx-glare" aria-hidden="true" />
+              {!isCancel && <TrackGhost circuit={race.circuit} className="fx-ghost-track" />}
+
               {/* Card Top Row: Round & Status Badges */}
               <div className="flex items-center justify-between gap-2 mb-3">
                 <div className="flex items-center gap-2">

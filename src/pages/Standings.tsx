@@ -10,6 +10,8 @@ import { Trophy, Award, TrendingUp, Car, Zap, ChevronRight, Medal, Target, Searc
 import { useCachedData } from '@/hooks/useCachedData';
 import { usePointsProgression } from '@/lib/pointsProgression';
 import { getTeamColor2026, getTeamTextColor2026 } from '@/lib/teamColors';
+import { Podium, type PodiumEntry } from '@/components/standings/Podium';
+import { BarChartRace } from '@/components/standings/BarChartRace';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Legend,
@@ -116,6 +118,7 @@ function PointsProgressionChart({
   officialOrder?: Array<{ code: string; driver: string; team: string }>;
 }): React.ReactElement {
   const { series, rounds, loading, error } = usePointsProgression(5, officialOrder);
+  const [focusKey, setFocusKey] = useState<string | null>(null);
 
   if (error) {
     return (
@@ -162,7 +165,9 @@ function PointsProgressionChart({
             />
             <Tooltip content={<ProgressionTooltip />} />
             <Legend
-              wrapperStyle={{ fontSize: 11, color: '#9ca3af', paddingTop: 8 }}
+              onMouseEnter={(o) => setFocusKey(String(o.value))}
+              onMouseLeave={() => setFocusKey(null)}
+              wrapperStyle={{ fontSize: 11, color: '#9ca3af', paddingTop: 8, cursor: 'pointer' }}
               formatter={(value: string) => {
                 const s = series.find((x) => x.key === value);
                 return s ? `${s.driver} (${s.team})` : value;
@@ -175,9 +180,14 @@ function PointsProgressionChart({
                 dataKey={s.key}
                 name={s.key}
                 stroke={s.color}
-                strokeWidth={2}
+                strokeWidth={focusKey === s.key ? 3.5 : 2.5}
+                strokeOpacity={focusKey && focusKey !== s.key ? 0.18 : 1}
+                style={{ filter: `drop-shadow(0 0 ${focusKey === s.key ? 9 : 5}px ${s.color})`, transition: 'stroke-opacity .25s ease' }}
                 dot={false}
-                activeDot={{ r: 4 }}
+                activeDot={{ r: 5, stroke: '#fff', strokeWidth: 1.5 }}
+                isAnimationActive
+                animationDuration={2200}
+                animationEasing="ease-out"
                 connectNulls
               />
             ))}
@@ -265,6 +275,27 @@ export function Standings() {
       )
     : data.drivers;
 
+  const driverPodium: PodiumEntry[] = data.drivers.slice(0, 3).map((d) => ({
+    key: d.code,
+    position: d.position,
+    name: d.name,
+    sub: d.team,
+    points: d.points,
+    color: getTeamColor2026(d.team),
+    textColor: getTeamTextColor2026(d.team),
+    ghost: d.code,
+  }));
+  const constructorPodium: PodiumEntry[] = data.constructors.slice(0, 3).map((c) => ({
+    key: c.shortName,
+    position: c.position,
+    name: c.shortName,
+    sub: c.drivers.join(' · '),
+    points: c.points,
+    color: getTeamColor2026(c.shortName),
+    textColor: getTeamTextColor2026(c.shortName),
+    ghost: c.shortName.slice(0, 3).toUpperCase(),
+  }));
+
   const openConstructorDialog = (ctor: Constructor) => {
     setSelectedConstructor(ctor);
   };
@@ -296,6 +327,7 @@ export function Standings() {
 
         {/* DRIVERS STANDINGS */}
         <TabsContent value="drivers" className="mt-6">
+          <Podium title="Drivers' championship podium" entries={driverPodium} className="mb-6" />
           <Card>
             <CardContent className="p-0">
               <div className="border-b border-gray-700/50 p-4">
@@ -483,6 +515,8 @@ export function Standings() {
             </Card>
           </div>
 
+          <BarChartRace drivers={data.drivers} />
+
           <Card className="mt-6">
             <CardContent className="p-4">
               <PointsProgressionChart
@@ -494,6 +528,7 @@ export function Standings() {
 
         {/* CONSTRUCTORS STANDINGS */}
         <TabsContent value="constructors" className="mt-6 space-y-6">
+          <Podium title="Constructors' championship podium" entries={constructorPodium} />
           <Card>
             <CardContent className="p-0">
               <div className="overflow-x-auto max-h-[70vh]">
