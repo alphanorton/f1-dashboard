@@ -473,3 +473,231 @@ input[type="range"]::-moz-range-thumb {
   .standings-page .standings-table-row,
   .tyre-event-selector { animation: none !important; }
 }
+
+
+/* ===== Dashboard v2: hero, next-race, leaders, results ===== */
+:root {
+  --dx-gold: #f5c542;
+  --dx-silver: #c9cfdb;
+  --dx-bronze: #d9915f;
+}
+
+/* Fading hairline used next to section titles */
+.dx-hairline { background: linear-gradient(90deg, rgba(255,255,255,.14), transparent); }
+
+/* Large outlined numerals used as a background watermark (R20, 2026, ANT ...) */
+.dx-ghost {
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-weight: 900;
+  line-height: .8;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,.08);
+  user-select: none;
+}
+
+/* ---- Hero ---- */
+.dx-hero {
+  isolation: isolate;
+  background:
+    radial-gradient(900px 380px at 100% -10%, rgba(225,6,0,.24), transparent 60%),
+    radial-gradient(600px 300px at 0% 120%, rgba(0,194,255,.08), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.01)),
+    #0b0d14;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 24px 60px rgba(0,0,0,.35);
+}
+/* Chequered flag strip along the top edge, fading out to the right */
+.dx-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: conic-gradient(#fff 25%, #14161d 0 50%, #fff 0 75%, #14161d 0) 0 0 / 12px 12px;
+  opacity: .2;
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent 70%);
+  mask-image: linear-gradient(90deg, #000, transparent 70%);
+  pointer-events: none;
+}
+.dx-stat { transition: border-color .25s ease, background-color .25s ease; }
+
+/* Progress ring */
+.dx-ring-arc {
+  stroke-dasharray: var(--c);
+  stroke-dashoffset: var(--off);
+  filter: drop-shadow(0 0 6px rgba(225,6,0,.55));
+  animation: dxRing 1.4s var(--ease-out-expo) .2s backwards;
+}
+@keyframes dxRing { from { stroke-dashoffset: var(--c); } }
+
+/* Season strip: one segment per Grand Prix */
+.dx-seg {
+  position: relative;
+  height: 10px;
+  border-radius: 3px;
+  background: rgba(255,255,255,.1);
+  transform-origin: bottom;
+  transition: transform .2s var(--ease-spring);
+  animation: dxSeg .5s var(--ease-out-expo) backwards;
+  animation-delay: calc(var(--i, 0) * 28ms + 250ms);
+}
+.dx-seg[data-state="done"] {
+  background: linear-gradient(180deg, #ff4a3d, #e10600);
+  box-shadow: 0 0 10px rgba(225,6,0,.35);
+}
+.dx-seg[data-state="next"] {
+  background: rgba(255,90,90,.22);
+  outline: 1.5px solid #ff5a5a;
+  outline-offset: 1px;
+  animation: dxSeg .5s var(--ease-out-expo) backwards, dxNext 1.8s ease-in-out 1s infinite;
+  animation-delay: calc(var(--i, 0) * 28ms + 250ms), 1s;
+}
+.dx-seg[data-sprint="true"]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: #ffb800;
+  transform: translateX(-50%);
+}
+@keyframes dxSeg { from { transform: scaleY(0); opacity: 0; } }
+@keyframes dxNext { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,90,90,.0); } 50% { box-shadow: 0 0 12px 2px rgba(255,90,90,.55); } }
+
+/* ---- Next race ---- */
+.dx-next {
+  background:
+    radial-gradient(700px 320px at 100% 0%, rgba(225,6,0,.2), transparent 60%),
+    linear-gradient(135deg, #10131c, #0a0c12 60%, rgba(60,6,6,.55));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 28px 70px rgba(0,0,0,.38);
+}
+.dx-track {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(225,6,0,.17), transparent 62%),
+    linear-gradient(135deg, #0a0d14, #06080c);
+  box-shadow: inset 0 0 40px rgba(0,0,0,.45);
+}
+/* Faint engineering grid + corner brackets */
+.dx-track::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 78%);
+  mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 78%);
+  pointer-events: none;
+}
+.dx-track::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  background:
+    linear-gradient(#ff5a5a, #ff5a5a) top left / 14px 2px no-repeat,
+    linear-gradient(#ff5a5a, #ff5a5a) top left / 2px 14px no-repeat,
+    linear-gradient(#ff5a5a, #ff5a5a) bottom right / 14px 2px no-repeat,
+    linear-gradient(#ff5a5a, #ff5a5a) bottom right / 2px 14px no-repeat;
+  opacity: .7;
+}
+.dx-track img { filter: drop-shadow(0 0 10px rgba(225,6,0,.28)); }
+
+/* Start lights: on one by one, then lights out - the start time flashes on "go". */
+.dx-lights {
+  display: inline-flex;
+  gap: 7px;
+  padding: 8px 10px;
+  border-radius: 9999px;
+  background: rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.dx-light {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: #2a0b0b;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  animation:
+    dxLightOn .18s calc(var(--i, 0) * .28s + .4s) both,
+    dxLightOff .12s 2.4s forwards;
+}
+@keyframes dxLightOn {
+  from { background: #2a0b0b; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+  to   { background: #ff2a1f; box-shadow: 0 0 12px 2px rgba(255,42,31,.75), inset 0 0 0 1px rgba(255,255,255,.2); }
+}
+@keyframes dxLightOff { to { background: #1c0909; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); } }
+.dx-time { animation: dxGo .7s 2.4s ease-out; }
+@keyframes dxGo { 0% { text-shadow: 0 0 0 rgba(255,90,90,0); } 35% { text-shadow: 0 0 22px rgba(255,90,90,.85); } 100% { text-shadow: 0 0 0 rgba(255,90,90,0); } }
+
+/* Weekend day pills */
+.dx-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 8px 4px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.1);
+  background: rgba(0,0,0,.25);
+  color: #d1d5db;
+  transition: transform .22s var(--ease-spring), border-color .22s ease;
+}
+.dx-day[data-past="true"] { opacity: .55; }
+.dx-day[data-today="true"] { border-color: rgba(255,255,255,.55); color: #fff; }
+.dx-day[data-race="true"] {
+  background: linear-gradient(180deg, rgba(225,6,0,.38), rgba(225,6,0,.14));
+  border-color: rgba(255,90,90,.6);
+  color: #fff;
+  box-shadow: 0 0 22px rgba(225,6,0,.22);
+  opacity: 1;
+}
+
+/* ---- Championship cards ---- */
+.dx-pos {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid currentColor;
+  background: rgba(255,255,255,.04);
+}
+.dx-pos[data-p="1"] { color: var(--dx-gold); background: rgba(245,197,66,.12); }
+.dx-pos[data-p="2"] { color: var(--dx-silver); }
+.dx-pos[data-p="3"] { color: var(--dx-bronze); }
+.dx-pos-round { width: 28px; height: 28px; border-radius: 9999px; font-size: 12px; flex-shrink: 0; }
+.dx-pos-lg { width: 36px; height: 36px; box-shadow: 0 0 18px rgba(245,197,66,.25); }
+.dx-pos-pill { padding: 4px 10px; border-radius: 9999px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+
+/* Gap-to-leader bar */
+.dx-gapbar { height: 4px; border-radius: 9999px; background: rgba(255,255,255,.07); overflow: hidden; }
+.dx-gapbar > i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--team-color, #e10600);
+  box-shadow: 0 0 8px var(--team-color, #e10600);
+  transform-origin: left center;
+  animation: barGrow 1s var(--ease-out-expo) .3s backwards;
+}
+
+/* ---- Results + upcoming ---- */
+.dx-result, .dx-up { transition: transform .35s var(--ease-spring), box-shadow .35s ease, border-color .25s ease; }
+
+@media (hover: hover) {
+  .dx-result:hover, .dx-up:hover { border-color: rgba(255,90,90,.45); }
+  .dx-day:hover { transform: translateY(-2px); }
+  .dx-stat:hover { border-color: rgba(255,90,90,.4); background-color: rgba(225,6,0,.06); }
+  .dx-seg:hover { transform: scaleY(1.6); }
+}
+.dx-result:active, .dx-up:active { transform: scale(.985); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dx-ring-arc, .dx-seg, .dx-seg[data-state="next"], .dx-light, .dx-time, .dx-gapbar > i { animation: none !important; }
+  .dx-light { background: #1c0909; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+  .dx-result, .dx-up, .dx-day, .dx-seg, .dx-stat { transition: none !important; }
+  .dx-result:active, .dx-up:active { transform: none; }
+}

@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
 import clsx from 'clsx';
 import {
   Flag,
@@ -26,73 +25,80 @@ import type { TyreCompoundKey, TyreStintRow } from './TireStrategy.helpers';
 import { findTyreAllocation2026, TYRE_ALLOCATIONS_2026 } from '@/lib/tyreAllocations2026';
 import {
   loadTyrePresets,
-  mergeMeetings,
   presetDrivers,
   presetMeeting,
   presetSession,
   presetStints,
 } from '@/lib/tyrePresets';
 
-const OPENF1_BASE = 'https://api.openf1.org/v1';
 const YEARS = [2026, 2025, 2024, 2023] as const;
-
-const tyreAxios = axios.create({
-  baseURL: OPENF1_BASE,
-  timeout: 20000,
-  headers: { Accept: 'application/json' },
-});
 
 type TyreQueryError = Error & { status?: number; statusText?: string };
 
-async function tyreFetch<T>(url: string, params: Record<string, unknown>): Promise<T[]> {
+interface LocalCalendar {
+  season: number;
+  races: Array<{
+    round: number;
+    name: string;
+    circuit?: string;
+    locality?: string;
+    country?: string;
+    date: string;
+    status?: string;
+  }>;
+}
+
+function normalizedRaceName(value: string | null | undefined): string {
+  return (value ?? '').toLowerCase().replace(/[^a-z0-9]/g, '').replace(/grandprix/g, '');
+}
+
+async function fetchLocalCalendar(year: number): Promise<OpenF1Meeting[]> {
   try {
-    const res = await tyreAxios.get<T[]>(url, { params });
-    return Array.isArray(res.data) ? res.data : [];
-  } catch (err) {
-    const axErr = err as AxiosError;
-    const message = axErr.response
-      ? `OpenF1 request failed (HTTP ${axErr.response.status})`.trim()
-      : axErr.request
-        ? 'OpenF1 unreachable: no response received'
-        : 'OpenF1 request could not be created';
-    const error = new Error(message) as TyreQueryError;
-    if (axErr.response) {
-      error.status = axErr.response.status;
-      error.statusText = axErr.response.statusText;
-    }
-    throw error;
+    const response = await fetch('/data/calendar.json');
+    if (!response.ok) return [];
+    const calendar = await response.json() as LocalCalendar;
+    if (calendar.season !== year || !Array.isArray(calendar.races)) return [];
+    return calendar.races.map((race) => ({
+      // Negative keys distinguish calendar-only entries from real OpenF1/preset keys.
+      meeting_key: -Math.abs(race.round),
+      meeting_name: race.name,
+      meeting_official_name: race.name,
+      location: race.locality ?? null,
+      country_name: race.country ?? null,
+      country_code: null,
+      circuit_short_name: race.circuit ?? null,
+      date_start: race.date ? `${race.date}T00:00:00Z` : null,
+    }));
+  } catch {
+    return [];
   }
 }
 
-// Local presets provide an offline fallback for races with curated data. For other races,
-// OpenF1 supplies the per-driver stint history. Compound labels are never guessed.
 async function fetchMeetings(year: number): Promise<OpenF1Meeting[]> {
-  const local = (await loadTyrePresets()).filter((p) => p.season === year).map(presetMeeting);
-  let remote: OpenF1Meeting[] = [];
-  try {
-    remote = await tyreFetch<OpenF1Meeting>('/meetings', { year });
-  } catch (err) {
-    if (local.length === 0) throw err;
-  }
-  return mergeMeetings(remote, local);
+  const presets = (await loadTyrePresets()).filter((p) => p.season === year);
+  const presetMeetings = presets.map(presetMeeting);
+  const calendarMeetings = await fetchLocalCalendar(year);
+  const presetNames = new Set(presetMeetings.map((m) => normalizedRaceName(m.meeting_name)));
+  const calendarOnly = calendarMeetings.filter((m) => !presetNames.has(normalizedRaceName(m.meeting_name)));
+  return [...calendarOnly, ...presetMeetings];
 }
 
 async function fetchSessions(meetingKey: number): Promise<OpenF1Session[]> {
+  // Calendar-only rows are selectable offline but have no fabricated session identifiers.
+  if (meetingKey < 0) return [];
   const preset = (await loadTyrePresets()).find((p) => p.meeting_key === meetingKey);
   if (preset) return [presetSession(preset)];
-  return tyreFetch<OpenF1Session>('/sessions', { meeting_key: meetingKey });
+  return [];
 }
 
 async function fetchDrivers(sessionKey: number): Promise<OpenF1Driver[]> {
   const preset = (await loadTyrePresets()).find((p) => p.session_key === sessionKey);
-  if (preset) return presetDrivers(preset);
-  return tyreFetch<OpenF1Driver>('/drivers', { session_key: sessionKey });
+  return preset ? presetDrivers(preset) : [];
 }
 
 async function fetchStints(sessionKey: number): Promise<OpenF1Stint[]> {
   const preset = (await loadTyrePresets()).find((p) => p.session_key === sessionKey);
-  if (preset) return presetStints(preset);
-  return tyreFetch<OpenF1Stint>('/stints', { session_key: sessionKey });
+  return preset ? presetStints(preset) : [];
 }
 
 interface OpenF1Meeting {
@@ -689,7 +695,7 @@ export function TireStrategy() {
       {(status === 'loading' || status === 'error' || status === 'empty') && (
         <section className="rounded-xl border border-gray-700/50 bg-muted/40 p-10 text-center">
           {status === 'loading' && (
-            <PageLoader message="Fetching sessions, drivers and stints from OpenF1" />
+            <PageLoader message="Loading local race calendar and verified tyre records" />
           )}
           {status === 'error' && (
             <ErrorState
@@ -702,11 +708,11 @@ export function TireStrategy() {
           {status === 'empty' && (
             <EmptyState
               icon={Flag}
-              title={isFutureMeeting ? 'This race has not run yet' : 'No stint data for this session'}
+              title={isFutureMeeting ? 'This race has not run yet' : 'No local stint record for this Grand Prix'}
               message={
                 isFutureMeeting
                   ? 'Tyre history becomes available once the race weekend is complete.'
-                  : 'Try another event or season, or check back after the session ends.'
+                  : 'This Grand Prix is available in the local calendar, but verified driver-by-driver tyre stints have not been bundled for it yet. No data was generated or guessed.'
               }
               className="mx-auto max-w-md"
             />
@@ -780,7 +786,7 @@ export function TireStrategy() {
               {omittedStintCount} source rows without a verified compound were omitted instead of being labelled or guessed. The chart only counts verified compounds; source coverage may therefore be partial.
             </p>
           )}
-          <p className="mt-3 text-[11px] text-gray-500">Source: OpenF1 session data and locally curated race records where available. Missing compounds are not inferred.</p>
+          <p className="mt-3 text-[11px] text-gray-500">Source: bundled local calendar and curated local tyre records. Missing compounds are not inferred.</p>
         </section>
       )}
 
