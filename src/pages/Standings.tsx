@@ -12,6 +12,8 @@ import { usePointsProgression } from '@/lib/pointsProgression';
 import { getTeamColor2026, getTeamTextColor2026 } from '@/lib/teamColors';
 import { Podium, type PodiumEntry } from '@/components/standings/Podium';
 import { BarChartRace } from '@/components/standings/BarChartRace';
+import { TeammateBattle } from '@/components/standings/TeammateBattle';
+import type { ResultsFile } from '@/lib/teammates';
 import { TeamLogo } from '@/components/ui/TeamLogo';
 import { DriverAvatar } from '@/components/ui/DriverAvatar';
 import {
@@ -205,6 +207,7 @@ export function Standings() {
   const [loading, setLoading] = useState(true);
   const [selectedConstructor, setSelectedConstructor] = useState<Constructor | null>(null);
   const [driverSearch, setDriverSearch] = useState('');
+  const { data: resultsData } = useCachedData<ResultsFile>('results', '/data/results.json');
   const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   const loadStandings = useCallback(() => {
@@ -318,12 +321,15 @@ export function Standings() {
       />
 
       <Tabs defaultValue="drivers" className="standings-tabs w-full">
-        <TabsList className="grid w-full md:w-[400px] grid-cols-2 bg-muted border border-gray-700/50">
+        <TabsList className="grid w-full md:w-[560px] grid-cols-3 bg-muted border border-gray-700/50">
           <TabsTrigger value="drivers" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Drivers
           </TabsTrigger>
           <TabsTrigger value="constructors" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Constructors
+          </TabsTrigger>
+          <TabsTrigger value="teammates" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
+            Teammates
           </TabsTrigger>
         </TabsList>
 
@@ -671,6 +677,15 @@ export function Standings() {
               </CardContent>
             </Card>
           </div>
+        </TabsContent>
+
+        {/* TEAMMATE BATTLES */}
+        <TabsContent value="teammates" className="mt-6">
+          {resultsData ? (
+            <TeammateBattle results={resultsData} teamOrder={data.constructors.map((c) => c.shortName)} />
+          ) : (
+            <Skeleton className="h-72 w-full rounded-2xl" />
+          )}
         </TabsContent>
       </Tabs>
 

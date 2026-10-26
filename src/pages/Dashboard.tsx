@@ -15,6 +15,7 @@ import { SeasonRing } from '@/components/dashboard/SeasonRing';
 import { SeasonStrip } from '@/components/dashboard/SeasonStrip';
 import { StartLights } from '@/components/dashboard/StartLights';
 import { LeaderCard, type LeaderRow } from '@/components/dashboard/LeaderCard';
+import { TitleFightCard } from '@/components/dashboard/TitleFightCard';
 
 interface Race {
   round: number;
@@ -100,10 +101,10 @@ function getTrackMapUrl(race: Race): string {
     [/miami/, 'miami.png'], [/canada|montreal/, 'montreal.png'],
     [/monaco/, 'monaco.png'], [/spanish|barcelona|catalunya/, 'barcelona.png'],
     [/austria|spielberg|red bull ring/, 'red_bull_ring.png'],
-    [/british|silverstone/, 'silverstone.png'], [/belgian|spa-francorchamps|spa circuit/, 'spa.svg'],
+    [/british|silverstone/, 'silverstone.png'], [/belgian|spa-francorchamps|spa circuit/, 'spa.png'],
     [/hungarian|hungaroring|budapest/, 'hungaroring.png'],
     [/dutch|zandvoort|netherlands/, 'zandvoort.png'], [/italian|monza/, 'monza.png'],
-    [/madrid|madring/, 'madrid.svg'], [/azerbaijan|baku/, 'baku.png'],
+    [/madrid|madring/, 'madrid.png'], [/azerbaijan|baku/, 'baku.png'],
     [/singapore|marina bay/, 'singapore.png'], [/united states|austin|cota|circuit of the americas/, 'cota.png'],
     [/mexico|hermanos rodr[ií]guez/, 'mexico.png'], [/brazil|s[aã]o paulo|interlagos/, 'interlagos.png'],
     [/las vegas/, 'las_vegas.png'], [/qatar|lusail/, 'losail.png'], [/abu dhabi|yas marina|uae/, 'yas_marina.png'],
@@ -496,6 +497,8 @@ export function Dashboard() {
       )}
 
       {/* Championship leaders */}
+      <TitleFightCard drivers={standingsData?.drivers ?? []} races={calendar} />
+
       <section className="dashboard-section dashboard-stagger-1">
         <SectionHeading
           title="Championship leaders"
