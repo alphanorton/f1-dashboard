@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "source": "Formula1.com Official & FIA Entry / ESPN 2026",
-  "asOfDate": "2026-10-11",
+  "asOfDate": "2026-10-25",
   "totalRounds": 23,
   "races": [
     {
@@ -369,8 +369,15 @@
       "date": "2026-10-25",
       "weekendDates": "23 - 25 Oct",
       "isSprint": false,
-      "status": "next",
-      "podium": []
+      "status": "completed",
+      "podium": [
+        "Kimi Antonelli (Mercedes)",
+        "Charles Leclerc (Ferrari)",
+        "Max Verstappen (Red Bull Racing)"
+      ],
+      "officialRound": 18,
+      "winner": "Kimi Antonelli (Mercedes)",
+      "notes": "Kimi Antonelli won from pole (1:34.035) over 56 laps at the 5.513 km Circuit of the Americas, finishing 13.078 s ahead of Charles Leclerc, who set the fastest lap (1:37.976, lap 42) and passed Verstappen for second on lap 49. Antonelli is now 123 points clear of George Russell and can clinch the title in Mexico City. Bottas retired with an engine failure; Colapinto and Bearman retired after collisions."
     },
     {
       "round": 21,
@@ -382,7 +389,7 @@
       "date": "2026-11-01",
       "weekendDates": "30 Oct - 01 Nov",
       "isSprint": false,
-      "status": "upcoming",
+      "status": "next",
       "podium": []
     },
     {

@@ -1,7 +1,7 @@
 {
   "season": 2026,
-  "asOfRound": 19,
-  "asOfDate": "2026-10-11",
+  "asOfRound": 20,
+  "asOfDate": "2026-10-25",
   "source": "Official FIA Classification 2026",
   "pointsSystem": "25-18-15-12-10-8-6-4-2-1",
   "races": {
@@ -3184,7 +3184,241 @@
           "laps": null
         }
       ]
+    },
+    "20": {
+      "round": 20,
+      "officialRound": 18,
+      "name": "United States Grand Prix",
+      "date": "2026-10-25",
+      "circuit": "Circuit of the Americas",
+      "distanceKm": 5.513,
+      "raceLaps": 56,
+      "winnerTime": "1:35:16.650",
+      "poleTime": "1:34.035",
+      "resultsNote": "Antonelli won from pole for his ninth win of 2026. Leclerc took the fastest lap (1:37.976, lap 42); no point was available for it. Valtteri Bottas retired with an engine failure but was classified (48 laps, over 90% distance). Franco Colapinto and Oliver Bearman retired with collision damage.",
+      "results": [
+        {
+          "pos": 1,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 25,
+          "gap": "1:35:16.650",
+          "laps": 56
+        },
+        {
+          "pos": 2,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 18,
+          "gap": "+13.078",
+          "laps": 56
+        },
+        {
+          "pos": 3,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 15,
+          "gap": "+17.485",
+          "laps": 56
+        },
+        {
+          "pos": 4,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 12,
+          "gap": "+18.515",
+          "laps": 56
+        },
+        {
+          "pos": 5,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 10,
+          "gap": "+30.521",
+          "laps": 56
+        },
+        {
+          "pos": 6,
+          "driver": "Isack Hadjar",
+          "code": "HAD",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 8,
+          "gap": "+34.373",
+          "laps": 56
+        },
+        {
+          "pos": 7,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 6,
+          "gap": "+52.674",
+          "laps": 56
+        },
+        {
+          "pos": 8,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 4,
+          "gap": "+54.303",
+          "laps": 56
+        },
+        {
+          "pos": 9,
+          "driver": "Liam Lawson",
+          "code": "LAW",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 2,
+          "gap": "+1:19.183",
+          "laps": 56
+        },
+        {
+          "pos": 10,
+          "driver": "Pierre Gasly",
+          "code": "GAS",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 1,
+          "gap": "+1:27.516",
+          "laps": 56
+        },
+        {
+          "pos": 11,
+          "driver": "Nico Hülkenberg",
+          "code": "HUL",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1:34.945",
+          "laps": 56
+        },
+        {
+          "pos": 12,
+          "driver": "Arvid Lindblad",
+          "code": "LIN",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1 lap",
+          "laps": 55
+        },
+        {
+          "pos": 13,
+          "driver": "Gabriel Bortoleto",
+          "code": "BOR",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1 lap",
+          "laps": 55
+        },
+        {
+          "pos": 14,
+          "driver": "Esteban Ocon",
+          "code": "OCO",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1 lap",
+          "laps": 55
+        },
+        {
+          "pos": 15,
+          "driver": "Lance Stroll",
+          "code": "STR",
+          "team": "Aston Martin",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1 lap",
+          "laps": 55
+        },
+        {
+          "pos": 16,
+          "driver": "Fernando Alonso",
+          "code": "ALO",
+          "team": "Aston Martin",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1 lap",
+          "laps": 55
+        },
+        {
+          "pos": 17,
+          "driver": "Alexander Albon",
+          "code": "ALB",
+          "team": "Williams",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1 lap",
+          "laps": 55
+        },
+        {
+          "pos": 18,
+          "driver": "Carlos Sainz",
+          "code": "SAI",
+          "team": "Williams",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1 lap",
+          "laps": 55
+        },
+        {
+          "pos": 19,
+          "driver": "Sergio Pérez",
+          "code": "PER",
+          "team": "Cadillac",
+          "status": "Finished",
+          "points": 0,
+          "gap": "+1 lap",
+          "laps": 55
+        },
+        {
+          "pos": 20,
+          "driver": "Valtteri Bottas",
+          "code": "BOT",
+          "team": "Cadillac",
+          "status": "DNF",
+          "points": 0,
+          "gap": "DNF (48 laps)",
+          "laps": 48
+        },
+        {
+          "pos": null,
+          "driver": "Franco Colapinto",
+          "code": "COL",
+          "team": "Alpine",
+          "status": "DNF",
+          "points": 0,
+          "gap": "DNF",
+          "laps": 35
+        },
+        {
+          "pos": null,
+          "driver": "Oliver Bearman",
+          "code": "BEA",
+          "team": "Haas",
+          "status": "DNF",
+          "points": 0,
+          "gap": "DNF",
+          "laps": 24
+        }
+      ]
     }
   },
-  "officialAsOfRound": 17
+  "officialAsOfRound": 18
 }
