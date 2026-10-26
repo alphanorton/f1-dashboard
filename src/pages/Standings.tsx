@@ -12,6 +12,8 @@ import { usePointsProgression } from '@/lib/pointsProgression';
 import { getTeamColor2026, getTeamTextColor2026 } from '@/lib/teamColors';
 import { Podium, type PodiumEntry } from '@/components/standings/Podium';
 import { BarChartRace } from '@/components/standings/BarChartRace';
+import { TeamLogo } from '@/components/ui/TeamLogo';
+import { DriverAvatar } from '@/components/ui/DriverAvatar';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Legend,
@@ -401,9 +403,11 @@ export function Standings() {
                           </td>
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-2">
+                              <DriverAvatar code={driver.code} name={driver.name} team={driver.team} size={36} />
                               <span className="px-2 py-0.5 rounded text-xs font-bold bg-surface text-gray-300 border border-gray-700 font-mono tabular-nums">
                                 {driver.driverNumber ?? driver.code}
                               </span>
+                              <TeamLogo team={driver.team} size={20} className="hidden sm:inline-flex" />
                               <div>
                                 <p className="font-bold text-white text-sm">{driver.name}</p>
                                 <p className="text-xs text-gray-400">{driver.team}</p>
@@ -569,9 +573,12 @@ export function Standings() {
                             )}
                           </td>
                           <td className="py-3 px-4">
-                            <div>
-                              <p className="font-bold text-sm" style={{ color: getTeamTextColor2026(team.shortName) }}>{team.name}</p>
-                              <p className="text-xs text-gray-400">{team.shortName}</p>
+                            <div className="flex items-center gap-3">
+                              <TeamLogo team={team.shortName} size={32} />
+                              <div>
+                                <p className="font-bold text-sm" style={{ color: getTeamTextColor2026(team.shortName) }}>{team.name}</p>
+                                <p className="text-xs text-gray-400">{team.shortName}</p>
+                              </div>
                             </div>
                           </td>
                           <td className="py-3 px-4 hidden lg:table-cell">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { DriverAvatar } from '@/components/ui/DriverAvatar';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { PageHeader } from '@/components/ui/PageHeader';
@@ -132,6 +133,9 @@ export function FastestLaps() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
+                          {race.driver_code && (
+                            <DriverAvatar code={race.driver_code} name={race.driver_name ?? race.driver_code} team={race.team ?? ''} size={28} />
+                          )}
                           <span className="px-2 py-0.5 rounded text-xs font-bold bg-surface text-gray-300 border border-gray-700/50 font-mono">
                             {race.driver_code ?? '—'}
                           </span>
