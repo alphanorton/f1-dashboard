@@ -3195,7 +3195,7 @@
       "raceLaps": 56,
       "winnerTime": "1:35:16.650",
       "poleTime": "1:34.035",
-      "resultsNote": "Antonelli won from pole for his ninth win of 2026. Leclerc took the fastest lap (1:37.976, lap 42); no point was available for it. Valtteri Bottas retired with an engine failure but was classified (48 laps, over 90% distance). Franco Colapinto and Oliver Bearman retired with collision damage.",
+      "resultsNote": "Antonelli won from pole for his ninth win of 2026. Leclerc took the fastest lap (1:37.976, lap 42); no point was available for it. Valtteri Bottas retired with an engine failure after 48 of 56 laps (not classified). Franco Colapinto and Oliver Bearman retired with collision damage.",
       "results": [
         {
           "pos": 1,
@@ -3388,7 +3388,7 @@
           "laps": 55
         },
         {
-          "pos": 20,
+          "pos": null,
           "driver": "Valtteri Bottas",
           "code": "BOT",
           "team": "Cadillac",

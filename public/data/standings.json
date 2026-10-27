@@ -258,19 +258,6 @@
     },
     {
       "position": 20,
-      "driverNumber": 22,
-      "code": "TSU",
-      "name": "Yuki Tsunoda",
-      "nationality": "Japan",
-      "team": "Racing Bulls",
-      "points": 1,
-      "wins": null,
-      "podiums": null,
-      "gap": 364,
-      "sprintPoints": null
-    },
-    {
-      "position": 21,
       "driverNumber": 18,
       "code": "STR",
       "name": "Lance Stroll",
@@ -283,7 +270,7 @@
       "sprintPoints": null
     },
     {
-      "position": 22,
+      "position": 21,
       "driverNumber": 77,
       "code": "BOT",
       "name": "Valtteri Bottas",
@@ -296,7 +283,7 @@
       "sprintPoints": null
     },
     {
-      "position": 23,
+      "position": 22,
       "driverNumber": 11,
       "code": "PER",
       "name": "Sergio Pérez",
@@ -415,10 +402,10 @@
         "Liam Lawson",
         "Yuki Tsunoda"
       ],
-      "points": 116,
+      "points": 115,
       "wins": null,
       "podiums": null,
-      "gap": 491,
+      "gap": 492,
       "updates": [
         "New RB22-inspired front wing Miami",
         "Optimized Venturi tunnel Belgium"

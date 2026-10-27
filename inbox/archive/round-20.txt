@@ -1,0 +1,233 @@
+round: 20
+official: 18
+fastest: LEC 1:37.976 lap 42
+classified: BOT
+--- 
+Formula 1
+Schedule
+Results
+Standings
+Race
+
+Results
+
+
+
+1
+ANT
+
+2
+LEC
+
+3
+VER
+
+4
+HAM
+
+5
+NOR
+
+6
+HAD
+
+7
+PIA
+
+8
+RUS
+
+9
+LAW
+
+10
+GAS
+
+11
+HUL
+
+12
+LIN
+
+13
+BOR
+
+14
+OCO
+
+15
+STR
+
+16
+ALO
+
+17
+ALB
+
+18
+SAI
+
+19
+PER
+
+NC
+BOT
+
+NC
+COL
+
+NC
+BEA
+
+Session status
+Results View
+Race positions
+Kimi Antonelli
+Gap to leader
+
+2026
+
+Drivers
+
+All
+2026 Drivers' Standings
+
+Pos.	Driver	Nationality	Team	Pts.
+1	
+
+ ANT
+ITA	
+
+Mercedes	365
+2	
+
+ RUS
+GBR	
+
+Mercedes	242
+3	
+
+ HAM
+GBR	
+
+Ferrari	241
+4	
+
+ VER
+NED	
+
+Red Bull Racing	236
+5	
+
+ LEC
+MON	
+
+Ferrari	233
+6	
+
+ NOR
+GBR	
+
+McLaren	211
+7	
+
+ PIA
+AUS	
+
+McLaren	144
+8	
+
+ HAD
+FRA	
+
+Red Bull Racing	105
+9	
+
+ LAW
+NZL	
+
+Racing Bulls	77
+10	
+
+ GAS
+FRA	
+
+Alpine	42
+11	
+
+ LIN
+GBR	
+
+Racing Bulls	38
+12	
+
+ COL
+ARG	
+
+Alpine	27
+13	
+
+ BEA
+GBR	
+
+Haas F1 Team	23
+14	
+
+ HUL
+GER	
+
+Audi	13
+15	
+
+ BOR
+BRA	
+
+Audi	10
+16	
+
+ OCO
+FRA	
+
+Haas F1 Team	7
+17	
+
+ ALO
+ESP	
+
+Aston Martin	7
+18	
+
+ SAI
+ESP	
+
+Williams	7
+19	
+
+ ALB
+THA	
+
+Williams	5
+20	
+
+ TSU
+JPN	
+
+Racing Bulls	1
+21	
+
+ STR
+CAN	
+
+Aston Martin	0
+22	
+
+ BOT
+FIN	
+
+Cadillac	0
+23	
+
+ PER
+MEX	
+
+Cadillac	0

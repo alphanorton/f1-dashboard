@@ -15,6 +15,7 @@ race.json (see tools/race.example.json):
   results          list in finishing order: {code, status ("Finished"|"DNF"|"DNS"), gap, laps}
                    - give "pos" only for classified drivers; leave it out for unclassified retirements
   sprintResults    optional, driver codes in sprint finishing order (sprint weekends); points go to the standings
+  expectPoints     optional {code: points} from the official standings; the run is refused if any total differs
   fastestLap       optional {code, lap_number, lap_time ("1:37.976"), s1, s2, s3, source}
                    - s1..s3 in seconds; leave them out if unknown (they stay null, never guessed)
 
@@ -130,6 +131,13 @@ def main():
     standings['constructors'].sort(key=lambda t: (-t['points'], t['position']))
     tl = standings['constructors'][0]['points']
     for i, t in enumerate(standings['constructors'], 1): t['position'] = i; t['gap'] = tl - t['points']
+
+    # ---- cross-check against the official standings pasted by the user (optional) ----
+    expect = race.get('expectPoints') or {}
+    bad = [f"{c}: computed {drivers_after[c]} vs official {v}" for c, v in expect.items() if c in (drivers_after := {d['code']: d['points'] for d in standings['drivers']}) and drivers_after[c] != v]
+    if bad: die('points do not match the official standings -> ' + '; '.join(bad))
+    missing = sorted(c for c in expect if c not in drivers)
+    if missing: print('Note: in the official standings but not in this project (ignored):', ', '.join(missing))
 
     # ---- calendar.json ----
     winner = next(r for r in rows if r['pos'] == 1)
