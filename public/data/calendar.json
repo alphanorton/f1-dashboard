@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "source": "Formula1.com Official & FIA Entry / ESPN 2026",
-  "asOfDate": "2026-10-25",
+  "asOfDate": "2026-11-01",
   "totalRounds": 23,
   "races": [
     {
@@ -389,8 +389,15 @@
       "date": "2026-11-01",
       "weekendDates": "30 Oct - 01 Nov",
       "isSprint": false,
-      "status": "next",
-      "podium": []
+      "status": "completed",
+      "podium": [
+        "Max Verstappen (Red Bull Racing)",
+        "Lewis Hamilton (Ferrari)",
+        "Kimi Antonelli (Mercedes)"
+      ],
+      "officialRound": 19,
+      "winner": "Max Verstappen (Red Bull Racing)",
+      "notes": "Verstappen won after Ferrari team-mates Leclerc and Hamilton clashed on lap 1, with a red flag and two safety cars. Antonelli finished third to clinch the 2026 title with four races to spare. Post-race penalties reshuffled the order: Piastri +10s (7th to 13th) and Colapinto and Gasly for yellow-flag infringements. Ryo Hirakawa scored a point on his F1 debut for Haas."
     },
     {
       "round": 22,
@@ -402,7 +409,7 @@
       "date": "2026-11-08",
       "weekendDates": "06 - 08 Nov",
       "isSprint": false,
-      "status": "upcoming",
+      "status": "next",
       "podium": []
     },
     {

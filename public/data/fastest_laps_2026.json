@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "source": "OpenF1 race session laps (api.openf1.org), cross-checked against Jolpica-Ergast results and the official formula1.com fastest-lap list",
-  "asOfDate": "2026-10-25",
+  "asOfDate": "2026-11-01",
   "generatedAt": "2026-10-11T15:28:43.410Z",
   "tolerance": {
     "lapTime": 0.001,
@@ -298,6 +298,23 @@
       "s3": null,
       "source": "grandprix.com race analysis and Wikipedia race page (two sources agree on 1:37.976, lap 42); sector times not available",
       "verified": false
+    },
+    {
+      "round": 19,
+      "projectRound": 21,
+      "grand_prix": "Mexico City Grand Prix",
+      "circuit": null,
+      "date": "2026-11-01",
+      "driver_name": "Lewis HAMILTON",
+      "driver_code": "HAM",
+      "team": "Ferrari",
+      "lap_number": 50,
+      "lap_time": 79.268,
+      "s1": null,
+      "s2": null,
+      "s3": null,
+      "source": "inbox/race.txt",
+      "verified": false
     }
   ],
   "needs_review": [
@@ -337,6 +354,14 @@
       "driver_code": "LEC",
       "lap_time": 97.976,
       "official_lap_time": "1:37.976"
+    },
+    {
+      "round": 19,
+      "grand_prix": "Mexico City Grand Prix",
+      "reason": "sector times missing",
+      "driver_code": "HAM",
+      "lap_time": 79.268,
+      "lap_number": 50
     }
   ]
 }
