@@ -77,11 +77,22 @@ def build_race(text):
     sep = next((i for i, l in enumerate(lines) if l.strip().startswith('---')), None)
     if sep is None: raise InboxError('The line "---" is missing: header lines go above it, the pasted results below it.')
     h = parse_header(lines[:sep]); paste = '\n'.join(lines[sep + 1:])
+    if 'undo' in h:
+        if not h['undo'].isdigit(): raise InboxError(f'undo must be a round number, got "{h["undo"]}"')
+        return {'undo': int(h['undo'])}
     if 'round' not in h: return None  # empty template: nothing to do
     if not h['round'].isdigit(): raise InboxError(f'round must be a number, got "{h["round"]}"')
     tokens = [t.strip() for t in paste.splitlines() if t.strip()]
     extra = set(re.findall(r'[A-Z]{3}', h.get('classified', '')))
     race = {'round': int(h['round']), 'results': parse_results(tokens, extra)}
+    if h.get('replace', '').lower() in ('yes', 'true', '1', 'y'): race['replace'] = True
+    if 'guest' in h:  # guest: HIR=Ryo Hirakawa|Haas ; XXX=Name|Team
+        guests = {}
+        for part in h['guest'].split(';'):
+            m = re.match(r'^\s*([A-Z]{3})\s*=\s*([^|]+?)\s*\|\s*(.+?)\s*$', part)
+            if not m: raise InboxError('guest: should look like  guest: HIR=Ryo Hirakawa|Haas  (separate several with ;)')
+            guests[m.group(1)] = {'name': m.group(2), 'team': m.group(3)}
+        race['guests'] = guests
     if 'official' in h and h['official'].isdigit(): race['officialRound'] = int(h['official'])
     if 'date' in h: race['date'] = h['date']
     if 'laps' in h and h['laps'].isdigit(): race['raceLaps'] = int(h['laps'])
@@ -121,16 +132,25 @@ def main():
 
     data = os.path.join(root, 'public', 'data')
     backup = tempfile.mkdtemp()
+    snap = os.path.join(root, 'inbox', 'undo-snapshot.json')
     for n in DATA_FILES: shutil.copy(os.path.join(data, n + '.json'), backup)
+    had_snap = os.path.exists(snap)
+    if had_snap: shutil.copy(snap, os.path.join(backup, 'undo-snapshot.json'))
 
     def restore():
         for n in DATA_FILES: shutil.copy(os.path.join(backup, n + '.json'), os.path.join(data, n + '.json'))
+        if had_snap: shutil.copy(os.path.join(backup, 'undo-snapshot.json'), snap)
+        elif os.path.exists(snap): os.remove(snap)
 
-    rj = os.path.join(backup, 'race.json'); json.dump(race, open(rj, 'w', encoding='utf-8'), ensure_ascii=False)
-    cmd = [sys.executable, os.path.join(HERE, 'add-race.py'), rj, '--root', root] + (['--dry-run'] if a.dry_run else [])
+    undo_round = race.get('undo')
+    if undo_round is not None:
+        cmd = [sys.executable, os.path.join(HERE, 'add-race.py'), '--undo', str(undo_round), '--root', root]
+    else:
+        rj = os.path.join(backup, 'race.json'); json.dump(race, open(rj, 'w', encoding='utf-8'), ensure_ascii=False)
+        cmd = [sys.executable, os.path.join(HERE, 'add-race.py'), rj, '--root', root] + (['--dry-run'] if a.dry_run else [])
     p = subprocess.run(cmd, capture_output=True, text=True)
     out = (p.stdout + p.stderr).strip()
-    title = f"round {race['round']}"
+    title = f"round {undo_round} undone" if undo_round is not None else f"round {race['round']}"
     if p.returncode != 0:
         restore(); write_status(root, False, title, out); print(out); return
     if not a.dry_run and not a.no_audit and shutil.which('node') and os.path.exists(os.path.join(root, 'audit-data.cjs')):
@@ -139,11 +159,16 @@ def main():
             restore(); msg = '\n'.join(l for l in (au.stdout + au.stderr).splitlines() if not l.startswith('PASS'))
             write_status(root, False, title + ' (data check failed)', msg); print(msg); return
         out += '\n\nData audit: passed'
-    if 'expectPoints' not in race: out += '\n\nNote: no standings table found in the paste, so the points were not cross-checked.'
+    if undo_round is None and 'expectPoints' not in race: out += '\n\nNote: no standings table found in the paste, so the points were not cross-checked.'
     print(out)
     if a.dry_run: return
-    write_status(root, True, title + ' added', out)
-    shutil.copy(inbox, os.path.join(root, 'inbox', 'archive', f"round-{race['round']:02d}.txt"))
+    if undo_round is not None:
+        write_status(root, True, title, out)
+        old_archive = os.path.join(root, 'inbox', 'archive', f'round-{undo_round:02d}.txt')
+        if os.path.exists(old_archive): os.remove(old_archive)
+    else:
+        write_status(root, True, title + (' replaced' if race.get('replace') else ' added'), out)
+        shutil.copy(inbox, os.path.join(root, 'inbox', 'archive', f"round-{race['round']:02d}.txt"))
     open(inbox, 'w', encoding='utf-8').write(TEMPLATE)
 
 

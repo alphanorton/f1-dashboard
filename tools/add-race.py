@@ -6,12 +6,17 @@ Updates public/data/{results,standings,calendar,fastest_laps_2026}.json together
 Usage:
   python3 tools/add-race.py race.json            # apply
   python3 tools/add-race.py race.json --dry-run  # show what would change, write nothing
+  python3 tools/add-race.py --undo 21            # take the LAST added race back out (exact restore)
   python3 tools/add-race.py race.json --root /path/to/project
 
 race.json (see tools/race.example.json):
   round            project round number (the calendar.json round)
   officialRound    optional, official FIA round number
   date, circuit, distanceKm, raceLaps, winnerTime, poleTime, note   (all optional but recommended)
+  replace          optional true: remove the previously added copy of this round first (last race only), then add this one
+  guests           optional {code: {name, team}} for one-off/substitute drivers who are not in standings.json.
+                   They appear in the race result and their points go to their TEAM's constructor total,
+                   but they do not get a row in the driver standings (the project keeps 22 drivers).
   results          list in finishing order: {code, status ("Finished"|"DNF"|"DNS"), gap, laps}
                    - give "pos" only for classified drivers; leave it out for unclassified retirements
   sprintResults    optional, driver codes in sprint finishing order (sprint weekends); points go to the standings
@@ -58,19 +63,57 @@ def f9_name(name):
     return ' '.join(parts[:-1] + [parts[-1].upper()])
 
 
+SNAPSHOT = os.path.join('inbox', 'undo-snapshot.json')
+DATA_NAMES = ('results', 'standings', 'calendar', 'fastest_laps_2026')
+
+
+def write_snapshot(root, rnd, files):
+    """Keep the four data files exactly as they were before this race, so the last race can be undone."""
+    p = os.path.join(root, SNAPSHOT)
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    snap = {'round': int(rnd), 'files': {n: {'bom': files[n][1], 'text': files[n][2]} for n in DATA_NAMES}}
+    json.dump(snap, open(p, 'w', encoding='utf-8'), ensure_ascii=False)
+
+
+def do_undo(root, rnd):
+    """Restore the data to how it was before round `rnd` was added. Only the most recently added race can be undone."""
+    p = os.path.join(root, SNAPSHOT)
+    if not os.path.exists(p): die('nothing to undo: there is no snapshot (only races added through add-race/inbox can be undone)')
+    snap = json.load(open(p, encoding='utf-8'))
+    if str(snap.get('round')) != str(rnd):
+        die(f"only the most recently added race can be undone, and that is round {snap.get('round')} (asked for {rnd})")
+    data = os.path.join(root, 'public', 'data')
+    current, _, _ = load(os.path.join(data, 'results.json'))
+    if str(rnd) not in current['races'] or str(current.get('asOfRound')) != str(rnd):
+        die(f'round {rnd} is not the latest race in results.json any more; undo it by hand')
+    for n in DATA_NAMES:
+        f = snap['files'][n]
+        open(os.path.join(data, n + '.json'), 'wb').write((b'\xef\xbb\xbf' if f['bom'] else b'') + f['text'].encode('utf-8'))
+    os.remove(p)
+
+
 def die(msg):
     print('ERROR:', msg); sys.exit(1)
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('race'); ap.add_argument('--root', default=os.path.join(os.path.dirname(__file__), '..'))
+    ap.add_argument('race', nargs='?'); ap.add_argument('--undo', type=int, help='undo the last added race (round number)'); ap.add_argument('--root', default=os.path.join(os.path.dirname(__file__), '..'))
     ap.add_argument('--dry-run', action='store_true')
     a = ap.parse_args()
     data = os.path.join(a.root, 'public', 'data')
+    if a.undo is not None:
+        if a.dry_run: die('--undo has no --dry-run')
+        do_undo(a.root, a.undo)
+        print(f'Round {a.undo} removed. Data restored to how it was before that race was added.')
+        return
+    if not a.race: die('give a race.json file, or use --undo ROUND')
     race = json.load(open(a.race, encoding='utf-8'))
     rnd = str(race['round'])
 
+    if race.get('replace') and not a.dry_run and rnd in load(os.path.join(data, 'results.json'))[0]['races']:
+        do_undo(a.root, rnd)
+        print(f'Replacing round {rnd}: the earlier copy was removed first.')
     files = {n: load(os.path.join(data, n + '.json')) for n in ('results', 'standings', 'calendar', 'fastest_laps_2026')}
     results, standings, calendar, fl = (files[n][0] for n in ('results', 'standings', 'calendar', 'fastest_laps_2026'))
 
@@ -78,6 +121,11 @@ def main():
     cal = next((r for r in calendar['races'] if str(r['round']) == rnd), None)
     if not cal: die(f'round {rnd} is not in calendar.json')
     drivers = {d['code']: d for d in standings['drivers']}
+    guests = race.get('guests') or {}
+    teams_known = {t['shortName'] for t in standings['constructors']}
+    for gc, g in guests.items():
+        if gc in drivers: die(f'{gc} is listed as a guest but is already in the standings')
+        if g.get('team') not in teams_known: die(f"guest {gc}: team \"{g.get('team')}\" is not one of the constructors")
 
     # ---- classification ----
     rows, pts_gp = [], {}
@@ -87,13 +135,14 @@ def main():
     seen = set()
     for r in race['results']:
         c = r['code']
-        if c not in drivers: die(f'unknown driver code {c} (not in standings.json)')
+        who = drivers.get(c) or guests.get(c)
+        if not who: die(f'unknown driver code {c} (not in standings.json; add it with a guest: line if it is a one-off driver)')
         if c in seen: die(f'driver {c} listed twice')
         seen.add(c)
         p = r.get('pos')
         pts = GP_POINTS[p - 1] if p is not None and p <= len(GP_POINTS) and r.get('status', 'Finished') != 'DNS' else 0
         pts_gp[c] = pts
-        row = dict(pos=p, driver=drivers[c]['name'], code=c, team=drivers[c]['team'], status=r.get('status', 'Finished'), points=pts)
+        row = dict(pos=p, driver=who.get('name'), code=c, team=who['team'], status=r.get('status', 'Finished'), points=pts)
         if 'gap' in r: row['gap'] = r['gap']
         if 'laps' in r: row['laps'] = r['laps']
         rows.append(row)
@@ -104,6 +153,11 @@ def main():
         if c not in drivers: die(f'unknown sprint driver code {c}')
         if i < len(SPRINT_POINTS): sprint_pts[c] = SPRINT_POINTS[i]
     delta = {c: pts_gp.get(c, 0) + sprint_pts.get(c, 0) for c in drivers}
+    guest_team_pts = {}
+    for gc, g in guests.items():
+        gp = pts_gp.get(gc, 0)
+        if gc in sprint_pts: die(f'guest {gc} scored sprint points; handle that by hand')
+        if gp: guest_team_pts[g['team']] = guest_team_pts.get(g['team'], 0) + gp
 
     # ---- results.json ----
     entry = {"round": race['round'], "officialRound": race.get('officialRound'), "name": cal['name'],
@@ -124,6 +178,7 @@ def main():
     for i, d in enumerate(standings['drivers'], 1): d['position'] = i; d['gap'] = lead - d['points']
     team_delta = {}
     for c, p in delta.items(): team_delta[drivers[c]['team']] = team_delta.get(drivers[c]['team'], 0) + p
+    for t, p in guest_team_pts.items(): team_delta[t] = team_delta.get(t, 0) + p
     for t in standings['constructors']:
         t['points'] += team_delta.get(t['shortName'], 0)
     unknown = set(team_delta) - {t['shortName'] for t in standings['constructors']}
@@ -181,11 +236,14 @@ def main():
     # ---- report ----
     print(f"Round {rnd}: {cal['name']} - winner {winner['driver']}")
     print('Points added:', ', '.join(f"{c} +{p}" for c, p in sorted(delta.items(), key=lambda x: -x[1]) if p))
+    for gc, g in guests.items():
+        print(f"Guest driver {gc} ({g.get('name')}, {g['team']}): {pts_gp.get(gc, 0)} pt(s), added to the team total only")
     print('Top 5 drivers:', ', '.join(f"{d['code']} {d['points']}" for d in standings['drivers'][:5]))
     print('Constructors:', ', '.join(f"{t['shortName']} {t['points']}" for t in standings['constructors'][:4]), '...')
     print('Next race:', nxt['name'] if nxt else '- (season finished)', '| races left:', len(later))
     if race.get('fastestLap'): print('Fastest lap:', item['driver_code'], item['lap_time'], 'verified' if item['verified'] else 'NOT verified (see needs_review)')
     if a.dry_run: print('\n--dry-run: nothing written'); return
+    write_snapshot(a.root, rnd, files)
     for n, key in (('results', results), ('standings', standings), ('calendar', calendar), ('fastest_laps_2026', fl)):
         _, bom, orig = files[n]
         save(os.path.join(data, n + '.json'), key, bom, orig)
