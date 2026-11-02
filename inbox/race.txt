@@ -1,5 +1,77 @@
-round: 
-official: 
-fastest: 
+round: 21
+official: 19
+fastest: HAM 1:19.268 lap 50
+guest: HIR=Ryo Hirakawa|Haas
+laps: 71
+winnertime: 2:20:28.772
+pole: 1:16.514
+distance: 4.304
+note: Verstappen won after Ferrari team-mates Leclerc and Hamilton clashed on lap 1, with a red flag and two safety cars. Antonelli finished third to clinch the 2026 title with four races to spare. Post-race penalties reshuffled the order: Piastri +10s (7th to 13th) and Colapinto and Gasly for yellow-flag infringements. Ryo Hirakawa scored a point on his F1 debut for Haas.
 --- 
-(Paste the formula1.com race results below this line. You can paste the standings table after it too.)
+Results
+
+1
+VER
+
+2
+HAM
+
+3
+ANT
+
+4
+LEC
+
+5
+NOR
+
+6
+RUS
+
+7
+LAW
+
+8
+BOR
+
+9
+HAD
+
+10
+HIR
+
+11
+ALB
+
+12
+SAI
+
+13
+PIA
+
+14
+HUL
+
+15
+COL
+
+16
+PER
+
+17
+GAS
+
+NC
+LIN
+
+NC
+BEA
+
+NC
+BOT
+
+NC
+STR
+
+NC
+ALO
