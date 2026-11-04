@@ -19,6 +19,21 @@ const assert = (condition, message) => condition ? pass(message) : fail(message)
 
 console.log('=== EHI F1 DATA INTEGRITY AUDIT ===');
 
+// Track maps: every local map must exist and be a PNG (placeholder SVGs drew wrong circuits), and
+// every circuit must carry a well-formed lap record ("m:ss.mmm (Driver, Team, Year)").
+{
+  const circuits = read('circuits.json').circuits;
+  for (const c of circuits) {
+    const url = c.trackMapUrl || '';
+    if (url.startsWith('/data/')) {
+      const ok = url.endsWith('.png') && fs.existsSync(path.join(process.cwd(), 'public', url));
+      if (!ok) fail(`${c.id}: track map ${url} is missing or not a PNG`);
+    }
+    if (!/^\d:\d{2}\.\d{3} \(.+, \d{4}\)$/.test(c.lapRecord || '')) fail(`${c.id}: malformed lap record "${c.lapRecord}"`);
+  }
+  assert(circuits.every((c) => !(c.trackMapUrl || '').endsWith('.svg')), 'no circuit uses a placeholder SVG track map');
+}
+
 // Calendar schema and round integrity.
 assert(calendar.season === 2026, 'calendar season is 2026');
 assert(Array.isArray(calendar.races) && calendar.races.length > 0, 'calendar has races');

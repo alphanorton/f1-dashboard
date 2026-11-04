@@ -195,7 +195,7 @@
       "length": 5.807,
       "laps": 53,
       "turns": 18,
-      "lapRecord": "1:30.983 (Lewis Hamilton, Mercedes, 2019)",
+      "lapRecord": "1:30.965 (Kimi Antonelli, Mercedes, 2025)",
       "maxGForce": "5.8G (Casio Triangle chicane - highest G of all F1 circuits)",
       "sectors": 3,
       "corners": [
@@ -308,7 +308,7 @@
       "length": 5.412,
       "laps": 57,
       "turns": 19,
-      "lapRecord": "1:27.685 (Max Verstappen, Red Bull, 2023)",
+      "lapRecord": "1:29.708 (Max Verstappen, Red Bull, 2023)",
       "maxGForce": "5.0G (Turn 17)",
       "sectors": 3,
       "corners": [],
@@ -394,7 +394,7 @@
       "length": 3.337,
       "laps": 78,
       "turns": 19,
-      "lapRecord": "1:10.166 (Lewis Hamilton, Mercedes, 2021)",
+      "lapRecord": "1:12.909 (Lewis Hamilton, Mercedes, 2021)",
       "maxGForce": "5.1G (Sainte Dévote - Turn 1)",
       "sectors": 3,
       "corners": [
@@ -492,7 +492,7 @@
       "length": 4.657,
       "laps": 66,
       "turns": 16,
-      "lapRecord": "1:18.149 (Max Verstappen, Red Bull, 2023)",
+      "lapRecord": "1:15.743 (Oscar Piastri, McLaren, 2025)",
       "maxGForce": "4.6G (Turn 9)",
       "sectors": 3,
       "corners": [
@@ -724,7 +724,7 @@
       "length": 7.004,
       "laps": 44,
       "turns": 19,
-      "lapRecord": "1:46.286 (Valtteri Bottas, Mercedes, 2018)",
+      "lapRecord": "1:44.701 (Sergio Perez, Red Bull, 2024)",
       "maxGForce": "5.5G (Eau Rouge-Raidillon)",
       "sectors": 3,
       "corners": [
@@ -797,10 +797,9 @@
         }
       ],
       "capacity": 70000,
-      "trackMapUrl": "/data/track-maps/spa.svg",
-      "trackMapStatus": "local-svg",
-      "trackMapNote": "Local SVG track map",
-      "trackMapFailure": "CDN GET returned an incomplete image body; decoding could not be completed."
+      "trackMapUrl": "/data/track-maps/spa.png",
+      "trackMapStatus": "local-downloaded",
+      "trackMapNote": "Spa-Francorchamps layout (La Source, Eau Rouge-Raidillon, Kemmel, Les Combes, Pouhon, Blanchimont, Bus Stop)"
     },
     {
       "id": "hungaroring",
@@ -896,7 +895,7 @@
       "length": 5.793,
       "laps": 53,
       "turns": 11,
-      "lapRecord": "1:21.046 (Rubens Barrichello, Ferrari, 2004)",
+      "lapRecord": "1:20.901 (Lando Norris, McLaren, 2025)",
       "maxGForce": "5.5G (Variante del Rettifilo - Turn 1 chicane)",
       "sectors": 3,
       "corners": [
@@ -1219,7 +1218,7 @@
       "length": 4.94,
       "laps": 62,
       "turns": 19,
-      "lapRecord": "1:35.867 (Lewis Hamilton, Mercedes, 2023)",
+      "lapRecord": "1:33.808 (Lewis Hamilton, Ferrari, 2025)",
       "maxGForce": "4.8G (Turn 7)",
       "sectors": 3,
       "corners": [],
@@ -1407,7 +1406,7 @@
       "length": 6.201,
       "laps": 50,
       "turns": 17,
-      "lapRecord": "1:35.490 (Oscar Piastri, McLaren, 2023)",
+      "lapRecord": "1:33.365 (Max Verstappen, Red Bull, 2025)",
       "maxGForce": "5.0G (Turn 14)",
       "sectors": 3,
       "corners": [],
@@ -1424,7 +1423,7 @@
       "length": 5.419,
       "laps": 57,
       "turns": 16,
-      "lapRecord": "1:24.319 (Max Verstappen, Red Bull, 2023)",
+      "lapRecord": "1:22.384 (Lando Norris, McLaren, 2024)",
       "maxGForce": "4.9G (Turn 6)",
       "sectors": 3,
       "corners": [],
@@ -1441,7 +1440,7 @@
       "length": 5.281,
       "laps": 58,
       "turns": 16,
-      "lapRecord": "1:26.103 (Max Verstappen, Red Bull, 2021)",
+      "lapRecord": "1:25.637 (Kevin Magnussen, Haas, 2024)",
       "maxGForce": "4.7G (Turn 5-6)",
       "sectors": 3,
       "corners": [
