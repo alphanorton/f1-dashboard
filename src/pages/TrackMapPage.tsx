@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CircuitImage } from '@/components/track/CircuitImage';
-import { Map, MapPin, Flag, Info } from 'lucide-react';
+import { Map, MapPin, Flag, Info, ChevronLeft, ChevronRight, Crown } from 'lucide-react';
+import { useChampion } from '@/hooks/useChampion';
+import { circuitSlug } from '@/lib/trackPaths';
 import { getFlagUrl } from '@/lib/flags';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { PageLoader } from '@/components/ui/PageLoader';
@@ -47,6 +50,19 @@ export function TrackMapPage() {
   const [imageError, setImageError] = useState<string | null>(null);
 
   const [retryKey, setRetryKey] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const mapRef = useRef<HTMLDivElement | null>(null);
+  const { champion, wins } = useChampion();
+  const winAt = (c: { name: string }) => { const slug = circuitSlug(c.name); return slug ? wins.get(slug) ?? null : null; };
+  const surname = champion?.name.split(' ').slice(-1)[0] ?? '';
+
+  // UX: the selected circuit lives in the URL (?circuit=spa) so it survives refresh and can be shared.
+  const pick = (c: Circuit, scroll = false) => {
+    setSelectedCircuit(c);
+    setImageError(null);
+    setSearchParams({ circuit: c.id }, { replace: true });
+    if (scroll) mapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -56,7 +72,7 @@ export function TrackMapPage() {
         if (cancelled) return;
         setData(d);
         if (d.circuits.length > 0) {
-          setSelectedCircuit(c => c ?? d.circuits[0]);
+          setSelectedCircuit(c => c ?? d.circuits.find(x => x.id === new URLSearchParams(window.location.search).get('circuit')) ?? d.circuits[0]);
         }
         setLoading(false);
       })
@@ -127,10 +143,7 @@ export function TrackMapPage() {
               value={selectedCircuit?.id || ''}
               onChange={(e) => {
                 const circuit = data.circuits.find(c => c.id === e.target.value);
-                if (circuit) {
-                  setSelectedCircuit(circuit);
-                  setImageError(null);
-                }
+                if (circuit) pick(circuit);
               }}
               className="flex-1 min-w-[250px] h-10 px-3 bg-surface border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red"
             >
@@ -146,7 +159,7 @@ export function TrackMapPage() {
 
       {/* Track Map Display */}
       {selectedCircuit && (
-        <Card className="overflow-hidden">
+        <Card className="overflow-hidden scroll-mt-20" ref={mapRef as React.Ref<HTMLDivElement>}>
           <CardHeader className="border-b border-gray-800">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -161,6 +174,16 @@ export function TrackMapPage() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
+                {(() => {
+                  const i = data.circuits.findIndex(c => c.id === selectedCircuit.id);
+                  const btn = 'inline-flex h-10 w-10 items-center justify-center rounded-lg border border-gray-700 bg-surface text-gray-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red';
+                  return (
+                    <>
+                      <button type="button" className={btn} aria-label="Previous circuit" onClick={() => pick(data.circuits[(i - 1 + data.circuits.length) % data.circuits.length])}><ChevronLeft className="h-4 w-4" /></button>
+                      <button type="button" className={btn} aria-label="Next circuit" onClick={() => pick(data.circuits[(i + 1) % data.circuits.length])}><ChevronRight className="h-4 w-4" /></button>
+                    </>
+                  );
+                })()}
                 <span className="px-3 py-1 bg-surface border border-gray-700 rounded-lg text-xs text-gray-300 font-mono tabular-nums">
                   {selectedCircuit.length.toFixed(3)} km
                 </span>
@@ -179,9 +202,14 @@ export function TrackMapPage() {
               name={selectedCircuit.name}
               trackMapUrl={selectedCircuit.trackMapUrl}
               className="max-h-[560px]"
+              badge={champion && winAt(selectedCircuit) ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-yellow-300/50 bg-black/70 px-3 py-1.5 text-xs font-bold text-yellow-300 backdrop-blur">
+                  <Crown className="h-3.5 w-3.5" aria-hidden="true" /> {surname} won here · R{winAt(selectedCircuit)!.round}
+                </span>
+              ) : undefined}
             />
             <p className="border-t border-gray-800 px-4 py-3 text-xs text-gray-400">
-              Source: Formula 1 legacy circuit diagrams. Layouts may differ from the 2026 configuration.
+              Circuit layout diagrams. Layouts may differ slightly from the 2026 configuration.
             </p>
 
             {/* Stats Grid */}
@@ -252,16 +280,20 @@ export function TrackMapPage() {
             <Flag className="h-5 w-5 text-green-400" />
             All 2026 circuits
           </CardTitle>
+          {champion && (
+            <p className="flex items-center gap-1.5 pt-1 text-xs text-gray-400">
+              <Crown className="h-3.5 w-3.5 text-yellow-300" aria-hidden="true" />
+              Crown marks circuits where {champion.name} won in 2026 ({wins.size})
+            </p>
+          )}
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {data.circuits.map(c => (
               <button
                 key={c.id}
-                onClick={() => {
-                  setSelectedCircuit(c);
-                  setImageError(null);
-                }}
+                onClick={() => pick(c, true)}
+                aria-pressed={selectedCircuit?.id === c.id}
                 className={`p-3 rounded-lg text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red ${
                   selectedCircuit?.id === c.id
                     ? 'bg-f1-red/15 border-2 border-f1-red/70'
@@ -275,6 +307,11 @@ export function TrackMapPage() {
                     <span className="text-xl shrink-0">🏁</span>
                   )}
                   <p className="font-bold text-white text-sm">{c.name}</p>
+                  {champion && winAt(c) && (
+                    <span className="ml-auto inline-flex shrink-0 items-center gap-1 rounded-full border border-yellow-300/40 bg-yellow-300/10 px-1.5 py-0.5 text-[10px] font-bold text-yellow-300" title={`${champion.name} won the ${winAt(c)!.race}`}>
+                      <Crown className="h-3 w-3" aria-hidden="true" /><span className="sr-only">{champion.name} won here</span>R{winAt(c)!.round}
+                    </span>
+                  )}
                 </div>
                 <p className="text-xs text-gray-400 truncate">{c.city}, {c.country}</p>
                 <div className="flex items-center gap-3 mt-2 text-xs text-gray-400 tabular-nums">

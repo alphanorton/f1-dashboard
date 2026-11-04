@@ -51,7 +51,7 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        'border-gray-800 bg-surface lg:fixed lg:left-0 lg:top-0 lg:z-40 lg:h-screen lg:border-r flex flex-col',
+        'hidden border-gray-800 bg-surface lg:fixed lg:left-0 lg:top-0 lg:z-40 lg:h-screen lg:border-r lg:flex flex-col',
         sidebarOpen ? 'lg:w-72' : 'lg:w-20'
       )}
     >
@@ -91,13 +91,15 @@ export function Sidebar() {
         )}
 
         {!sidebarOpen && (
-          <div className="flex gap-2 lg:hidden">
-            {sections.flatMap((section) => section.items).map(({ name, href, icon: Icon }) => (
-              <NavLink key={href} to={href} end={href === '/'} title={name} className={linkClasses}>
-                <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
-              </NavLink>
+          <ul className="flex flex-col gap-1">
+            {[...sections.flatMap((section) => section.items), { name: 'Settings', href: '/settings', icon: Settings }].map(({ name, href, icon: Icon }) => (
+              <li key={href}>
+                <NavLink to={href} end={href === '/'} title={name} aria-label={name} className={linkClasses}>
+                  <Icon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                </NavLink>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </nav>
 

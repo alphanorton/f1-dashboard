@@ -12,6 +12,7 @@ const pageMeta: Record<string, { label: string; icon: typeof Trophy }> = {
   '/fastest-laps': { label: 'Fastest Laps', icon: Gauge },
   '/circuits': { label: 'Circuits', icon: MapPin },
   '/track-map': { label: 'Track Map', icon: MapPin },
+  '/singapore-2026': { label: 'Singapore 2026', icon: Calendar },
   '/settings': { label: 'Settings', icon: Settings },
 };
 

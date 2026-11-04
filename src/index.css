@@ -933,3 +933,21 @@ input[type="range"]::-moz-range-thumb {
   .fx-race-row, .fx-race-fill { transition: none !important; }
   .grand-prix-page .gp-race-card.fx-tilt { transform: none; transition: none; }
 }
+
+
+/* ===== Standings: 2026 champion treatment (scoped to new classes) ===== */
+.champ-hero { border-color: rgba(245, 197, 66, .45); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 60px -20px rgba(245, 197, 66, .35), 0 10px 30px rgba(0,0,0,.28); }
+.champ-avatar { border-radius: 9999px; padding: 4px; background: conic-gradient(from 200deg, #f5c542, #fff3c4, #f5c542, #b8891a, #f5c542); box-shadow: 0 0 28px rgba(245,197,66,.35); }
+.champ-row { background: linear-gradient(90deg, rgba(245,197,66,.12), rgba(245,197,66,.02) 60%, transparent); box-shadow: inset 3px 0 0 var(--dx-gold); }
+.champ-chip { display: inline-flex; flex-direction: column; align-items: center; min-width: 40px; padding: 4px 6px; border-radius: 8px; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: #cbd0db; line-height: 1.15; }
+.champ-chip-r { font-size: 9px; letter-spacing: .08em; opacity: .7; }
+.champ-chip-p { font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.champ-chip-p1 { color: var(--dx-gold); border-color: rgba(245,197,66,.55); background: rgba(245,197,66,.14); }
+.champ-chip-p2 { color: var(--dx-silver); border-color: rgba(201,207,219,.4); }
+.champ-chip-p3 { color: var(--dx-bronze); border-color: rgba(217,145,95,.45); }
+.champ-chip-pts { color: #fff; }
+.champ-chip-dnf { color: #ff7a7a; border-color: rgba(255,90,90,.35); background: rgba(255,90,90,.08); }
+
+/* ===== Layout UX: keyboard focus + collapsed rail tooltips ===== */
+.rail-link { position: relative; }
+@media (prefers-reduced-motion: reduce) { .champ-avatar { box-shadow: none; } }

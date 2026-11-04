@@ -21,7 +21,7 @@ const CONFETTI = Array.from({ length: 24 }, (_, i) => i);
  * sweep runs across P1 and confetti falls behind it. Block height follows the points
  * (leader = tallest). Purely visual: screen readers get an ordered list instead.
  */
-export function Podium({ entries, title, className = '' }: { entries: PodiumEntry[]; title: string; className?: string }) {
+export function Podium({ entries, title, className = '', leaderLabel = 'Leader' }: { entries: PodiumEntry[]; title: string; className?: string; leaderLabel?: string }) {
   const top = entries.slice(0, 3);
   if (top.length < 3) return null;
 
@@ -90,7 +90,7 @@ export function Podium({ entries, title, className = '' }: { entries: PodiumEntr
               <div className="fx-pod-card">
                 {e.position === 1 ? (
                   <span className="dx-pos dx-pos-pill" data-p="1">
-                    <Crown className="h-3.5 w-3.5" aria-hidden="true" /> Leader
+                    <Crown className="h-3.5 w-3.5" aria-hidden="true" /> {leaderLabel}
                   </span>
                 ) : (
                   <span className="dx-pos dx-pos-round mx-auto" data-p={String(e.position)}>

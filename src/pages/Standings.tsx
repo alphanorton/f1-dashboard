@@ -6,7 +6,8 @@ import { PageLoader } from '@/components/ui/PageLoader';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { Trophy, Award, TrendingUp, Car, Zap, ChevronRight, Medal, Target, Search, X } from 'lucide-react';
+import { Trophy, Award, TrendingUp, Car, Zap, ChevronRight, Medal, Target, Search, X, Crown } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import { useCachedData } from '@/hooks/useCachedData';
 import { usePointsProgression } from '@/lib/pointsProgression';
 import { getTeamColor2026, getTeamTextColor2026 } from '@/lib/teamColors';
@@ -14,11 +15,15 @@ import { Podium, type PodiumEntry } from '@/components/standings/Podium';
 import { BarChartRace } from '@/components/standings/BarChartRace';
 import { TeammateBattle } from '@/components/standings/TeammateBattle';
 import type { ResultsFile } from '@/lib/teammates';
+import { ConstructorChampionBanner } from '@/components/standings/ConstructorChampionBanner';
+import { computeConstructorTitle } from '@/lib/constructorTitle';
+import { ChampionHero } from '@/components/standings/ChampionHero';
+import { computeTitleFight } from '@/components/dashboard/TitleFightCard';
 import { TeamLogo } from '@/components/ui/TeamLogo';
 import { DriverAvatar } from '@/components/ui/DriverAvatar';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Legend,
+  ResponsiveContainer, Legend, ReferenceLine,
 } from 'recharts';
 
 interface Driver {
@@ -118,8 +123,14 @@ function ProgressionTooltip({
 
 function PointsProgressionChart({
   officialOrder,
+  championCode,
+  clinchRound,
 }: {
   officialOrder?: Array<{ code: string; driver: string; team: string }>;
+  /** Highlights this driver's line (gold glow, thicker, drawn on top). */
+  championCode?: string | null;
+  /** Round where the title was decided; drawn as a dashed gold marker. */
+  clinchRound?: number | null;
 }): React.ReactElement {
   const { series, rounds, loading, error } = usePointsProgression(5, officialOrder);
   const [focusKey, setFocusKey] = useState<string | null>(null);
@@ -140,6 +151,9 @@ function PointsProgressionChart({
     for (const s of series) row[s.key] = s.points[i]?.value ?? null;
     return row;
   });
+
+  // Champion is drawn last so its line sits on top of the others.
+  const drawOrder = championCode ? [...series.filter((s) => s.key !== championCode), ...series.filter((s) => s.key === championCode)] : series;
 
   return (
     <div className="space-y-3">
@@ -174,19 +188,31 @@ function PointsProgressionChart({
               wrapperStyle={{ fontSize: 11, color: '#9ca3af', paddingTop: 8, cursor: 'pointer' }}
               formatter={(value: string) => {
                 const s = series.find((x) => x.key === value);
-                return s ? `${s.driver} (${s.team})` : value;
+                return s ? `${s.driver} (${s.team})${s.key === championCode ? ' · Champion' : ''}` : value;
               }}
             />
-            {series.map((s) => (
+            {clinchRound != null && (
+              <ReferenceLine
+                x={clinchRound}
+                stroke="#f5c542"
+                strokeDasharray="4 4"
+                strokeOpacity={0.8}
+                label={{ value: 'Title clinched', position: 'insideTopLeft', fill: '#f5c542', fontSize: 11, fontWeight: 700 }}
+              />
+            )}
+            {drawOrder.map((s) => {
+              const isChamp = s.key === championCode;
+              const dim = focusKey ? focusKey !== s.key : championCode ? !isChamp : false;
+              return (
               <Line
                 key={s.key}
                 type="monotone"
                 dataKey={s.key}
                 name={s.key}
                 stroke={s.color}
-                strokeWidth={focusKey === s.key ? 3.5 : 2.5}
-                strokeOpacity={focusKey && focusKey !== s.key ? 0.18 : 1}
-                style={{ filter: `drop-shadow(0 0 ${focusKey === s.key ? 9 : 5}px ${s.color})`, transition: 'stroke-opacity .25s ease' }}
+                strokeWidth={focusKey === s.key ? 3.5 : isChamp ? 4 : 2.5}
+                strokeOpacity={focusKey && focusKey !== s.key ? 0.18 : dim ? 0.55 : 1}
+                style={{ filter: `drop-shadow(0 0 ${focusKey === s.key ? 9 : isChamp ? 10 : 5}px ${isChamp ? '#f5c542' : s.color})`, transition: 'stroke-opacity .25s ease' }}
                 dot={false}
                 activeDot={{ r: 5, stroke: '#fff', strokeWidth: 1.5 }}
                 isAnimationActive
@@ -194,7 +220,8 @@ function PointsProgressionChart({
                 animationEasing="ease-out"
                 connectNulls
               />
-            ))}
+              );
+            })}
           </LineChart>
         </ResponsiveContainer>
       </div>
@@ -208,6 +235,27 @@ export function Standings() {
   const [selectedConstructor, setSelectedConstructor] = useState<Constructor | null>(null);
   const [driverSearch, setDriverSearch] = useState('');
   const { data: resultsData } = useCachedData<ResultsFile>('results', '/data/results.json');
+  const { data: calendarData } = useCachedData<{ races: Array<{ round?: number; status?: string; isSprint?: boolean; notes?: string }> }>('calendar', '/data/calendar.json');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = ['drivers', 'constructors', 'teammates'].includes(searchParams.get('tab') ?? '') ? (searchParams.get('tab') as string) : 'drivers';
+  const searchRef = useRef<HTMLInputElement | null>(null);
+  const changeTab = useCallback((value: string) => {
+    setSearchParams(value === 'drivers' ? {} : { tab: value }, { replace: true });
+  }, [setSearchParams]);
+
+  // UX: "/" jumps to the driver search, like most data tables.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const el = e.target as HTMLElement | null;
+      if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.isContentEditable)) return;
+      if (!searchRef.current) return;
+      e.preventDefault();
+      searchRef.current.focus();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   const loadStandings = useCallback(() => {
@@ -266,6 +314,12 @@ export function Standings() {
     return <PageLoader message="Loading standings..." />;
   }
 
+  const title = calendarData ? computeTitleFight(data.drivers, calendarData.races) : null;
+  const champion = title?.clinched ? title.leader : null;
+  // The calendar notes say which race decided the title; no match means no marker rather than a guess.
+  const clinchRound = champion ? (calendarData?.races.find((r) => r.status === 'completed' && /clinch/i.test(r.notes ?? ''))?.round ?? null) : null;
+  const ctorTitle = calendarData ? computeConstructorTitle(data.constructors, calendarData.races) : null;
+  const ctorChampion = ctorTitle?.clinched ? ctorTitle.leader : null;
   const mostWins = leaderBy(data.drivers, (d) => d.wins);
   const mostPodiums = leaderBy(data.drivers, (d) => d.podiums);
   const mostTeamWins = leaderBy(data.constructors, (c) => c.wins);
@@ -310,7 +364,7 @@ export function Standings() {
       {/* Header */}
       <PageHeader
         title="2026 Championship Standings"
-        subtitle={`After Round ${data.asOfRound} — ${data.asOfRace} | ${data.remainingRaces} races remaining`}
+        subtitle={`${champion ? `${champion.name} is the 2026 World Champion · ` : ''}After Round ${data.asOfRound} — ${data.asOfRace} | ${data.remainingRaces} races remaining`}
         icon={Trophy}
         actions={
           <div className="flex items-center gap-2 bg-muted/40 border border-gray-700/50 px-3 py-1.5 rounded-lg text-xs text-gray-400">
@@ -320,7 +374,7 @@ export function Standings() {
         }
       />
 
-      <Tabs defaultValue="drivers" className="standings-tabs w-full">
+      <Tabs value={tab} onValueChange={changeTab} className="standings-tabs w-full">
         <TabsList className="grid w-full md:w-[560px] grid-cols-3 bg-muted border border-gray-700/50">
           <TabsTrigger value="drivers" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Drivers
@@ -335,7 +389,10 @@ export function Standings() {
 
         {/* DRIVERS STANDINGS */}
         <TabsContent value="drivers" className="mt-6">
-          <Podium title="Drivers' championship podium" entries={driverPodium} className="mb-6" />
+          {champion ? (
+            <ChampionHero drivers={data.drivers} races={calendarData?.races ?? []} results={resultsData} />
+          ) : null}
+          <Podium title="Drivers' championship podium" entries={driverPodium} className="my-6" leaderLabel={champion ? 'Champion' : 'Leader'} />
           <Card>
             <CardContent className="p-0">
               <div className="border-b border-gray-700/50 p-4">
@@ -344,8 +401,10 @@ export function Standings() {
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <input
                     id="driver-search"
+                    ref={searchRef}
                     type="search"
-                    placeholder="Search driver, team or code..."
+                    placeholder="Search driver, team or code…  ( / )"
+                    onKeyDown={(e) => { if (e.key === 'Escape' && driverSearch) { e.preventDefault(); setDriverSearch(''); } }}
                     value={driverSearch}
                     onChange={(e) => setDriverSearch(e.target.value)}
                     className="h-10 w-full rounded-lg border border-gray-700 bg-surface pl-9 pr-9 text-sm text-white placeholder:text-gray-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red"
@@ -361,6 +420,9 @@ export function Standings() {
                     </button>
                   )}
                 </div>
+                <p className="mt-2 text-xs text-gray-400" role="status" aria-live="polite">
+                  {driverSearch.trim() ? `${filteredDrivers.length} of ${data.drivers.length} drivers` : `${data.drivers.length} drivers · press / to search`}
+                </p>
               </div>
               <div className="overflow-x-auto max-h-[70vh]">
                 <table className="w-full text-sm">
@@ -388,19 +450,15 @@ export function Standings() {
                         <tr
                           key={driver.position}
                           className={`standings-table-row team-row-bar hover:bg-muted/40 transition-colors ${
-                            isLeader ? 'bg-amber-950/20' : ''
+                            isLeader ? (champion ? 'champ-row' : 'bg-amber-950/20') : ''
                           }`}
                           style={{ '--team-color': getTeamColor2026(driver.team) } as React.CSSProperties}
                         >
                           <td className="py-3 px-4 text-center">
                             <div className="flex items-center justify-center">
                               {isTop3 ? (
-                                <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black tabular-nums ${
-                                  driver.position === 1 ? 'bg-amber-500 text-black' :
-                                  driver.position === 2 ? 'bg-gray-300 text-black' :
-                                  'bg-amber-700 text-white'
-                                }`}>
-                                  {driver.position}
+                                <span className="dx-pos dx-pos-round" data-p={driver.position}>
+                                  {isLeader && champion ? <Crown className="h-3.5 w-3.5" aria-label="Champion" /> : driver.position}
                                 </span>
                               ) : (
                                 <span className="text-gray-400 font-mono text-sm tabular-nums">{driver.position}</span>
@@ -415,7 +473,10 @@ export function Standings() {
                               </span>
                               <TeamLogo team={driver.team} size={20} className="hidden sm:inline-flex" />
                               <div>
-                                <p className="font-bold text-white text-sm">{driver.name}</p>
+                                <p className="font-bold text-white text-sm">
+                                  {driver.name}
+                                  {isLeader && champion && <span className="ml-2 rounded-full border border-yellow-300/40 bg-yellow-300/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-yellow-300">Champion</span>}
+                                </p>
                                 <p className="text-xs text-gray-400">{driver.team}</p>
                               </div>
                             </div>
@@ -442,7 +503,7 @@ export function Standings() {
                             {driver.gap === null ? (
                               <span className="text-gray-400 text-xs">—</span>
                             ) : driver.gap === 0 ? (
-                              <span className="text-amber-400 text-xs font-bold">Leader</span>
+                              <span className="text-amber-400 text-xs font-bold">{champion ? 'Champion' : 'Leader'}</span>
                             ) : (
                               <span className="text-gray-400 text-xs font-mono tabular-nums">−{driver.gap}</span>
                             )}
@@ -468,10 +529,10 @@ export function Standings() {
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 text-amber-400 mb-1">
                   <Trophy className="h-4 w-4" />
-                  <span className="text-xs font-medium">Championship leader</span>
+                  <span className="text-xs font-medium">{champion ? 'World Champion' : 'Championship leader'}</span>
                 </div>
                 <p className="text-lg font-black text-white">{data.drivers[0].name}</p>
-                <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{data.drivers[0].points} points</p>
+                <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{data.drivers[0].points} points{champion && title ? ` · ${title.remainingCount} races to spare` : ''}</p>
               </CardContent>
             </Card>
 
@@ -530,6 +591,8 @@ export function Standings() {
           <Card className="mt-6">
             <CardContent className="p-4">
               <PointsProgressionChart
+                championCode={champion?.code ?? null}
+                clinchRound={clinchRound}
                 officialOrder={data.drivers.map((d) => ({ code: d.code, driver: d.name, team: d.team }))}
               />
             </CardContent>
@@ -538,7 +601,8 @@ export function Standings() {
 
         {/* CONSTRUCTORS STANDINGS */}
         <TabsContent value="constructors" className="mt-6 space-y-6">
-          <Podium title="Constructors' championship podium" entries={constructorPodium} />
+          {calendarData && <ConstructorChampionBanner constructors={data.constructors} races={calendarData.races} />}
+          <Podium title="Constructors' championship podium" entries={constructorPodium} leaderLabel={ctorChampion ? 'Champion' : 'Leader'} />
           <Card>
             <CardContent className="p-0">
               <div className="overflow-x-auto max-h-[70vh]">
@@ -562,7 +626,7 @@ export function Standings() {
                         <tr
                           key={team.position}
                           className={`hover:bg-muted/40 transition-colors ${
-                            isLeader ? 'bg-amber-950/20' : ''
+                            isLeader ? (ctorChampion ? 'champ-row' : 'bg-amber-950/20') : ''
                           }`}
                         >
                           <td className="py-3 px-4 text-center">
@@ -599,7 +663,7 @@ export function Standings() {
                             {team.gap === null ? (
                               <span className="text-gray-400 text-xs">—</span>
                             ) : team.gap === 0 ? (
-                              <span className="text-amber-400 text-xs font-bold">Leader</span>
+                              <span className="text-amber-400 text-xs font-bold">{ctorChampion ? 'Champion' : 'Leader'}</span>
                             ) : (
                               <span className="text-gray-400 text-xs font-mono tabular-nums">−{team.gap}</span>
                             )}

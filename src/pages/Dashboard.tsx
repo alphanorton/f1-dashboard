@@ -15,7 +15,7 @@ import { SeasonRing } from '@/components/dashboard/SeasonRing';
 import { SeasonStrip } from '@/components/dashboard/SeasonStrip';
 import { StartLights } from '@/components/dashboard/StartLights';
 import { LeaderCard, type LeaderRow } from '@/components/dashboard/LeaderCard';
-import { TitleFightCard } from '@/components/dashboard/TitleFightCard';
+import { TitleFightCard, computeTitleFight } from '@/components/dashboard/TitleFightCard';
 
 interface Race {
   round: number;
@@ -514,7 +514,7 @@ export function Dashboard() {
           <EmptyState icon={Trophy} title="No standings yet" message="Championship data will appear after the first race." />
         ) : (
           <div className="stagger-group grid gap-4 lg:grid-cols-2">
-            <LeaderCard title="Drivers" icon={Trophy} rows={driverRows} index={0} />
+            <LeaderCard title="Drivers" icon={Trophy} rows={driverRows} index={0} leaderLabel={computeTitleFight(standingsData?.drivers ?? [], calendar)?.clinched ? 'Champion' : 'Leader'} />
             <LeaderCard title="Constructors" icon={Users} rows={constructorRows} index={1} />
           </div>
         )}

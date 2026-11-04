@@ -20,7 +20,7 @@ export interface LeaderRow {
  * Championship card: P1 gets a large "hero" block tinted with the team colour, P2/P3 are compact rows
  * with a bar that shows how close they are to the leader (bar width = points / leader points).
  */
-export function LeaderCard({ title, icon: Icon, rows, index }: { title: string; icon: LucideIcon; rows: LeaderRow[]; index: number }) {
+export function LeaderCard({ title, icon: Icon, rows, index, leaderLabel = 'Leader' }: { title: string; icon: LucideIcon; rows: LeaderRow[]; index: number; leaderLabel?: string }) {
   const [leader, ...rest] = rows;
   if (!leader) return null;
   const margin = rest[0] ? leader.points - rest[0].points : null;
@@ -45,7 +45,7 @@ export function LeaderCard({ title, icon: Icon, rows, index }: { title: string; 
         <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1" style={{ background: leader.color }} />
         <div className="relative">
           <span className="dx-pos dx-pos-pill" data-p="1">
-            <Crown className="h-3.5 w-3.5" aria-hidden="true" /> Leader
+            <Crown className="h-3.5 w-3.5" aria-hidden="true" /> {leaderLabel}
           </span>
           <p className="mt-3 text-balance font-f1 text-xl font-black uppercase leading-tight text-white sm:text-2xl">{leader.name}</p>
           {leader.sub && (

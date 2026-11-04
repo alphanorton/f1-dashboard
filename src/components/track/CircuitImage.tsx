@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface CircuitImageProps {
@@ -6,13 +6,15 @@ export interface CircuitImageProps {
   name: string;
   trackMapUrl?: string;
   className?: string;
+  /** Optional overlay shown top-left of the map (e.g. a winner badge). */
+  badge?: React.ReactNode;
 }
 
 type LoadState = 'loading' | 'loaded' | 'error';
 
 const RETRY_DELAYS_MS = [1500, 4000];
 
-export function CircuitImage({ circuitId, name, trackMapUrl, className }: CircuitImageProps) {
+export function CircuitImage({ circuitId, name, trackMapUrl, className, badge }: CircuitImageProps) {
   const hasUrl = Boolean(trackMapUrl);
   const [state, setState] = useState<LoadState>(hasUrl ? 'loading' : 'error');
   const [attempt, setAttempt] = useState(0);
@@ -61,6 +63,8 @@ export function CircuitImage({ circuitId, name, trackMapUrl, className }: Circui
           <div className="w-8 h-8 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
         </div>
       )}
+
+      {state === 'loaded' && badge && <div className="absolute left-3 top-3 z-10">{badge}</div>}
 
       {state === 'loaded' && (
         <p className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-1 text-[10px] text-gray-300">
