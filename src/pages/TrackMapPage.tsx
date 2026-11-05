@@ -6,6 +6,7 @@ import { CircuitInteractiveMap } from '@/components/track/CircuitInteractiveMap'
 import { Map, MapPin, Flag, ChevronLeft, ChevronRight, Crown, Gauge } from 'lucide-react';
 import { useChampion } from '@/hooks/useChampion';
 import { circuitSlug } from '@/lib/trackPaths';
+import { getCircuitPhoto } from '@/lib/circuitPhotos';
 import { getFlagUrl } from '@/lib/flags';
 import { PageHeader } from '@/components/ui/PageHeader';
 import { PageLoader } from '@/components/ui/PageLoader';
@@ -236,6 +237,35 @@ export function TrackMapPage() {
               Interactive layout traced from the official circuit map. Turn markers are measured peaks of curvature along that line
               (numbered from its origin — independent from official turn numbering); the start/finish bar sits at the line origin.
             </p>
+
+            {/* Verified circuit photograph (only when one is confidently matched) */}
+            {(() => {
+              const photo = getCircuitPhoto(selectedCircuit.name);
+              if (!photo) return null;
+              return (
+                <div className="relative h-44 w-full overflow-hidden border-t border-gray-800 sm:h-56">
+                  <img
+                    src={photo.src}
+                    alt={`${selectedCircuit.name} aerial view`}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        'linear-gradient(0deg, rgba(12,14,17,0.96) 0%, rgba(12,14,17,0.35) 55%, rgba(12,14,17,0.12) 100%)',
+                    }}
+                  />
+                  <div className="absolute bottom-3 left-4">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Verified circuit photograph</p>
+                    <p className="text-sm font-bold text-white">{selectedCircuit.name}</p>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Technical information panel */}
             <div className="border-t border-gray-800 bg-[#0c0e11] p-4 sm:p-5">

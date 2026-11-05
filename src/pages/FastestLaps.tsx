@@ -15,6 +15,8 @@ const CIRCUIT_LABELS: Record<string, string> = {
   albert_park: 'Albert Park',
   red_bull_ring: 'Red Bull Ring',
   marina_bay: 'Marina Bay',
+  cota: 'Circuit of the Americas',
+  mexico: 'Hermanos Rodríguez',
   yas_marina: 'Yas Marina',
   las_vegas: 'Las Vegas',
   gilles_villeneuve: 'Gilles Villeneuve',

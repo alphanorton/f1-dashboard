@@ -12,6 +12,7 @@ import {
 import { getGrandPrixCalendar, getRaceResults } from '@/services/f1DataService';
 import type { GrandPrixCalendar, GrandPrixRace, RaceResults } from '@/models/grandPrix';
 import { getFlagUrl } from '@/lib/flags';
+import { getCircuitPhotoForRace } from '@/lib/circuitPhotos';
 import { TrackLoop } from '@/components/track/TrackLoop';
 import { TrackGhost } from '@/components/track/TrackGhost';
 import { StartLights } from '@/components/dashboard/StartLights';
@@ -51,7 +52,6 @@ export function GrandPrix() {
         if (!cancelled) {
           setData(calendarData);
           setResults(resultsData);
-
           setLoading(false);
         }
       } catch (err) {
@@ -124,71 +124,86 @@ export function GrandPrix() {
       />
 
       {/* Hero Next Race Card */}
-      {nextRace && (
-        <div className="gp-hero relative overflow-hidden rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-950/50 via-gray-900 to-gray-950 p-6 shadow-2xl">
-          <div className="gp-hero-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-red-600/15 blur-3xl pointer-events-none" />
-          <span className="fx-hero-flash" aria-hidden="true" />
-          <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-600 text-white shadow-lg shadow-red-600/30 animate-pulse">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Next Grand Prix — Round {nextRace.round}
-                </span>
-                <span className="text-xs text-gray-400 bg-gray-800/80 px-2.5 py-1 rounded-full border border-gray-700">
-                  {nextRace.weekendDates}
-                </span>
+      {nextRace && (() => {
+        const heroPhoto = getCircuitPhotoForRace(nextRace);
+        return (
+          <div className="gp-hero relative overflow-hidden rounded-2xl border border-red-500/30 bg-gradient-to-br from-red-950/50 via-gray-900 to-gray-950 p-6 shadow-2xl">
+            {heroPhoto && (
+              <>
+                <img
+                  src={heroPhoto.src}
+                  alt={`${nextRace.circuit} aerial view`}
+                  className="gp-hero-photo pointer-events-none absolute inset-0 h-full w-full object-cover"
+                  loading="eager"
+                  decoding="async"
+                />
+                <div aria-hidden="true" className="gp-hero-photo-scrim pointer-events-none absolute inset-0" />
+              </>
+            )}
+            <div className="gp-hero-glow absolute top-0 right-0 h-96 w-96 rounded-full bg-red-600/15 blur-3xl pointer-events-none" />
+            <span className="fx-hero-flash" aria-hidden="true" />
+            <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-600 text-white shadow-lg shadow-red-600/30 animate-pulse">
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Next Grand Prix — Round {nextRace.round}
+                  </span>
+                  <span className="text-xs text-gray-300 bg-gray-900/80 px-2.5 py-1 rounded-full border border-gray-700 backdrop-blur-sm">
+                    {nextRace.weekendDates}
+                  </span>
+                </div>
+
+                <div>
+                  <h2 className="text-3xl lg:text-4xl font-black text-white flex items-center gap-3">
+                    {getFlagUrl(nextRace.country) ? (
+                      <img src={getFlagUrl(nextRace.country)!} alt={`${nextRace.country} flag`} className="w-10 h-7 object-cover rounded-sm shadow-md" />
+                    ) : (
+                      <span className="text-4xl">🏁</span>
+                    )}
+                    <span>{nextRace.name}</span>
+                  </h2>
+                  <p className="text-gray-300 flex items-center gap-2 mt-2 text-sm sm:text-base">
+                    <MapPin className="h-4 w-4 text-red-400 shrink-0" />
+                    <span>{nextRace.circuit} — {nextRace.locality}, {nextRace.country}</span>
+                  </p>
+                </div>
+
+                {nextRace.notes && (
+                  <p className="text-xs text-amber-300/90 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-md inline-block backdrop-blur-sm">
+                    ⚡ {nextRace.notes}
+                  </p>
+                )}
+
+                {(() => {
+                  const days = daysUntil(nextRace.date);
+                  if (days === null || days < 0) return null;
+                  return (
+                    <div className="flex flex-wrap items-center gap-3">
+                      <StartLights />
+                      <span className="dx-time font-f1 text-xs font-bold uppercase tracking-[0.2em] text-[#FF5A5A]">
+                        {days === 0 ? 'Race day' : `${days} day${days === 1 ? '' : 's'} to lights out`}
+                      </span>
+                    </div>
+                  );
+                })()}
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-1">
+                  <button 
+                    onClick={() => setSelectedRace(nextRace)}
+                    className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-f1-red px-5 py-3 text-sm font-bold text-white transition-all shadow-lg shadow-f1-red/20 hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                  >
+                    <span>View Details & Circuit</span>
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
 
-              <div>
-                <h2 className="text-3xl lg:text-4xl font-black text-white flex items-center gap-3">
-                  {getFlagUrl(nextRace.country) ? (
-                    <img src={getFlagUrl(nextRace.country)!} alt={`${nextRace.country} flag`} className="w-10 h-7 object-cover rounded-sm" />
-                  ) : (
-                    <span className="text-4xl">🏁</span>
-                  )}
-                  <span>{nextRace.name}</span>
-                </h2>
-                <p className="text-gray-300 flex items-center gap-2 mt-2 text-sm sm:text-base">
-                  <MapPin className="h-4 w-4 text-red-400 shrink-0" />
-                  <span>{nextRace.circuit} — {nextRace.locality}, {nextRace.country}</span>
-                </p>
-              </div>
-
-              {nextRace.notes && (
-                <p className="text-xs text-amber-300/90 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-md inline-block">
-                  ⚡ {nextRace.notes}
-                </p>
-              )}
-
-              {(() => {
-                const days = daysUntil(nextRace.date);
-                if (days === null || days < 0) return null;
-                return (
-                  <div className="flex flex-wrap items-center gap-3">
-                    <StartLights />
-                    <span className="dx-time font-f1 text-xs font-bold uppercase tracking-[0.2em] text-[#FF5A5A]">
-                      {days === 0 ? 'Race day' : `${days} day${days === 1 ? '' : 's'} to lights out`}
-                    </span>
-                  </div>
-                );
-              })()}
-
-              <div className="flex flex-col sm:flex-row gap-3 pt-1">
-              <button 
-                onClick={() => setSelectedRace(nextRace)}
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-f1-red px-5 py-3 text-sm font-bold text-white transition-all shadow-lg shadow-f1-red/20 hover:bg-red-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-              >
-                <span>View Details & Circuit</span>
-                <ChevronRight className="h-4 w-4" />
-              </button>
+              <TrackLoop circuit={nextRace.circuit} className="fx-hero-track h-auto w-full max-w-[300px] shrink-0 self-center sm:max-w-[360px] lg:max-w-[340px]" />
             </div>
-            </div>
-
-            <TrackLoop circuit={nextRace.circuit} className="fx-hero-track h-auto w-full max-w-[300px] shrink-0 self-center sm:max-w-[360px] lg:max-w-[340px]" />
           </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* KPI Stats Overview */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -329,12 +344,13 @@ export function GrandPrix() {
         </div>
       </div>
 
-      {/* Grid of Grand Prix Cards */}
+      {/* Grid of Grand Prix Cards with Circuit Aerial View Headers */}
       <div className="gp-race-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredRaces.map((race) => {
           const isNext = race.status === 'next';
           const isDone = race.status === 'completed';
           const isCancel = race.status === 'cancelled';
+          const cardPhoto = getCircuitPhotoForRace(race);
 
           return (
             <div
@@ -349,96 +365,136 @@ export function GrandPrix() {
                   setSelectedRace(race);
                 }
               }}
-              className={`gp-race-card fx-tilt group cursor-pointer relative rounded-xl border transition-all duration-300 p-5 ${
+              className={`gp-race-card fx-tilt group cursor-pointer relative overflow-hidden rounded-2xl border transition-all duration-300 flex flex-col ${
                 isNext
-                  ? 'bg-gray-900 border-red-500/80 shadow-lg shadow-red-950/40 ring-1 ring-red-500/40'
+                  ? 'bg-gray-900 border-red-500/80 shadow-xl shadow-red-950/40 ring-1 ring-red-500/40'
                   : isCancel
-                  ? 'bg-gray-900/30 border-gray-800/60 opacity-60'
-                  : 'bg-gray-900/70 border-gray-800 hover:border-gray-700 hover:bg-gray-850'
+                  ? 'bg-gray-900/40 border-gray-800/60 opacity-60'
+                  : 'bg-gray-900/80 border-gray-800 hover:border-gray-700 hover:bg-gray-850'
               }`}
             >
               <span className="fx-glare" aria-hidden="true" />
-              {!isCancel && <TrackGhost circuit={race.circuit} className="fx-ghost-track" />}
-
-              {/* Card Top Row: Round & Status Badges */}
-              <div className="flex items-center justify-between gap-2 mb-3">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded text-xs font-bold bg-gray-800 text-gray-300 border border-gray-700 font-mono">
-                    R{race.round.toString().padStart(2, '0')}
-                  </span>
-                  {race.isSprint && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
-                      <Zap className="h-3 w-3" />
-                      Sprint
-                    </span>
-                  )}
+              
+              {/* Circuit Header Photograph */}
+              {cardPhoto && !isCancel && (
+                <div className="relative h-28 w-full overflow-hidden shrink-0">
+                  <img
+                    src={cardPhoto.src}
+                    alt={`${race.circuit} aerial photograph`}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{
+                      background: 'linear-gradient(180deg, rgba(9,11,16,0.20) 0%, rgba(9,11,16,0.65) 60%, rgba(9,11,16,0.95) 100%)',
+                    }}
+                  />
+                  {/* Floating Liquid-Glass Badges over header photo */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 z-10">
+                    <div className="flex items-center gap-1.5">
+                      <span className="px-2 py-0.5 rounded-md text-xs font-black bg-black/70 text-white border border-white/20 backdrop-blur-md font-mono shadow-md">
+                        R{race.round.toString().padStart(2, '0')}
+                      </span>
+                      {race.isSprint && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 backdrop-blur-md shadow-md">
+                          <Zap className="h-3 w-3" />
+                          Sprint
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      {isNext && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-600 text-white shadow-lg shadow-red-600/40 animate-pulse">
+                          Next Race
+                        </span>
+                      )}
+                      {isDone && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-700/50 backdrop-blur-md">
+                          Completed
+                        </span>
+                      )}
+                      {race.status === 'upcoming' && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-950/80 text-blue-300 border border-blue-700/50 backdrop-blur-md">
+                          Upcoming
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
+              )}
 
-                <div>
-                  {isNext && (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-600 text-white">
-                      Next Race
-                    </span>
-                  )}
-                  {isDone && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-950/60 text-emerald-400 border border-emerald-800/40">
-                      Completed
-                    </span>
-                  )}
-                  {isCancel && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-rose-950/60 text-rose-400 border border-rose-800/40">
-                      Cancelled
-                    </span>
-                  )}
-                  {race.status === 'upcoming' && (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-blue-950/60 text-blue-400 border border-blue-800/40">
-                      Upcoming
-                    </span>
-                  )}
-                </div>
-              </div>
+              {/* Card Body */}
+              <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between relative">
+                {!isCancel && <TrackGhost circuit={race.circuit} className="fx-ghost-track" />}
 
-              {/* Race Title & Country */}
-              <div className="flex items-start gap-3">
-                {getFlagUrl(race.country) ? (
-                  <img src={getFlagUrl(race.country)!} alt={`${race.country} flag`} className="w-9 h-6 object-cover rounded-sm shrink-0 select-none" />
-                ) : (
-                  <span className="text-3xl shrink-0 select-none">🏁</span>
+                {!cardPhoto && (
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 rounded text-xs font-bold bg-gray-800 text-gray-300 border border-gray-700 font-mono">
+                        R{race.round.toString().padStart(2, '0')}
+                      </span>
+                      {race.isSprint && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">
+                          <Zap className="h-3 w-3" />
+                          Sprint
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      {isCancel && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-rose-950/60 text-rose-400 border border-rose-800/40">
+                          Cancelled
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 )}
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-base font-bold text-white truncate group-hover:text-red-400 transition-colors">
-                    {race.name}
-                  </h3>
-                  <p className="text-xs text-gray-400 truncate mt-0.5">{race.circuit}</p>
+
+                {/* Race Title & Country */}
+                <div className="flex items-start gap-3 relative z-10">
+                  {getFlagUrl(race.country) ? (
+                    <img src={getFlagUrl(race.country)!} alt={`${race.country} flag`} className="w-9 h-6 object-cover rounded-sm shrink-0 select-none shadow-md ring-1 ring-white/10" />
+                  ) : (
+                    <span className="text-3xl shrink-0 select-none">🏁</span>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base font-bold text-white truncate group-hover:text-red-400 transition-colors">
+                      {race.name}
+                    </h3>
+                    <p className="text-xs text-gray-300 truncate mt-0.5 font-medium">{race.circuit}</p>
+                  </div>
                 </div>
+
+                {/* Circuit Info & Date */}
+                <div className="mt-4 pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-300 relative z-10">
+                  <div className="flex items-center gap-1.5">
+                    <CalendarIcon className="h-3.5 w-3.5 text-red-400" />
+                    <span>{race.weekendDates}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 font-mono text-xs text-gray-400">
+                    <MapPin className="h-3.5 w-3.5 text-gray-400" />
+                    <span>{race.locality}</span>
+                  </div>
+                </div>
+
+                {/* Winner or Notes if available */}
+                {isDone && race.winner && (
+                  <div className="mt-2.5 pt-2 border-t border-gray-800/60 flex items-center gap-1.5 text-xs text-emerald-400 relative z-10">
+                    <Trophy className="h-3.5 w-3.5 shrink-0 text-amber-400" />
+                    <span className="text-gray-400 text-xs">Winner:</span>
+                    <span className="font-semibold text-emerald-300 truncate">{race.winner}</span>
+                  </div>
+                )}
+
+                {isCancel && (
+                  <div className="mt-2.5 pt-2 border-t border-gray-800/60 text-xs text-rose-400/90 truncate relative z-10">
+                    ⚠️ {race.notes || 'Race cancelled'}
+                  </div>
+                )}
               </div>
-
-              {/* Circuit Info & Date */}
-              <div className="mt-4 pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs text-gray-400">
-                <div className="flex items-center gap-1.5">
-                  <CalendarIcon className="h-3.5 w-3.5 text-gray-400" />
-                  <span>{race.weekendDates}</span>
-                </div>
-                <div className="flex items-center gap-1.5 font-mono text-xs text-gray-400">
-                  <MapPin className="h-3.5 w-3.5 text-gray-400" />
-                  <span>{race.locality}</span>
-                </div>
-              </div>
-
-              {/* Winner or Notes if available */}
-              {isDone && race.winner && (
-                <div className="mt-2.5 pt-2 border-t border-gray-800/60 flex items-center gap-1.5 text-xs text-emerald-400">
-                  <Trophy className="h-3.5 w-3.5 shrink-0" />
-                  <span className="text-gray-400 text-xs">Winner:</span>
-                  <span className="font-medium truncate">{race.winner}</span>
-                </div>
-              )}
-
-              {isCancel && (
-                <div className="mt-2.5 pt-2 border-t border-gray-800/60 text-xs text-rose-400/90 truncate">
-                  ⚠️ {race.notes || 'Race cancelled'}
-                </div>
-              )}
             </div>
           );
         })}
@@ -447,11 +503,11 @@ export function GrandPrix() {
       {/* Selected Race Modal/Detail Drawer */}
       {selectedRace && (
         <div 
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in"
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in"
           onClick={() => setSelectedRace(null)}
         >
           <div 
-            className="bg-gray-900 border border-gray-700 rounded-2xl max-w-xl w-full p-6 space-y-5 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+            className="bg-gray-900 border border-gray-700/80 rounded-2xl max-w-xl w-full p-6 space-y-5 shadow-2xl relative max-h-[90vh] overflow-y-auto"
             onClick={e => e.stopPropagation()}
           >
             {/* Header with Back Button */}
@@ -465,7 +521,7 @@ export function GrandPrix() {
                   <ChevronLeft className="h-5 w-5" />
                 </button>
                 {getFlagUrl(selectedRace.country) ? (
-                  <img src={getFlagUrl(selectedRace.country)!} alt={`${selectedRace.country} flag`} className="w-10 h-7 object-cover rounded-sm" />
+                  <img src={getFlagUrl(selectedRace.country)!} alt={`${selectedRace.country} flag`} className="w-10 h-7 object-cover rounded-sm shadow-md" />
                 ) : (
                   <span className="text-4xl">🏁</span>
                 )}
@@ -491,6 +547,30 @@ export function GrandPrix() {
                 <X className="h-5 w-5" />
               </button>
             </div>
+
+            {(() => {
+              const photo = getCircuitPhotoForRace(selectedRace);
+              if (!photo) return null;
+              return (
+                <div className="relative overflow-hidden rounded-xl border border-gray-700/60 shadow-lg">
+                  <img
+                    src={photo.src}
+                    alt={`${selectedRace.circuit} aerial view`}
+                    className="h-44 w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(180deg, transparent 20%, rgba(9,11,16,0.92) 100%)' }}
+                  />
+                  <p className="absolute bottom-2 left-3 text-[10px] font-bold uppercase tracking-[0.18em] text-gray-300">
+                    Verified circuit photograph · {selectedRace.circuit}
+                  </p>
+                </div>
+              );
+            })()}
 
             <div className="grid grid-cols-2 gap-3 text-sm">
               <div className="bg-gray-800/60 p-3 rounded-lg border border-gray-700/60">
@@ -559,7 +639,6 @@ export function GrandPrix() {
                       const isDNF = r.status === 'DNF';
                       const isNC = r.status === 'NC' || r.status === 'NC/DNS';
                       const isDNS = r.status === 'DNS';
-                      const isClassified = !isDNF && !isNC && !isDNS;
                       return (
                         <div
                           key={`${r.code}-${idx}`}

@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { ErrorState } from '@/components/ui/ErrorState';
-import { Trophy, Flag, Zap, Clock3, MapPin, Users, CalendarDays, Hourglass, ArrowUpRight, ChevronRight } from 'lucide-react';
+import { Trophy, Flag, Zap, Clock3, MapPin, Users, CalendarDays, Hourglass, ArrowUpRight, ChevronRight, Crown } from 'lucide-react';
 import { useCachedData } from '@/hooks/useCachedData';
 import { getFlagUrl } from '@/lib/flags';
 import { getTeamColor2026, getTeamTextColor2026, teamTint } from '@/lib/teamColors';
 import { formatShortDate } from '@/lib/utils';
 import { CircuitImage } from '@/components/track/CircuitImage';
+import { getCircuitPhotoForRace, allCircuitPhotos } from '@/lib/circuitPhotos';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
 import { SectionHeading } from '@/components/dashboard/SectionHeading';
 import { SeasonRing } from '@/components/dashboard/SeasonRing';
@@ -165,9 +166,22 @@ function NextRaceCard({ race }: { race: Race }) {
   const raceDate = new Date(`${race.date}T12:00:00`);
   const dateLabel = new Intl.DateTimeFormat('en', { weekday: 'long', day: 'numeric', month: 'long' }).format(raceDate);
   const days = weekendDays(race);
+  const photo = getCircuitPhotoForRace(race);
 
   return (
     <section className="next-race-card dx-next group relative overflow-hidden rounded-2xl border border-white/10">
+      {photo && (
+        <>
+          <img
+            src={photo.src}
+            alt={`${race.circuit} aerial view`}
+            className="dx-next-photo pointer-events-none absolute inset-0 h-full w-full object-cover"
+            loading="eager"
+            decoding="async"
+          />
+          <div aria-hidden="true" className="dx-next-scrim pointer-events-none absolute inset-0" />
+        </>
+      )}
       <span aria-hidden="true" className="dx-ghost pointer-events-none absolute -bottom-6 left-3 text-[120px] sm:text-[170px]">
         R{race.round}
       </span>
@@ -252,12 +266,29 @@ function ResultCard({ race }: { race: Race }) {
   const winner = entries[0];
   const winnerTeam = winner?.team || race.winnerTeam || '';
   const color = getTeamColor2026(winnerTeam);
+  const photo = getCircuitPhotoForRace(race);
 
   return (
     <Link
       to="/grand-prix"
       className="dx-result lift group relative flex w-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red"
     >
+      {photo && (
+        <div className="relative h-24 w-full overflow-hidden">
+          <img
+            src={photo.src}
+            alt={`${race.circuit} aerial view`}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(180deg, rgba(11,13,18,0.15) 0%, rgba(11,13,18,0.55) 62%, rgba(11,13,18,0.96) 100%)' }}
+          />
+        </div>
+      )}
       <div className="flex items-center gap-2 px-4 pt-4">
         <FlagImg country={race.country} className="h-4 w-6 shrink-0 rounded-sm object-cover" />
         <span className="rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 text-xs font-bold tabular-nums text-gray-300">R{race.round}</span>
@@ -321,6 +352,7 @@ function UpcomingTile({ race }: { race: Race }) {
   const d = new Date(`${race.date}T12:00:00`);
   const day = d.getDate();
   const month = new Intl.DateTimeFormat('en', { month: 'short' }).format(d);
+  const photo = getCircuitPhotoForRace(race);
   return (
     <Link
       to="/grand-prix"
@@ -342,6 +374,22 @@ function UpcomingTile({ race }: { race: Race }) {
           {race.weekendDates} · Round {race.round}
         </p>
       </div>
+      {photo && (
+        <div className="relative hidden w-14 shrink-0 overflow-hidden sm:block">
+          <img
+            src={photo.src}
+            alt={`${race.circuit} aerial view`}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+            decoding="async"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(90deg, rgba(11,13,18,0.92) 0%, rgba(11,13,18,0.35) 60%, rgba(11,13,18,0.2) 100%)' }}
+          />
+        </div>
+      )}
       <ChevronRight className="mr-2 h-4 w-4 shrink-0 self-center text-gray-400 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
     </Link>
   );
@@ -350,7 +398,6 @@ function UpcomingTile({ race }: { race: Race }) {
 function DashboardSkeleton() {
   return (
     <div className="space-y-6" aria-hidden="true">
-      <Skeleton className="h-64 w-full rounded-2xl" />
       <Skeleton className="h-80 w-full rounded-2xl" />
       <div className="grid gap-4 lg:grid-cols-2">
         <Skeleton className="h-72 w-full rounded-2xl" />
@@ -362,6 +409,47 @@ function DashboardSkeleton() {
         <Skeleton className="h-52 w-full rounded-2xl" />
       </div>
     </div>
+  );
+}
+
+function CircuitGallery() {
+  const photos = allCircuitPhotos();
+  if (photos.length === 0) return null;
+  return (
+    <section className="dashboard-section dashboard-stagger-5">
+      <SectionHeading
+        title="Circuit Aerial Views"
+        kicker={`${photos.length} verified photographs across the 2026 calendar`}
+        action={{ to: '/grand-prix', label: 'Full calendar' }}
+      />
+      <div className="stagger-group grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
+        {photos.map((photo, i) => (
+          <Link
+            key={photo.circuit}
+            to="/grand-prix"
+            style={{ '--i': i } as React.CSSProperties}
+            className="dx-up group relative aspect-[16/9] overflow-hidden rounded-xl border border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-f1-red"
+          >
+            <img
+              src={photo.src}
+              alt={`${photo.circuit} aerial view`}
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
+              decoding="async"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(180deg, rgba(11,13,18,0.15) 0%, rgba(11,13,18,0.35) 45%, rgba(11,13,18,0.95) 100%)' }}
+            />
+            <div className="absolute inset-x-0 bottom-0 p-2.5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-400">Round {photo.round}</p>
+              <p className="truncate text-sm font-bold text-white">{photo.circuit}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -497,28 +585,24 @@ export function Dashboard() {
       )}
 
       {/* Championship leaders */}
-      <TitleFightCard drivers={standingsData?.drivers ?? []} races={calendar} />
-
-      <section className="dashboard-section dashboard-stagger-1">
+      <div className="dashboard-section dashboard-stagger-champ">
         <SectionHeading
-          title="Championship leaders"
-          kicker={standingsData?.asOfRace ? `After the ${standingsData.asOfRace}` : undefined}
-          action={{ to: '/standings', label: 'Full standings' }}
+          title="Championship"
+          kicker={standingsData?.asOfRace ? `After the ${standingsData.asOfRace}` : 'World drivers & constructors title fight'}
         />
+        <TitleFightCard drivers={standingsData?.drivers ?? []} races={calendar} />
         {standingsLoading ? (
-          <div className="grid gap-4 lg:grid-cols-2">
+          <div className="mt-4 grid gap-4 lg:grid-cols-2">
             <Skeleton className="h-72 w-full rounded-2xl" />
             <Skeleton className="h-72 w-full rounded-2xl" />
           </div>
-        ) : driverRows.length === 0 ? (
-          <EmptyState icon={Trophy} title="No standings yet" message="Championship data will appear after the first race." />
-        ) : (
-          <div className="stagger-group grid gap-4 lg:grid-cols-2">
-            <LeaderCard title="Drivers" icon={Trophy} rows={driverRows} index={0} leaderLabel={computeTitleFight(standingsData?.drivers ?? [], calendar)?.clinched ? 'Champion' : 'Leader'} />
+        ) : driverRows.length > 0 && (
+          <div className="stagger-group mt-4 grid gap-4 lg:grid-cols-2">
+            <LeaderCard title="Drivers" icon={Crown} rows={driverRows} index={0} leaderLabel={computeTitleFight(standingsData?.drivers ?? [], calendar)?.clinched ? 'Champion' : 'Leader'} />
             <LeaderCard title="Constructors" icon={Users} rows={constructorRows} index={1} />
           </div>
         )}
-      </section>
+      </div>
 
       {/* Recent results */}
       <section className="dashboard-section dashboard-stagger-2">
@@ -562,6 +646,23 @@ export function Dashboard() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* Verified circuit aerial views */}
+      <CircuitGallery />
+
+      {/* Replica parts showcase */}
+      <section className="dashboard-section dashboard-stagger-4">
+        <div className="relative overflow-hidden rounded-2xl border border-white/10">
+          <img
+            src="/hero-parts.webp"
+            alt="F1 Engineering Components"
+            className="h-[260px] w-full object-cover object-center md:h-[300px]"
+            loading="lazy"
+            decoding="async"
+            style={{ objectPosition: '60% center' }}
+          />
+        </div>
       </section>
     </div>
   );
