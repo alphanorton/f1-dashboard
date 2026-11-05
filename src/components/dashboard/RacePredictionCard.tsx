@@ -138,8 +138,6 @@ export function RacePredictionCard({ prediction, className }: RacePredictionCard
                   </div>
                 ))}
               </dl>
-
-              <p className="mt-3 text-[11px] leading-relaxed text-gray-400">{confidenceNote}</p>
             </div>
 
             {/* Projected podium */}
@@ -161,51 +159,8 @@ export function RacePredictionCard({ prediction, className }: RacePredictionCard
                   ))}
                 </ol>
               )}
-
-              {topThree.length > 0 && (
-                <p className="mt-2.5 text-[10px] leading-relaxed text-gray-500">
-                  Bar length is the model score relative to the leader — a ranking aid, not a probability.
-                </p>
-              )}
             </div>
           </div>
-
-          {/* Championship context */}
-          <div className="lgp-item lgp-context" style={{ '--i': 3 } as React.CSSProperties}>
-            <p className="lgp-eyebrow">Championship context</p>
-            <p className="mt-1 text-xs leading-relaxed text-gray-300">
-              {championship.leaderName ? (
-                <>
-                  <span className="font-bold text-white">{championship.leaderName}</span> leads on{' '}
-                  <span className="font-mono font-bold text-white">{championship.leaderPoints}</span> pts
-                  {championship.titleDecided ? (
-                    <> — the drivers&apos; title is already decided.</>
-                  ) : (
-                    <>
-                      {' '}with {championship.remainingRaces} race{championship.remainingRaces === 1 ? '' : 's'} left
-                      ({championship.maxPointsAvailable} pts still available).
-                    </>
-                  )}
-                </>
-              ) : (
-                <>Championship standings are unavailable for this projection.</>
-              )}
-            </p>
-            {championship.leaderName && !championship.predictedDriverAlive && (
-              <p className="mt-1.5 text-[11px] leading-relaxed text-amber-300/90">
-                {winner.name} is mathematically out of the title: the gap to the leader is larger than the{' '}
-                {championship.maxPointsAvailable} points still on offer, so this projection covers the race win only.
-              </p>
-            )}
-          </div>
-
-          {/* Model provenance */}
-          <p className="lgp-item lgp-note" style={{ '--i': 4 } as React.CSSProperties}>
-            Ranked by 70% recency-weighted points over the last {roundsUsed.length} round
-            {roundsUsed.length === 1 ? '' : 's'} (R{roundsUsed[0]}–R{roundsUsed[roundsUsed.length - 1]}) + 30% season points
-            per race, from this project&apos;s own results and standings. No probability is published because no
-            calibrated outcome model exists for this dataset. Predictions are not results.
-          </p>
         </div>
       </div>
     </section>
