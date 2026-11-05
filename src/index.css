@@ -952,3 +952,64 @@ input[type="range"]::-moz-range-thumb {
 /* ===== Layout UX: keyboard focus + collapsed rail tooltips ===== */
 .rail-link { position: relative; }
 @media (prefers-reduced-motion: reduce) { .champ-avatar { box-shadow: none; } }
+
+/* ===== Track Map: premium interactive circuit viewer (tmx-*) ===== */
+.tmx-svg { touch-action: none; cursor: grab; }
+.tmx-svg.tmx-drag { cursor: grabbing; }
+
+.tmx-corner { cursor: pointer; outline: none; }
+.tmx-corner:focus-visible .tmx-chipbg { stroke: #ffffff; }
+.tmx-chipbg { fill: rgba(15,18,23,.9); stroke: rgba(214,222,238,.34); transition: fill .15s ease, stroke .15s ease, stroke-width .15s ease; }
+.tmx-corner:hover .tmx-chipbg, .tmx-corner.is-hover .tmx-chipbg { fill: rgba(40,47,58,.95); stroke: #f3f4f6; }
+.tmx-corner.is-active .tmx-chipbg { fill: #e10600; stroke: #ffffff; }
+.tmx-chiptxt { fill: #e7eaf2; font-family: 'Orbitron', system-ui, sans-serif; font-weight: 700; pointer-events: none; user-select: none; }
+.tmx-corner:hover .tmx-chiptxt, .tmx-corner.is-hover .tmx-chiptxt, .tmx-corner.is-active .tmx-chiptxt { fill: #ffffff; }
+
+.tmx-chevron { fill: rgba(255,255,255,.3); }
+
+.tmx-sfline { stroke: #ffffff; }
+.tmx-sfchip { fill: rgba(224,228,236,.14); stroke: rgba(255,255,255,.5); stroke-width: 1; }
+.tmx-sflabel { fill: #ffffff; font-family: 'Orbitron', system-ui, sans-serif; font-weight: 700; letter-spacing: .04em; }
+
+.tmx-zoomchip { min-width: 46px; margin-bottom: 2px; padding: 3px 7px; border-radius: 8px; border: 1px solid rgba(255,255,255,.12); background: rgba(9,11,14,.78); color: #cbd0db; font-size: 10.5px; text-align: center; font-variant-numeric: tabular-nums; line-height: 1; backdrop-filter: blur(6px); }
+.tmx-ctrlbtn { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; background: rgba(9,11,14,.78); border: 1px solid rgba(255,255,255,.14); color: #d7dce6; backdrop-filter: blur(6px); cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.tmx-ctrlbtn:hover { background: rgba(225,6,0,.85); border-color: rgba(255,255,255,.55); color: #fff; }
+.tmx-ctrlbtn:focus-visible { outline: 2px solid #e10600; outline-offset: 2px; }
+.tmx-ctrlbtn:active { outline: none; }
+
+.tmx-legend { position: absolute; bottom: 10px; left: 14px; margin-right: 12rem; pointer-events: none; font-size: 9.5px; letter-spacing: .09em; text-transform: uppercase; color: rgba(154,162,177,.72); }
+
+.tmx-tip { position: absolute; transform: translate(-50%, -116%); z-index: 5; min-width: 148px; max-width: 240px; padding: 7px 10px 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,.16); background: rgba(8,10,13,.93); box-shadow: 0 10px 30px rgba(0,0,0,.55); pointer-events: none; animation: tmx-pop .16s ease-out; }
+.tmx-tip-title { font-family: 'Orbitron', system-ui, sans-serif; font-weight: 700; font-size: 12.5px; letter-spacing: .02em; color: #ffffff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tmx-tip-meta { margin-top: 2px; font-size: 10.5px; color: #b9c0cd; white-space: nowrap; }
+.tmx-tip-sub { margin-top: 3px; font-size: 9.5px; color: #737b88; white-space: nowrap; }
+@keyframes tmx-pop { from { opacity: 0; transform: translate(-50%, -116%) scale(.96); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .tmx-tip { animation: none; }
+  .tmx-chipbg, .tmx-ctrlbtn { transition: none; }
+}
+
+/* ===== Track Map page: technical panels (tmx-*) ===== */
+.tmx-stage { background: radial-gradient(1200px 620px at 50% -12%, rgba(160,176,200,.07), transparent 62%), radial-gradient(900px 500px at 82% 110%, rgba(225,6,0,.05), transparent 60%), #0b0d10; }
+
+.tmx-tile { border-bottom: 2px solid rgba(255,255,255,.07); border-radius: 8px; background: rgba(255,255,255,.025); padding: 10px 12px; }
+.tmx-tile-label { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #8a92a0; }
+.tmx-tile-value { margin-top: 3px; font-family: 'Orbitron', system-ui, sans-serif; font-weight: 700; font-size: 17px; color: #ffffff; font-variant-numeric: tabular-nums; }
+.tmx-tile-sub { margin-top: 2px; font-size: 10.5px; color: #6d7480; line-height: 1.35; }
+
+.tmx-sector { display: inline-flex; align-items: center; gap: 6px; border: 1px solid; border-radius: 9999px; padding: 4px 12px; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #e5e7eb; background: rgba(255,255,255,.03); }
+.tmx-sector-dot { width: 8px; height: 8px; border-radius: 9999px; }
+.tmx-sector-note { font-size: 10.5px; color: #6d7480; }
+
+.tmx-cornerrow { display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,.07); border-radius: 8px; padding: 7px 9px; background: rgba(255,255,255,.02); cursor: pointer; transition: border-color .15s ease, background .15s ease; width: 100%; }
+.tmx-cornerrow:hover { border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.045); }
+.tmx-cornerrow:focus-visible { outline: 2px solid #e10600; outline-offset: 1px; }
+.tmx-cornerrow.is-active { border-color: #e10600; background: rgba(225,6,0,.12); }
+.tmx-cornerrow-dim { cursor: default; }
+.tmx-cr-num { display: inline-flex; align-items: center; justify-content: center; min-width: 26px; height: 22px; padding: 0 4px; border-radius: 5px; background: rgba(224,228,236,.1); color: #fff; font-family: 'Orbitron', system-ui, sans-serif; font-size: 10.5px; font-weight: 700; flex-shrink: 0; }
+.tmx-cornerrow.is-active .tmx-cr-num { background: #e10600; color: #fff; }
+.tmx-cr-num-dim { background: rgba(224,228,236,.045); color: #8a92a0; }
+
+.tmx-cornerrow-static { cursor: default; }
+

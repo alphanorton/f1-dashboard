@@ -61,6 +61,14 @@ export function circuitSlug(circuitName: string): string | null {
   return null;
 }
 
+/** Resolves the traced layout for a circuit name, or null when none was traced. */
+export async function getTrackPath(circuitName?: string): Promise<TrackPath | null> {
+  const slug = circuitName ? circuitSlug(circuitName) : null;
+  if (!slug) return null;
+  const all = await loadTrackPaths();
+  return all[slug] ?? null;
+}
+
 /** Returns the traced layout for a circuit, or null while loading / when none was traced. */
 export function useTrackPath(circuitName?: string): TrackPath | null {
   const [track, setTrack] = useState<TrackPath | null>(null);

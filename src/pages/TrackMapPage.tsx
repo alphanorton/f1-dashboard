@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CircuitImage } from '@/components/track/CircuitImage';
-import { Map, MapPin, Flag, Info, ChevronLeft, ChevronRight, Crown } from 'lucide-react';
+import { CircuitInteractiveMap } from '@/components/track/CircuitInteractiveMap';
+import { Map, MapPin, Flag, ChevronLeft, ChevronRight, Crown, Gauge } from 'lucide-react';
 import { useChampion } from '@/hooks/useChampion';
 import { circuitSlug } from '@/lib/trackPaths';
 import { getFlagUrl } from '@/lib/flags';
@@ -43,11 +44,34 @@ interface CircuitsData {
   circuits: Circuit[];
 }
 
+const SPEED_COLOR: Record<string, string> = {
+  very_fast: 'text-red-400',
+  fast: 'text-orange-400',
+  medium: 'text-yellow-400',
+  slow: 'text-blue-400',
+};
+
+const getSpeedColor = (speed: string) => SPEED_COLOR[speed] ?? 'text-gray-400';
+
+const getSpeedLabel = (speed: string) =>
+  ({ very_fast: 'Very fast', fast: 'Fast', medium: 'Medium', slow: 'Slow' }[speed] ?? speed);
+
+const SECTOR_COLORS = ['#e10600', '#00b6e8', '#f5c542'] as const;
+
+/** "1:19.813 (Charles Leclerc, Ferrari, 2024)" -> parts, when the record string follows that shape. */
+function parseLapRecord(record: string): { time: string | null; rest: string | null } {
+  const m = record.match(/^([\d:.]+)\s*\((.+?),\s*(\d{4})\)$/);
+  if (!m) return { time: null, rest: record || null };
+  return { time: m[1], rest: `${m[2]} · ${m[3]}` };
+}
+
 export function TrackMapPage() {
   const [data, setData] = useState<CircuitsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedCircuit, setSelectedCircuit] = useState<Circuit | null>(null);
   const [imageError, setImageError] = useState<string | null>(null);
+  const [activeCorner, setActiveCorner] = useState<number | null>(null);
+  const [measuredNums, setMeasuredNums] = useState<number[]>([]);
 
   const [retryKey, setRetryKey] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -60,6 +84,8 @@ export function TrackMapPage() {
   const pick = (c: Circuit, scroll = false) => {
     setSelectedCircuit(c);
     setImageError(null);
+    setActiveCorner(null);
+    setMeasuredNums([]);
     setSearchParams({ circuit: c.id }, { replace: true });
     if (scroll) mapRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -83,6 +109,9 @@ export function TrackMapPage() {
     return () => { cancelled = true; };
   }, [retryKey]);
 
+  const handleActiveCorner = useCallback((n: number | null) => setActiveCorner(n), []);
+  const handleMeasured = useCallback((nums: number[]) => setMeasuredNums(nums), []);
+
   if (!loading && !data) {
     return (
       <div className="space-y-6">
@@ -104,31 +133,11 @@ export function TrackMapPage() {
     return <PageLoader message="Loading circuits..." />;
   }
 
-  const getSpeedColor = (speed: string) => {
-    switch (speed) {
-      case 'very_fast': return 'text-red-400';
-      case 'fast': return 'text-orange-400';
-      case 'medium': return 'text-yellow-400';
-      case 'slow': return 'text-blue-400';
-      default: return 'text-gray-400';
-    }
-  };
-
-  const getSpeedLabel = (speed: string) => {
-    switch (speed) {
-      case 'very_fast': return 'Very fast';
-      case 'fast': return 'Fast';
-      case 'medium': return 'Medium';
-      case 'slow': return 'Slow';
-      default: return speed;
-    }
-  };
-
   return (
     <div className="space-y-6">
       <PageHeader
         title="2026 circuit maps"
-        subtitle={`${data.circuits.length} circuits with map images and corner details`}
+        subtitle={`${data.circuits.length} circuits · interactive layout, measured turns & circuit intelligence`}
         icon={Map}
       />
 
@@ -195,79 +204,132 @@ export function TrackMapPage() {
           </CardHeader>
 
           <CardContent className="p-0">
-            {/* Track Map Image */}
-            <CircuitImage
+            {/* Interactive circuit map (verified traced geometry) */}
+            <CircuitInteractiveMap
               key={selectedCircuit.id}
-              circuitId={selectedCircuit.id}
-              name={selectedCircuit.name}
-              trackMapUrl={selectedCircuit.trackMapUrl}
-              className="max-h-[560px]"
+              circuit={selectedCircuit}
+              className="tmx-stage bg-[#0b0d10]"
+              activeCorner={activeCorner}
+              onActiveCornerChange={handleActiveCorner}
+              onMeasuredCorners={handleMeasured}
+              fallback={
+                <CircuitImage
+                  circuitId={selectedCircuit.id}
+                  name={selectedCircuit.name}
+                  trackMapUrl={selectedCircuit.trackMapUrl}
+                  className="max-h-[560px]"
+                  badge={champion && winAt(selectedCircuit) ? (
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-yellow-300/50 bg-black/70 px-3 py-1.5 text-xs font-bold text-yellow-300 backdrop-blur">
+                      <Crown className="h-3.5 w-3.5" aria-hidden="true" /> {surname} won here · R{winAt(selectedCircuit)!.round}
+                    </span>
+                  ) : undefined}
+                />
+              }
               badge={champion && winAt(selectedCircuit) ? (
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-yellow-300/50 bg-black/70 px-3 py-1.5 text-xs font-bold text-yellow-300 backdrop-blur">
                   <Crown className="h-3.5 w-3.5" aria-hidden="true" /> {surname} won here · R{winAt(selectedCircuit)!.round}
                 </span>
               ) : undefined}
             />
+
             <p className="border-t border-gray-800 px-4 py-3 text-xs text-gray-400">
-              Circuit layout diagrams. Layouts may differ slightly from the 2026 configuration.
+              Interactive layout traced from the official circuit map. Turn markers are measured peaks of curvature along that line
+              (numbered from its origin — independent from official turn numbering); the start/finish bar sits at the line origin.
             </p>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-surface/60 border-t border-gray-800">
-              <div className="p-3 rounded-lg bg-muted/40 border border-gray-700/50">
-                <p className="text-xs text-gray-400 mb-1">Track length</p>
-                <p className="text-lg font-bold text-white tabular-nums">{selectedCircuit.length.toFixed(3)} km</p>
+            {/* Technical information panel */}
+            <div className="border-t border-gray-800 bg-[#0c0e11] p-4 sm:p-5">
+              <p className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-gray-500">
+                <Gauge className="h-3.5 w-3.5 text-f1-red" aria-hidden="true" /> Circuit intelligence
+              </p>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+                {(() => {
+                  const rec = parseLapRecord(selectedCircuit.lapRecord);
+                  const tiles: Array<{
+                    label: string;
+                    value: React.ReactNode;
+                    sub?: string;
+                    accent?: boolean;
+                  }> = [
+                    { label: 'Track length', value: `${selectedCircuit.length.toFixed(3)}`, sub: 'km · per lap' },
+                    { label: 'Laps', value: selectedCircuit.laps, sub: selectedCircuit.raceDistance !== undefined ? `${selectedCircuit.raceDistance.toFixed(3)} km race` : 'Race distance not in local data', accent: selectedCircuit.raceDistance === undefined },
+                    { label: 'Corners', value: selectedCircuit.turns, sub: `${selectedCircuit.corners.length} in dataset` },
+                    { label: 'Sectors', value: selectedCircuit.sectors, sub: 'Split points not in local data', accent: true },
+                    { label: 'DRS zones', value: '—', sub: 'Not available in local data', accent: true },
+                    rec.time
+                      ? { label: 'Lap record', value: rec.time, sub: rec.rest ?? undefined, accent: true }
+                      : { label: 'Lap record', value: selectedCircuit.lapRecord || '—', sub: selectedCircuit.lapRecord ? undefined : 'Not available locally' },
+                  ];
+                  return tiles.map((t, idx) => (
+                    <div
+                      key={idx}
+                      className="tmx-tile"
+                      style={t.accent ? { borderBottomColor: 'rgba(225,6,0,.55)' } : undefined}
+                    >
+                      <p className="tmx-tile-label">{t.label}</p>
+                      <p className="tmx-tile-value">{t.value}</p>
+                      {t.sub && <p className="tmx-tile-sub" style={t.accent ? { color: '#ff8f89' } : undefined}>{t.sub}</p>}
+                    </div>
+                  ));
+                })()}
               </div>
-              <div className="p-3 rounded-lg bg-muted/40 border border-gray-700/50">
-                <p className="text-xs text-gray-400 mb-1">Laps</p>
-                <p className="text-lg font-bold text-white tabular-nums">{selectedCircuit.laps}</p>
-              </div>
-              <div className="p-3 rounded-lg bg-muted/40 border border-gray-700/50">
-                <p className="text-xs text-gray-400 mb-1">Spectator capacity</p>
-                <p className="text-lg font-bold text-emerald-400 tabular-nums">{selectedCircuit.capacity.toLocaleString('en-US')}</p>
-              </div>
-              <div className="p-3 rounded-lg bg-muted/40 border border-gray-700/50">
-                <p className="text-xs text-gray-400 mb-1">
-                  {selectedCircuit.maxGForceHistorical ? 'Highest documented G-force' : 'Max G-force'}
-                </p>
-                <p className="text-lg font-bold text-red-400 tabular-nums">{selectedCircuit.maxGForce}</p>
-              </div>
-              {selectedCircuit.raceDistance !== undefined && (
-                <div className="p-3 rounded-lg bg-muted/40 border border-gray-700/50">
-                  <p className="text-xs text-gray-400 mb-1">Race distance</p>
-                  <p className="text-lg font-bold text-white tabular-nums">{selectedCircuit.raceDistance.toFixed(3)} km</p>
+              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="tmx-tile">
+                  <p className="tmx-tile-label">Spectator capacity</p>
+                  <p className="tmx-tile-value">{selectedCircuit.capacity.toLocaleString('en-US')}</p>
                 </div>
-              )}
+                <div className="tmx-tile">
+                  <p className="tmx-tile-label">{selectedCircuit.maxGForceHistorical ? 'Highest documented G-force' : 'Max G-force'}</p>
+                  <p className="tmx-tile-value">{selectedCircuit.maxGForce}</p>
+                </div>
+                <div className="tmx-tile">
+                  <p className="tmx-tile-label">Circuit type</p>
+                  <p className="tmx-tile-value">Grade 1 · {selectedCircuit.turns} turns</p>
+                  <p className="tmx-tile-sub">Per local circuit dataset</p>
+                </div>
+              </div>
+
+              {/* Sector tags — boundaries are not present in local datasets, so they are not drawn on the map */}
+              <div className="mt-4 flex flex-wrap items-center gap-2" role="list" aria-label="Sectors">
+                {['Sector 1', 'Sector 2', 'Sector 3'].map((s, i) => (
+                  <span key={s} role="listitem" className="tmx-sector" style={{ borderColor: SECTOR_COLORS[i] }}>
+                    <span className="tmx-sector-dot" style={{ background: SECTOR_COLORS[i] }} aria-hidden="true" />
+                    {s}
+                  </span>
+                ))}
+                <span className="tmx-sector-note">Split points not available in local data — sectors are not drawn on the map</span>
+              </div>
             </div>
 
-            {/* Lap Record & Corners */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-surface/60 border-t border-gray-800">
-              <div className="p-4 rounded-xl bg-muted/40 border border-gray-700/50">
-                <div className="flex items-center gap-1.5 text-blue-400 mb-2">
-                  <Info className="h-4 w-4" />
-                  <span className="text-xs font-medium uppercase">Lap record</span>
-                </div>
-                <p className="text-sm text-gray-300 font-mono tabular-nums">{selectedCircuit.lapRecord}</p>
+            {/* Corner explorer — official dataset list */}
+            <div className="border-t border-gray-800 bg-[#0c0e11] p-4 sm:p-5">
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-gray-500">
+                  <Flag className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" /> Corner list ({selectedCircuit.corners.length} · official dataset)
+                </p>
+                <p className="text-[11px] text-gray-500">
+                  {measuredNums.length} turn peak{measuredNums.length === 1 ? '' : 's'} measured on the traced layout
+                </p>
               </div>
-
-              <div className="p-4 rounded-xl bg-muted/40 border border-gray-700/50">
-                <div className="flex items-center gap-1.5 text-amber-400 mb-2">
-                  <Flag className="h-4 w-4" />
-                  <span className="text-xs font-medium uppercase">Corners ({selectedCircuit.corners.length})</span>
-                </div>
-                <div className="max-h-48 overflow-y-auto space-y-1">
-                  {selectedCircuit.corners.map((corner, idx) => (
-                    <div key={idx} className="flex items-center justify-between text-xs p-1.5 bg-surface/70 rounded border border-gray-800">
-                      <span className="font-mono text-white font-bold w-8 text-center tabular-nums">{corner.number}</span>
-                      <span className="text-white flex-1 text-right pr-2 truncate">{corner.name}</span>
-                      <span className={`px-1.5 py-0.5 rounded text-xs ${getSpeedColor(corner.speed)}`}>
-                        {getSpeedLabel(corner.speed)}
-                      </span>
-                      <span className="font-mono text-amber-400 w-10 text-center tabular-nums">{corner.gear}</span>
-                    </div>
-                  ))}
-                </div>
+              <div className="grid max-h-64 grid-cols-1 gap-1.5 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-3">
+                {selectedCircuit.corners.map((corner, idx) => (
+                  <div key={`${corner.number}-${idx}`} className="tmx-cornerrow tmx-cornerrow-static">
+                    <span className="tmx-cr-num">{corner.number}</span>
+                    <span className="min-w-0 flex-1 text-left">
+                      <span className="block truncate text-xs font-semibold text-white">{corner.name}</span>
+                      {corner.notes && <span className="block truncate text-[10px] text-gray-500">{corner.notes}</span>}
+                    </span>
+                    <span className={`shrink-0 text-[10px] font-bold uppercase ${getSpeedColor(corner.speed)}`}>
+                      {getSpeedLabel(corner.speed)}
+                    </span>
+                    <span className="w-10 shrink-0 text-right font-mono text-[10px] text-amber-400 tabular-nums">G{corner.gear}</span>
+                  </div>
+                ))}
               </div>
+              <p className="mt-2 text-[11px] leading-relaxed text-gray-500">
+                Names, speed profiles and gears come from the local circuit dataset. Map turn markers are measured from the traced
+                geometry and numbered independently — the two numberings are not interchangeable.
+              </p>
             </div>
           </CardContent>
         </Card>
