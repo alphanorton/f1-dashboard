@@ -604,6 +604,32 @@ input[type="range"]::-moz-range-thumb {
 }
 .dx-track img { filter: drop-shadow(0 0 10px rgba(225,6,0,.28)); }
 
+/* Verified circuit photograph behind the next-race card. */
+.dx-next-photo {
+  z-index: 0;
+  opacity: .45;
+  object-position: center 58%;
+  transform: scale(1.02);
+  transition: transform 900ms ease, opacity 400ms ease;
+}
+.dx-next:hover .dx-next-photo { opacity: .55; transform: scale(1.06); }
+.dx-next-scrim {
+  z-index: 0;
+  background:
+    linear-gradient(90deg, rgba(10,12,18,.97) 0%, rgba(10,12,18,.92) 34%, rgba(10,12,18,.62) 60%, rgba(10,12,18,.22) 100%),
+    linear-gradient(0deg, rgba(10,12,18,.9) 0%, rgba(10,12,18,.1) 62%, transparent 100%);
+}
+@media (max-width: 767px) {
+  .dx-next-photo { opacity: .3; }
+  .dx-next-scrim {
+    background:
+      linear-gradient(180deg, rgba(10,12,18,.94) 0%, rgba(10,12,18,.86) 55%, rgba(10,12,18,.93) 100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dx-next-photo, .dx-next:hover .dx-next-photo { transform: none; transition: none; }
+}
+
 /* Start lights: on one by one, then lights out - the start time flashes on "go". */
 .dx-lights {
   display: inline-flex;
@@ -952,6 +978,112 @@ input[type="range"]::-moz-range-thumb {
 /* ===== Layout UX: keyboard focus + collapsed rail tooltips ===== */
 .rail-link { position: relative; }
 @media (prefers-reduced-motion: reduce) { .champ-avatar { box-shadow: none; } }
+
+/* ===== Grand Prix: verified circuit photography ===== */
+.gp-hero-photo {
+  z-index: 0;
+  opacity: .5;
+  object-position: center 60%;
+  transform: scale(1.03);
+  transition: transform 900ms ease, opacity 300ms ease;
+}
+.gp-hero:hover .gp-hero-photo { opacity: .62; transform: scale(1.07); }
+.gp-hero-photo-scrim {
+  z-index: 0;
+  background:
+    linear-gradient(100deg, rgba(10,8,10,.96) 0%, rgba(12,10,12,.88) 42%, rgba(12,10,12,.52) 72%, rgba(12,10,12,.28) 100%),
+    linear-gradient(0deg, rgba(9,11,16,.85) 0%, transparent 65%);
+}
+@media (max-width: 767px) {
+  .gp-hero-photo { opacity: .34; }
+  .gp-hero-photo-scrim {
+    background: linear-gradient(180deg, rgba(10,8,10,.92) 0%, rgba(12,10,12,.86) 55%, rgba(9,11,16,.94) 100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gp-hero-photo, .gp-hero:hover .gp-hero-photo { transform: none; transition: none; }
+}
+
+/* ===== Liquid Glass: Premium translucent card with depth ===== */
+.liquid-glass {
+  position: relative;
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 42%, rgba(8, 10, 14, 0.42) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 12px 40px rgba(0, 0, 0, 0.38),
+    0 2px 8px rgba(0, 0, 0, 0.22);
+  animation: liquid-glass-enter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-origin: center top;
+}
+
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.12) 30%, 
+    rgba(255, 255, 255, 0.08) 70%, 
+    transparent 100%);
+  pointer-events: none;
+}
+
+.liquid-glass::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12px;
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg, rgba(255, 90, 90, 0.4) 0%, transparent 100%);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+@keyframes liquid-glass-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.liquid-glass > * {
+  animation: liquid-glass-content 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+}
+
+@keyframes liquid-glass-content {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass {
+    animation: none;
+    transform: none;
+  }
+  .liquid-glass > * {
+    animation: none;
+    transform: none;
+  }
+}
 
 /* ===== Track Map: premium interactive circuit viewer (tmx-*) ===== */
 .tmx-svg { touch-action: none; cursor: grab; }
