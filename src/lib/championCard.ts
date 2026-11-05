@@ -145,12 +145,12 @@ export async function renderChampionCard(canvas: HTMLCanvasElement, d: ChampionC
   const R = 130;
   ctx.save();
   g = ctx.createConicGradient ? ctx.createConicGradient(3.5, cx, cy) : (ctx.createLinearGradient(cx - R, cy - R, cx + R, cy + R) as unknown as CanvasGradient);
-  g.addColorStop(0, '#F5C542');
-  g.addColorStop(0.3, '#FFF3C4');
-  g.addColorStop(0.6, '#B8891A');
-  g.addColorStop(1, '#F5C542');
-  ctx.shadowColor = 'rgba(245,197,66,.5)';
-  ctx.shadowBlur = 40;
+  g.addColorStop(0, '#FFFFFF');
+  g.addColorStop(0.3, rgba(d.teamColor, 0.85));
+  g.addColorStop(0.6, '#C9CFDB');
+  g.addColorStop(1, '#FFFFFF');
+  ctx.shadowColor = rgba(d.teamColor, 0.45);
+  ctx.shadowBlur = 36;
   ctx.fillStyle = g;
   ctx.beginPath();
   ctx.arc(cx, cy, R + 10, 0, Math.PI * 2);

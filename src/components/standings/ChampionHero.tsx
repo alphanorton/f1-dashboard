@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Crown, Trophy, Flag, Medal, Target, AlertTriangle, Share2 } from 'lucide-react';
+import { Crown, Flag, Medal, Target, AlertTriangle, Share2 } from 'lucide-react';
 import { ChampionShareDialog } from '@/components/standings/ChampionShareDialog';
 import { DriverAvatar } from '@/components/ui/DriverAvatar';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
@@ -54,12 +54,14 @@ export function ChampionHero({ drivers, races, results }: Props) {
   const card = useMemo(() => {
     if (!info) return null;
     const { leader, remainingCount } = info;
+    // computeTitleFight only carries code/name/team/points; look the full row up for the extra fields.
+    const full = drivers.find((d) => d.code === leader.code);
     return {
       name: leader.name,
       team: leader.team,
       teamColor: getTeamColor2026(leader.team),
       code: leader.code,
-      number: leader.driverNumber ?? null,
+      number: full?.driverNumber ?? null,
       points: leader.points,
       wins: line.wins,
       podiums: line.podiums,
@@ -72,10 +74,11 @@ export function ChampionHero({ drivers, races, results }: Props) {
       }),
       headline: `Title clinched with ${remainingCount} ${remainingCount === 1 ? 'race' : 'races'} to spare`,
     };
-  }, [info, line]);
+  }, [info, line, drivers]);
   if (!info || !info.clinched || !card) return null;
 
   const { leader, second, gapToSecond, maxLeft, remainingCount } = info;
+  const fullLeader = drivers.find((d) => d.code === leader.code);
   const color = getTeamColor2026(leader.team);
   const stats = [
     { icon: Flag, label: 'GP wins', value: line.wins },
@@ -101,14 +104,13 @@ export function ChampionHero({ drivers, races, results }: Props) {
           <div className="min-w-0">
             <h2 className="text-balance font-f1 text-2xl font-black uppercase leading-tight text-white sm:text-4xl">{leader.name}</h2>
             <p className="mt-1 text-sm font-semibold" style={{ color: getTeamTextColor2026(leader.team) }}>
-              {leader.team}{leader.driverNumber ? ` · #${leader.driverNumber}` : ''}{leader.nationality ? ` · ${leader.nationality}` : ''}
+              {leader.team}{fullLeader?.driverNumber ? ` · #${fullLeader.driverNumber}` : ''}{fullLeader?.nationality ? ` · ${fullLeader.nationality}` : ''}
             </p>
             <p className="mt-2 flex items-end gap-2">
               <span className="font-f1 text-4xl font-black tabular-nums text-white sm:text-5xl"><AnimatedNumber value={leader.points} /></span>
               <span className="pb-1.5 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">pts</span>
             </p>
           </div>
-          <Trophy className="ml-auto hidden h-14 w-14 shrink-0 text-yellow-300/90 sm:block" aria-hidden="true" />
         </div>
 
         <p className="mt-5 text-sm text-gray-300">

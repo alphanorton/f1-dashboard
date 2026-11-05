@@ -10,6 +10,20 @@ import { Zap, Timer, AlertTriangle, CheckCircle2 } from 'lucide-react';
 import { useCachedData } from '@/hooks/useCachedData';
 import { formatLapTime } from '@/lib/motion';
 
+/** Image-friendly slug -> display label. Anything unknown falls back to replacing underscores. */
+const CIRCUIT_LABELS: Record<string, string> = {
+  albert_park: 'Albert Park',
+  red_bull_ring: 'Red Bull Ring',
+  marina_bay: 'Marina Bay',
+  yas_marina: 'Yas Marina',
+  las_vegas: 'Las Vegas',
+  gilles_villeneuve: 'Gilles Villeneuve',
+};
+const circuitLabel = (value: string | null | undefined): string | null => {
+  if (!value) return null;
+  return CIRCUIT_LABELS[value] ?? value.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+};
+
 interface FastestLap {
   round: number;
   grand_prix: string;
@@ -126,7 +140,7 @@ export function FastestLaps() {
                       </td>
                       <td className="py-3 px-4">
                         <p className="font-bold text-white text-sm">{race.grand_prix}</p>
-                        <p className="text-xs text-gray-400">{race.circuit}</p>
+                        <p className="text-xs text-gray-400">{circuitLabel(race.circuit) ?? race.circuit ?? ''}</p>
                       </td>
                       <td className="py-3 px-4 hidden lg:table-cell">
                         <span className="text-gray-400 text-xs font-mono tabular-nums">{race.date}</span>
@@ -196,7 +210,7 @@ export function FastestLaps() {
                   R{item.round}
                 </Badge>
                 <span className="text-gray-300 text-sm font-medium">{item.grand_prix}</span>
-                <span className="text-gray-400 text-xs">{item.reason}</span>
+                <span className="text-gray-400 text-xs">{item.reason.replace(/_/g, ' ')}</span>
               </div>
             ))}
           </CardContent>

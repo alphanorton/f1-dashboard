@@ -51,11 +51,7 @@ export function GrandPrix() {
         if (!cancelled) {
           setData(calendarData);
           setResults(resultsData);
-          
-          // Auto-select next race
-          const next = calendarData.races.find(r => r.status === 'next');
-          if (next) setSelectedRace(next);
-          
+
           setLoading(false);
         }
       } catch (err) {
