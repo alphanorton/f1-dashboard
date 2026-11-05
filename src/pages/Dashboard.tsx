@@ -666,9 +666,6 @@ export function Dashboard() {
         )}
       </section>
 
-      {/* Verified circuit aerial views */}
-      <CircuitGallery />
-
       {/* Replica parts showcase */}
       <section className="dashboard-section dashboard-stagger-4">
         <div className="relative overflow-hidden rounded-2xl border border-white/10">

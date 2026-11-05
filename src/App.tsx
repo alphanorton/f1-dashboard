@@ -66,7 +66,6 @@ function App() {
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/grand-prix" element={<GrandPrix />} />
                     <Route path="/singapore-2026" element={<Singapore2026 />} />
-                    <Route path="/circuits" element={<Circuits />} />
                     <Route path="/standings" element={<Standings />} />
                     <Route path="/track-map" element={<TrackMapPage />} />
                     <Route path="/tyres" element={<TireStrategy />} />

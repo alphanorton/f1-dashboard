@@ -24,7 +24,6 @@ const primaryItems: MobileItem[] = [
 
 const moreItems: MobileItem[] = [
   { name: 'Fastest Laps', href: '/fastest-laps', icon: Gauge },
-  { name: 'Circuits', href: '/circuits', icon: MapPin },
   { name: 'Track Map', href: '/track-map', icon: Map },
   { name: 'Settings', href: '/settings', icon: Settings },
 ];

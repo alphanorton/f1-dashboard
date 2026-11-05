@@ -31,7 +31,6 @@ const sections: Array<{ label: string; items: NavItem[] }> = [
   {
     label: 'Reference',
     items: [
-      { name: 'Circuits', href: '/circuits', icon: MapPin },
       { name: 'Track Map', href: '/track-map', icon: Map },
     ],
   },
