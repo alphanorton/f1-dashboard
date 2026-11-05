@@ -276,11 +276,11 @@
       "team": "Ferrari",
       "lap_number": 41,
       "lap_time": 95.202,
-      "s1": null,
-      "s2": null,
-      "s3": null,
-      "source": "Supplied 2026 Singapore Grand Prix classification (single source, not cross-checked)",
-      "verified": false
+      "s1": 28.307,
+      "s2": 40.048,
+      "s3": 26.847,
+      "source": "OpenF1 /laps (session 11388, driver 16): sectors sum exactly to the 1:35.202 lap time",
+      "verified": true
     },
     {
       "round": 18,
@@ -293,28 +293,28 @@
       "team": "Ferrari",
       "lap_number": 42,
       "lap_time": 97.976,
-      "s1": null,
-      "s2": null,
-      "s3": null,
-      "source": "grandprix.com race analysis and Wikipedia race page (two sources agree on 1:37.976, lap 42); sector times not available",
-      "verified": false
+      "s1": 26.289,
+      "s2": 38.906,
+      "s3": 32.781,
+      "source": "OpenF1 /laps (session 11396, driver 16): sectors sum exactly to the 1:37.976 lap time",
+      "verified": true
     },
     {
       "round": 19,
       "projectRound": 21,
       "grand_prix": "Mexico City Grand Prix",
-      "circuit": null,
+      "circuit": "mexico",
       "date": "2026-11-01",
       "driver_name": "Lewis HAMILTON",
       "driver_code": "HAM",
       "team": "Ferrari",
       "lap_number": 50,
       "lap_time": 79.268,
-      "s1": null,
-      "s2": null,
-      "s3": null,
-      "source": "inbox/race.txt",
-      "verified": false
+      "s1": 27.364,
+      "s2": 31.612,
+      "s3": 20.292,
+      "source": "OpenF1 /laps (session 11404, driver 44): sectors sum exactly to the 1:19.268 lap time",
+      "verified": true
     }
   ],
   "needs_review": [
@@ -337,31 +337,6 @@
       "openf1_lap_duration": 98.22,
       "rejected_alternative": "1:38.511 (f1-fansite)",
       "driver_code": "VER"
-    },
-    {
-      "round": 17,
-      "grand_prix": "Singapore Grand Prix",
-      "reason": "Lap time and lap number come from the supplied classification only. Sector times for the fastest lap were not supplied, so s1/s2/s3 are null rather than split from the lap time.",
-      "driver_code": "LEC",
-      "lap_time": 95.202,
-      "official_lap_time": "1:35.202",
-      "lap_number": 41
-    },
-    {
-      "round": 18,
-      "grand_prix": "United States Grand Prix",
-      "reason": "Lap time (1:37.976) and lap number (42) agree across grandprix.com and Wikipedia, but sector times for the fastest lap were not available, so s1/s2/s3 are null rather than split from the lap time.",
-      "driver_code": "LEC",
-      "lap_time": 97.976,
-      "official_lap_time": "1:37.976"
-    },
-    {
-      "round": 19,
-      "grand_prix": "Mexico City Grand Prix",
-      "reason": "sector times missing",
-      "driver_code": "HAM",
-      "lap_time": 79.268,
-      "lap_number": 50
     }
   ]
 }

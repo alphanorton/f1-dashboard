@@ -584,7 +584,7 @@
   ],
   "sectors": {
     "unit": "seconds",
-    "note": "Top speed 316 km/h (Lando Norris, McLaren). Sector times for the fastest lap and for the other drivers were not available in the sources.",
+    "note": "Top speed 316 km/h (Lando Norris, McLaren). Fastest-lap sectors for Charles Leclerc come from OpenF1 /laps (session 11388) and sum exactly to 1:35.202. Sector times for the other drivers were not available in the sources.",
     "race": [
       {
         "code": "VER",
@@ -594,9 +594,9 @@
       },
       {
         "code": "LEC",
-        "s1": null,
-        "s2": null,
-        "s3": null
+        "s1": 28.307,
+        "s2": 40.048,
+        "s3": 26.847
       },
       {
         "code": "ANT",
