@@ -1145,3 +1145,329 @@ input[type="range"]::-moz-range-thumb {
 
 .tmx-cornerrow-static { cursor: default; }
 
+/* =====================================================================
+   Race Prediction — Liquid Glass panel (lgp-*)
+
+   Scoped to this one surface on purpose: the rest of the dashboard keeps
+   its opaque broadcast styling.
+   ===================================================================== */
+
+.lgp-wrap {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Colour bloom painted *behind* the panel. This is the only reason the
+   backdrop blur reads as depth rather than a flat dark tint: the glass is
+   literally refracting these gradients. It sits below the panel, so it can
+   never reduce text contrast. */
+.lgp-bloom {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 32px;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 62% at 12% 18%, rgba(225, 6, 0, 0.42), transparent 72%),
+    radial-gradient(40% 56% at 86% 4%, rgba(0, 168, 232, 0.30), transparent 74%),
+    radial-gradient(48% 60% at 66% 100%, rgba(150, 92, 255, 0.22), transparent 74%);
+  filter: blur(54px) saturate(135%);
+  opacity: 0.6;
+}
+
+.lgp-panel {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(120% 130% at 14% -18%, rgba(255, 255, 255, 0.17), transparent 58%),
+    radial-gradient(96% 120% at 100% 0%, rgba(225, 6, 0, 0.14), transparent 64%),
+    linear-gradient(158deg, rgba(26, 29, 38, 0.74) 0%, rgba(14, 16, 23, 0.68) 46%, rgba(9, 11, 16, 0.78) 100%);
+  -webkit-backdrop-filter: blur(26px) saturate(165%) brightness(1.06);
+  backdrop-filter: blur(26px) saturate(165%) brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.20),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.42),
+    inset 0 0 70px rgba(255, 255, 255, 0.025),
+    0 26px 64px -14px rgba(0, 0, 0, 0.66),
+    0 2px 10px rgba(0, 0, 0, 0.32);
+  animation: lgp-panel-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Specular sheen: soft light pooling in the upper-left of the glass. */
+.lgp-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    radial-gradient(62% 46% at 14% 0%, rgba(255, 255, 255, 0.20), transparent 72%),
+    linear-gradient(104deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0) 38%);
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+/* Fine glass rim: a 1px gradient edge that fades from white highlight into
+   a restrained F1 red at the bottom-right. */
+.lgp-panel::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    146deg,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.10) 30%,
+    rgba(255, 255, 255, 0) 56%,
+    rgba(225, 6, 0, 0.34) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Short red accent light on the top edge. */
+.lgp-accent {
+  position: absolute;
+  top: 0;
+  left: 22px;
+  z-index: 2;
+  width: 74px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(255, 90, 90, 0.85), rgba(255, 90, 90, 0));
+  pointer-events: none;
+}
+
+.lgp-body {
+  position: relative;
+  z-index: 1;
+  padding: 16px;
+}
+
+.lgp-item {
+  animation: lgp-item-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(90ms + var(--i, 0) * 55ms);
+}
+
+.lgp-icon {
+  display: inline-flex;
+  height: 34px;
+  width: 34px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  border: 1px solid rgba(255, 90, 90, 0.34);
+  background: linear-gradient(150deg, rgba(255, 90, 90, 0.22), rgba(225, 6, 0, 0.06));
+  color: #ff8f89;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.lgp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.28);
+  padding: 3px 9px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #c7ccd6;
+  white-space: nowrap;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+.lgp-winner {
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.012) 58%),
+    rgba(0, 0, 0, 0.20);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  padding: 12px;
+}
+
+.lgp-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8f97a5;
+}
+
+.lgp-metric {
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.035);
+  padding: 6px 8px;
+}
+
+.lgp-metric-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8f97a5;
+  line-height: 1.2;
+}
+
+.lgp-metric-value {
+  margin-top: 2px;
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.lgp-metric-sub {
+  font-size: 9px;
+  color: #6d7480;
+}
+
+.lgp-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.028);
+  padding: 7px 9px;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lgp-row:hover {
+    background: rgba(255, 255, 255, 0.062);
+    border-color: rgba(255, 255, 255, 0.16);
+    transform: translateX(2px);
+  }
+}
+
+.lgp-rank {
+  display: inline-flex;
+  height: 20px;
+  width: 20px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  background: rgba(0, 0, 0, 0.35);
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.lgp-bar {
+  display: none;
+  height: 5px;
+  width: 74px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.lgp-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 9999px;
+  opacity: 0.85;
+  animation: lgp-bar-grow 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(260ms + var(--i, 0) * 55ms);
+}
+
+.lgp-score {
+  width: 34px;
+  flex-shrink: 0;
+  text-align: right;
+  font-family: 'Orbitron', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #d8dde6;
+  font-variant-numeric: tabular-nums;
+}
+
+.lgp-context {
+  margin-top: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.22);
+  padding: 10px 12px;
+}
+
+.lgp-note {
+  margin-top: 10px;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: #7c8391;
+}
+
+@media (min-width: 640px) {
+  .lgp-body { padding: 18px; }
+  .lgp-winner { padding: 14px; }
+  .lgp-bar { display: block; }
+}
+
+@keyframes lgp-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    -webkit-backdrop-filter: blur(0px) saturate(100%);
+    backdrop-filter: blur(0px) saturate(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lgp-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lgp-bar-grow {
+  from { transform: scaleX(0); transform-origin: left center; }
+  to { transform: scaleX(1); transform-origin: left center; }
+}
+
+/* Browsers without backdrop blur get a denser tint so text contrast never
+   depends on the filter being supported. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lgp-panel {
+    background:
+      radial-gradient(120% 130% at 14% -18%, rgba(255, 255, 255, 0.10), transparent 58%),
+      linear-gradient(158deg, rgba(22, 25, 33, 0.98) 0%, rgba(13, 15, 21, 0.98) 100%);
+  }
+  .lgp-bloom { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lgp-panel { animation: none; }
+  .lgp-item { animation: none; opacity: 1; transform: none; }
+  .lgp-bar-fill { animation: none; transform: none; }
+  .lgp-row { transition: none; }
+  .lgp-row:hover { transform: none; }
+}
+

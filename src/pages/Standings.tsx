@@ -525,19 +525,19 @@ export function Standings() {
           </Card>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
-            <Card className="standings-stat-card">
-              <CardContent className="p-4">
+            <div className="standings-stat-card liquid-glass">
+              <div className="p-4">
                 <div className="flex items-center gap-2 text-amber-400 mb-1">
                   <Trophy className="h-4 w-4" />
                   <span className="text-xs font-medium">{champion ? 'World Champion' : 'Championship leader'}</span>
                 </div>
                 <p className="text-lg font-black text-white">{data.drivers[0].name}</p>
                 <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{data.drivers[0].points} points{champion && title ? ` · ${title.remainingCount} races to spare` : ''}</p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="standings-stat-card">
-              <CardContent className="p-4">
+            <div className="standings-stat-card liquid-glass">
+              <div className="p-4">
                 <div className="flex items-center gap-2 text-emerald-400 mb-1">
                   <Award className="h-4 w-4" />
                   <span className="text-xs font-medium">Most wins</span>
@@ -550,12 +550,12 @@ export function Standings() {
                 ) : (
                   <p className="text-lg font-black text-gray-400">—</p>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
             {driversHavePodiums ? (
-              <Card>
-                <CardContent className="p-4">
+              <div className="liquid-glass">
+                <div className="p-4">
                   <div className="flex items-center gap-2 text-blue-400 mb-1">
                     <Medal className="h-4 w-4" />
                     <span className="text-xs font-medium">Most podiums</span>
@@ -568,12 +568,12 @@ export function Standings() {
                   ) : (
                     <p className="text-lg font-black text-gray-400">—</p>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ) : null}
 
-            <Card className="standings-stat-card">
-              <CardContent className="p-4">
+            <div className="standings-stat-card liquid-glass">
+              <div className="p-4">
                 <div className="flex items-center gap-2 text-purple-400 mb-1">
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-xs font-medium">Points gap</span>
@@ -582,8 +582,8 @@ export function Standings() {
                   {data.drivers[1]?.gap != null && data.drivers[1].gap > 0 ? data.drivers[1].gap : '—'}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
 
           <BarChartRace drivers={data.drivers} />
@@ -687,21 +687,21 @@ export function Standings() {
             </CardContent>
           </Card>
 
-          {/* Constructor Stats */}
+          {/* Constructor Stats — Liquid Glass */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card className="standings-stat-card">
-              <CardContent className="p-4">
+            <div className="standings-stat-card liquid-glass">
+              <div className="p-4">
                 <div className="flex items-center gap-2 text-amber-400 mb-1">
                   <Trophy className="h-4 w-4" />
                   <span className="text-xs font-medium">Championship leader</span>
                 </div>
                 <p className="text-lg font-black text-white">{data.constructors[0].name}</p>
                 <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{data.constructors[0].points} points</p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="standings-stat-card">
-              <CardContent className="p-4">
+            <div className="standings-stat-card liquid-glass">
+              <div className="p-4">
                 <div className="flex items-center gap-2 text-emerald-400 mb-1">
                   <Award className="h-4 w-4" />
                   <span className="text-xs font-medium">Most wins</span>
@@ -714,11 +714,11 @@ export function Standings() {
                 ) : (
                   <p className="text-lg font-black text-gray-400">—</p>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="standings-stat-card">
-              <CardContent className="p-4">
+            <div className="standings-stat-card liquid-glass">
+              <div className="p-4">
                 <div className="flex items-center gap-2 text-purple-400 mb-1">
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-xs font-medium">Points gap</span>
@@ -727,19 +727,19 @@ export function Standings() {
                   {data.constructors[1]?.gap != null && data.constructors[1].gap > 0 ? data.constructors[1].gap : '—'}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card className="standings-stat-card">
-              <CardContent className="p-4">
+            <div className="standings-stat-card liquid-glass">
+              <div className="p-4">
                 <div className="flex items-center gap-2 text-blue-400 mb-1">
                   <Car className="h-4 w-4" />
                   <span className="text-xs font-medium">Active teams</span>
                 </div>
                 <p className="text-lg font-black text-white tabular-nums">{data.constructors.length}</p>
                 <p className="text-xs text-gray-400 mt-0.5">constructors this season</p>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </TabsContent>
 

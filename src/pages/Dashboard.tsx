@@ -17,6 +17,8 @@ import { SeasonStrip } from '@/components/dashboard/SeasonStrip';
 import { StartLights } from '@/components/dashboard/StartLights';
 import { LeaderCard, type LeaderRow } from '@/components/dashboard/LeaderCard';
 import { TitleFightCard, computeTitleFight } from '@/components/dashboard/TitleFightCard';
+import { RacePredictionCard } from '@/components/dashboard/RacePredictionCard';
+import { computeRacePrediction, type PredictionResultsData } from '@/lib/racePrediction';
 
 interface Race {
   round: number;
@@ -456,6 +458,7 @@ function CircuitGallery() {
 export function Dashboard() {
   const { data: calendarData, loading, error } = useCachedData<CalendarData>('calendar', '/data/calendar.json');
   const { data: standingsData, loading: standingsLoading } = useCachedData<StandingsData>('standings', '/data/standings.json');
+  const { data: resultsData } = useCachedData<PredictionResultsData>('results', '/data/results.json');
 
   const calendar = calendarData?.races ?? [];
   const activeRaces = useMemo(() => calendar.filter((r) => r.status !== 'cancelled'), [calendar]);
@@ -470,6 +473,17 @@ export function Dashboard() {
   );
   const sprintCount = useMemo(() => activeRaces.filter((r) => r.isSprint).length, [activeRaces]);
   const laterRaces = useMemo(() => upcomingRaces.filter((r) => r !== nextRace), [upcomingRaces, nextRace]);
+
+  // Race projection for the next Grand Prix. Built only from the project's own
+  // results + standings data; returns null while the datasets are still loading.
+  const racePrediction = useMemo(() => {
+    if (!standingsData || !resultsData || calendar.length === 0) return null;
+    return computeRacePrediction({
+      drivers: standingsData.drivers,
+      results: resultsData,
+      calendar,
+    });
+  }, [standingsData, resultsData, calendar]);
 
   const driverRows: LeaderRow[] = useMemo(
     () =>
@@ -576,6 +590,10 @@ export function Dashboard() {
           ))}
         </dl>
       </section>
+
+      {/* Race prediction (Liquid Glass) — sits directly under the hero so its
+          opening animation is actually seen on first load. */}
+      {racePrediction && <RacePredictionCard prediction={racePrediction} />}
 
       {/* Next race */}
       {nextRace ? (

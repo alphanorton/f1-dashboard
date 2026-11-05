@@ -205,59 +205,59 @@ export function GrandPrix() {
         );
       })()}
 
-      {/* KPI Stats Overview */}
+      {/* KPI Stats Overview — Liquid Glass */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <Card className="gp-stat-card border-gray-700/50 bg-muted/40">
-          <CardContent className="p-5 flex items-center justify-between">
+        <div className="gp-stat-card liquid-glass">
+          <div className="p-5 flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-gray-400">Total Grand Prix</p>
+              <p className="text-xs font-medium text-gray-300">Total Grand Prix</p>
               <p className="text-2xl lg:text-3xl font-black text-white mt-1 tabular-nums">{data.totalRounds}</p>
               <p className="text-xs text-gray-400 mt-0.5">FIA approved calendar</p>
             </div>
-            <div className="p-3 rounded-xl bg-surface border border-gray-700/50 text-gray-300">
-              <Flag className="h-6 w-6 text-red-500" />
+            <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-gray-200">
+              <Flag className="h-6 w-6 text-red-400" />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card className="gp-stat-card border-gray-700/50 bg-muted/40">
-          <CardContent className="p-5 flex items-center justify-between">
+        <div className="gp-stat-card liquid-glass">
+          <div className="p-5 flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-gray-400">Completed</p>
+              <p className="text-xs font-medium text-gray-300">Completed</p>
               <p className="text-2xl lg:text-3xl font-black text-emerald-400 mt-1 tabular-nums">{completedCount}</p>
-              <p className="text-xs text-emerald-500/80 mt-0.5">{completedCount} races finished</p>
+              <p className="text-xs text-emerald-400/70 mt-0.5">{completedCount} races finished</p>
             </div>
-            <div className="p-3 rounded-xl bg-emerald-950/50 border border-emerald-800/40 text-emerald-400">
+            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">
               <CheckCircle2 className="h-6 w-6" />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card className="gp-stat-card border-gray-700/50 bg-muted/40">
-          <CardContent className="p-5 flex items-center justify-between">
+        <div className="gp-stat-card liquid-glass">
+          <div className="p-5 flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-gray-400">Remaining</p>
+              <p className="text-xs font-medium text-gray-300">Remaining</p>
               <p className="text-2xl lg:text-3xl font-black text-blue-400 mt-1 tabular-nums">{upcomingCount}</p>
-              <p className="text-xs text-blue-500/80 mt-0.5">Races to go</p>
+              <p className="text-xs text-blue-400/70 mt-0.5">Races to go</p>
             </div>
-            <div className="p-3 rounded-xl bg-blue-950/50 border border-blue-800/40 text-blue-400">
+            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300">
               <Clock className="h-6 w-6" />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card className="gp-stat-card border-gray-700/50 bg-muted/40">
-          <CardContent className="p-5 flex items-center justify-between">
+        <div className="gp-stat-card liquid-glass">
+          <div className="p-5 flex items-center justify-between">
             <div>
-              <p className="text-xs font-medium text-gray-400">Sprint Races</p>
+              <p className="text-xs font-medium text-gray-300">Sprint Races</p>
               <p className="text-2xl lg:text-3xl font-black text-amber-400 mt-1 tabular-nums">{sprintCount}</p>
-              <p className="text-xs text-amber-500/80 mt-0.5">Sprint weekends</p>
+              <p className="text-xs text-amber-400/70 mt-0.5">Sprint weekends</p>
             </div>
-            <div className="p-3 rounded-xl bg-amber-950/50 border border-amber-800/40 text-amber-400">
+            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300">
               <Zap className="h-6 w-6" />
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Filters & Search */}
