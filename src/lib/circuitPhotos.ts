@@ -1,7 +1,8 @@
 /**
  * Circuit photography for the 2026 calendar.
  *
- * All 25 calendar rounds are matched to visually verified circuit photographs.
+ * All 25 calendar rounds have a bundled photograph. Most are aerial views; Las Vegas and Yas Marina
+ * are trackside race photos. Check licensing before publishing the site.
  */
 
 export interface CircuitPhoto {
@@ -11,36 +12,36 @@ export interface CircuitPhoto {
   circuit: string;
   /** Grand Prix round in the 2026 calendar. */
   round: number;
-  /** Where the photo came from, for provenance. */
+  /** Provenance note. Never put local file paths here: this module ships in the public bundle. */
   source: string;
 }
 
 const PHOTOS: CircuitPhoto[] = [
-  { src: '/circuits/melbourne.jpg', circuit: 'Albert Park Circuit', round: 1, source: 'D:\\Aether\\1793890025583.jpg' },
-  { src: '/circuits/shanghai.jpg', circuit: 'Shanghai International Circuit', round: 2, source: 'D:\\Aether\\1793890082352.jpg' },
-  { src: '/circuits/suzuka.jpg', circuit: 'Suzuka International Racing Course', round: 3, source: 'D:\\Aether\\1793890084766.jpg' },
-  { src: '/circuits/bahrain.jpg', circuit: 'Bahrain International Circuit', round: 4, source: 'C:\\Users\\swat4\\Downloads\\1793896896552.jpg' },
-  { src: '/circuits/jeddah.jpg', circuit: 'Jeddah Corniche Circuit', round: 5, source: 'C:\\Users\\swat4\\Downloads\\1793896938586.jpg' },
-  { src: '/circuits/miami.jpg', circuit: 'Miami International Autodrome', round: 6, source: 'D:\\Aether\\1793890065252.jpg' },
-  { src: '/circuits/montreal.jpg', circuit: 'Circuit Gilles-Villeneuve', round: 7, source: 'D:\\Aether\\1793890067454.jpg' },
-  { src: '/circuits/monaco.jpg', circuit: 'Circuit de Monaco', round: 8, source: 'D:\\Aether\\1793890029119.jpg' },
-  { src: '/circuits/barcelona.jpg', circuit: 'Circuit de Barcelona-Catalunya', round: 9, source: 'D:\\Aether\\1793890038569.jpg' },
-  { src: '/circuits/red_bull_ring.jpg', circuit: 'Red Bull Ring', round: 10, source: 'D:\\Aether\\1793890040359.jpg' },
-  { src: '/circuits/silverstone.jpg', circuit: 'Silverstone Circuit', round: 11, source: 'D:\\Aether\\1793890044772.jpg' },
-  { src: '/circuits/spa.jpg', circuit: 'Circuit de Spa-Francorchamps', round: 12, source: 'D:\\Aether\\1793890024011.jpg' },
-  { src: '/circuits/hungaroring.jpg', circuit: 'Hungaroring', round: 13, source: 'D:\\Aether\\1793890050641.jpg' },
-  { src: '/circuits/zandvoort.jpg', circuit: 'Circuit Zandvoort', round: 14, source: 'D:\\Aether\\1793890053430.jpg' },
-  { src: '/circuits/monza.jpg', circuit: 'Autodromo Nazionale Monza', round: 15, source: 'D:\\Aether\\1793890055665.jpg' },
-  { src: '/circuits/madring.jpg', circuit: 'Madring Circuit', round: 16, source: 'D:\\Aether\\1793890058549.jpg' },
-  { src: '/circuits/baku.jpg', circuit: 'Baku City Circuit', round: 17, source: 'D:\\Aether\\1793890061888.jpg' },
-  { src: '/circuits/sepang.jpg', circuit: 'Sepang International Circuit', round: 18, source: 'D:\\Aether\\1793890086793.jpg' },
-  { src: '/circuits/singapore.jpg', circuit: 'Marina Bay Street Circuit', round: 19, source: 'D:\\Aether\\1793890020082.jpg' },
-  { src: '/circuits/cota.jpg', circuit: 'Circuit of the Americas', round: 20, source: 'D:\\Aether\\1793890070043.jpg' },
-  { src: '/circuits/mexico.jpg', circuit: 'Autódromo Hermanos Rodríguez', round: 21, source: 'D:\\Aether\\1793890073221.jpg' },
-  { src: '/circuits/interlagos.jpg', circuit: 'Autódromo José Carlos Pace', round: 22, source: 'C:\\Users\\swat4\\Downloads\\1793896898998.jpg' },
-  { src: '/circuits/las_vegas.jpg', circuit: 'Las Vegas Strip Circuit', round: 23, source: 'D:\\Aether\\1793890017832.jpg' },
-  { src: '/circuits/losail.jpg', circuit: 'Lusail International Circuit', round: 24, source: 'D:\\Aether\\1793890013022.jpg' },
-  { src: '/circuits/yas_marina.jpg', circuit: 'Yas Marina Circuit', round: 25, source: 'D:\\Aether\\1793890015800.jpg' },
+  { src: '/circuits/melbourne.jpg', circuit: 'Albert Park Circuit', round: 1, source: 'bundled asset' },
+  { src: '/circuits/shanghai.jpg', circuit: 'Shanghai International Circuit', round: 2, source: 'bundled asset' },
+  { src: '/circuits/suzuka.jpg', circuit: 'Suzuka International Racing Course', round: 3, source: 'bundled asset' },
+  { src: '/circuits/bahrain.jpg', circuit: 'Bahrain International Circuit', round: 4, source: 'bundled asset' },
+  { src: '/circuits/jeddah.jpg', circuit: 'Jeddah Corniche Circuit', round: 5, source: 'bundled asset' },
+  { src: '/circuits/miami.jpg', circuit: 'Miami International Autodrome', round: 6, source: 'bundled asset' },
+  { src: '/circuits/montreal.jpg', circuit: 'Circuit Gilles-Villeneuve', round: 7, source: 'bundled asset' },
+  { src: '/circuits/monaco.jpg', circuit: 'Circuit de Monaco', round: 8, source: 'bundled asset' },
+  { src: '/circuits/barcelona.jpg', circuit: 'Circuit de Barcelona-Catalunya', round: 9, source: 'bundled asset' },
+  { src: '/circuits/red_bull_ring.jpg', circuit: 'Red Bull Ring', round: 10, source: 'bundled asset' },
+  { src: '/circuits/silverstone.jpg', circuit: 'Silverstone Circuit', round: 11, source: 'bundled asset' },
+  { src: '/circuits/spa.jpg', circuit: 'Circuit de Spa-Francorchamps', round: 12, source: 'bundled asset' },
+  { src: '/circuits/hungaroring.jpg', circuit: 'Hungaroring', round: 13, source: 'bundled asset' },
+  { src: '/circuits/zandvoort.jpg', circuit: 'Circuit Zandvoort', round: 14, source: 'bundled asset' },
+  { src: '/circuits/monza.jpg', circuit: 'Autodromo Nazionale Monza', round: 15, source: 'bundled asset' },
+  { src: '/circuits/madring.jpg', circuit: 'Madring Circuit', round: 16, source: 'bundled asset' },
+  { src: '/circuits/baku.jpg', circuit: 'Baku City Circuit', round: 17, source: 'bundled asset' },
+  { src: '/circuits/sepang.jpg', circuit: 'Sepang International Circuit', round: 18, source: 'bundled asset' },
+  { src: '/circuits/singapore.jpg', circuit: 'Marina Bay Street Circuit', round: 19, source: 'bundled asset' },
+  { src: '/circuits/cota.jpg', circuit: 'Circuit of the Americas', round: 20, source: 'bundled asset' },
+  { src: '/circuits/mexico.jpg', circuit: 'Autódromo Hermanos Rodríguez', round: 21, source: 'bundled asset' },
+  { src: '/circuits/interlagos.jpg', circuit: 'Autódromo José Carlos Pace', round: 22, source: 'bundled asset' },
+  { src: '/circuits/las_vegas.jpg', circuit: 'Las Vegas Strip Circuit', round: 23, source: 'bundled asset' },
+  { src: '/circuits/losail.jpg', circuit: 'Lusail International Circuit', round: 24, source: 'bundled asset' },
+  { src: '/circuits/yas_marina.jpg', circuit: 'Yas Marina Circuit', round: 25, source: 'bundled asset' },
 ];
 
 /** Aliases for circuit lookup. */

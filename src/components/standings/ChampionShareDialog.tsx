@@ -73,7 +73,7 @@ export function ChampionShareDialog({ open, onOpenChange, card }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92vh] w-full max-w-md overflow-y-auto" aria-label="Share the champion card">
+      <DialogContent className="lg-dialog max-h-[92vh] w-full max-w-md overflow-y-auto" aria-label="Share the champion card">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-lg font-black text-white"><ImageIcon className="h-5 w-5 text-yellow-300" aria-hidden="true" /> Champion card</DialogTitle>
           <DialogDescription>A 1080 × 1350 image, sized for social posts.</DialogDescription>

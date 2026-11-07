@@ -16,7 +16,6 @@ const TrackMapPage = lazy(() => import('@/pages/TrackMapPage').then((m) => ({ de
 const Standings = lazy(() => import('@/pages/Standings').then((m) => ({ default: m.Standings })));
 const GrandPrix = lazy(() => import('@/pages/GrandPrix').then((m) => ({ default: m.GrandPrix })));
 const Singapore2026 = lazy(() => import('@/pages/Singapore2026').then((m) => ({ default: m.Singapore2026 })));
-const Circuits = lazy(() => import('@/pages/Circuits').then((m) => ({ default: m.Circuits })));
 const TireStrategy = lazy(() => import('@/pages/TireStrategy').then((m) => ({ default: m.TireStrategy })));
 const FastestLaps = lazy(() => import('@/pages/FastestLaps').then((m) => ({ default: m.FastestLaps })));
 const Settings = lazy(() => import('@/pages/Settings').then((m) => ({ default: m.Settings })));

@@ -10,7 +10,6 @@ const pageMeta: Record<string, { label: string; icon: typeof Trophy }> = {
   '/standings': { label: 'Championship Standings', icon: Trophy },
   '/tyres': { label: 'Tyre Strategy', icon: CircleDot },
   '/fastest-laps': { label: 'Fastest Laps', icon: Gauge },
-  '/circuits': { label: 'Circuits', icon: MapPin },
   '/track-map': { label: 'Track Map', icon: MapPin },
   '/singapore-2026': { label: 'Singapore 2026', icon: Calendar },
   '/settings': { label: 'Settings', icon: Settings },
@@ -36,7 +35,7 @@ export function Header() {
   const isWeekend = isRaceWeekend(calendar);
 
   return (
-    <header className="sticky top-0 z-10 h-16 bg-[#0B0B14]/95 backdrop-blur-md border-b border-gray-800 flex items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="lg-bar lg-bar-top sticky top-0 z-10 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-3 min-w-0">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-f1-red shadow-lg shadow-f1-red/20">
           <Trophy className="h-5 w-5 text-white" />

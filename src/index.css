@@ -233,6 +233,9 @@ input[type="range"]::-moz-range-thumb {
 .dashboard-section.dashboard-stagger-1 { animation-delay: 70ms; }
 .dashboard-section.dashboard-stagger-2 { animation-delay: 130ms; }
 .dashboard-section.dashboard-stagger-3 { animation-delay: 190ms; }
+.dashboard-section.dashboard-stagger-champ { animation-delay: 40ms; }
+.dashboard-section.dashboard-stagger-4 { animation-delay: 250ms; }
+.dashboard-section.dashboard-stagger-5 { animation-delay: 310ms; }
 .next-race-card { isolation: isolate; }
 .next-race-card::after,
 .gp-hero::after {
@@ -1010,6 +1013,7 @@ input[type="range"]::-moz-range-thumb {
   background:
     linear-gradient(160deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 42%, rgba(8, 10, 14, 0.42) 100%);
   border: 1px solid rgba(255, 255, 255, 0.14);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
   box-shadow: 
@@ -1288,15 +1292,6 @@ input[type="range"]::-moz-range-thumb {
   backdrop-filter: blur(6px);
 }
 
-.lgp-winner {
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.012) 58%),
-    rgba(0, 0, 0, 0.20);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
-  padding: 12px;
-}
 
 .lgp-eyebrow {
   font-size: 10px;
@@ -1306,121 +1301,8 @@ input[type="range"]::-moz-range-thumb {
   color: #8f97a5;
 }
 
-.lgp-metric {
-  border-radius: 9px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  background: rgba(255, 255, 255, 0.035);
-  padding: 6px 8px;
-}
-
-.lgp-metric-label {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #8f97a5;
-  line-height: 1.2;
-}
-
-.lgp-metric-value {
-  margin-top: 2px;
-  font-family: 'Orbitron', system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  color: #ffffff;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.1;
-}
-
-.lgp-metric-sub {
-  font-size: 9px;
-  color: #6d7480;
-}
-
-.lgp-row {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.028);
-  padding: 7px 9px;
-  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
-}
-
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .lgp-row:hover {
-    background: rgba(255, 255, 255, 0.062);
-    border-color: rgba(255, 255, 255, 0.16);
-    transform: translateX(2px);
-  }
-}
-
-.lgp-rank {
-  display: inline-flex;
-  height: 20px;
-  width: 20px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  border: 1px solid currentColor;
-  background: rgba(0, 0, 0, 0.35);
-  font-family: 'Orbitron', system-ui, sans-serif;
-  font-size: 10.5px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.lgp-bar {
-  display: none;
-  height: 5px;
-  width: 74px;
-  flex-shrink: 0;
-  overflow: hidden;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.10);
-}
-
-.lgp-bar-fill {
-  display: block;
-  height: 100%;
-  border-radius: 9999px;
-  opacity: 0.85;
-  animation: lgp-bar-grow 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: calc(260ms + var(--i, 0) * 55ms);
-}
-
-.lgp-score {
-  width: 34px;
-  flex-shrink: 0;
-  text-align: right;
-  font-family: 'Orbitron', system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: #d8dde6;
-  font-variant-numeric: tabular-nums;
-}
-
-.lgp-context {
-  margin-top: 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.22);
-  padding: 10px 12px;
-}
-
-.lgp-note {
-  margin-top: 10px;
-  font-size: 10.5px;
-  line-height: 1.55;
-  color: #7c8391;
-}
-
 @media (min-width: 640px) {
   .lgp-body { padding: 18px; }
-  .lgp-winner { padding: 14px; }
-  .lgp-bar { display: block; }
 }
 
 @keyframes lgp-panel-in {
@@ -1447,11 +1329,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-@keyframes lgp-bar-grow {
-  from { transform: scaleX(0); transform-origin: left center; }
-  to { transform: scaleX(1); transform-origin: left center; }
-}
-
 /* Browsers without backdrop blur get a denser tint so text contrast never
    depends on the filter being supported. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -1466,8 +1343,64 @@ input[type="range"]::-moz-range-thumb {
 @media (prefers-reduced-motion: reduce) {
   .lgp-panel { animation: none; }
   .lgp-item { animation: none; opacity: 1; transform: none; }
-  .lgp-bar-fill { animation: none; transform: none; }
-  .lgp-row { transition: none; }
-  .lgp-row:hover { transform: none; }
 }
 
+
+/* ===== Form guide rows (inside the glass panel) ===== */
+.fg-row {
+  display: grid; align-items: center; gap: 10px;
+  grid-template-columns: 22px 34px minmax(0, 1fr) auto auto auto;
+  padding: 8px 10px; border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.012) 60%), rgba(0, 0, 0, 0.18);
+}
+.fg-pos { font-family: 'Orbitron', system-ui, sans-serif; font-weight: 900; font-size: 13px; color: #cbd0db; text-align: center; }
+.fg-chips { display: flex; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.fg-chips .champ-chip { min-width: 36px; padding: 3px 4px; }
+.fg-stat { display: none; flex-direction: column; align-items: flex-end; min-width: 52px; line-height: 1.15; }
+.fg-stat-v { font-family: 'Orbitron', system-ui, sans-serif; font-weight: 900; font-size: 14px; color: #fff; }
+.fg-stat-l { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: #9aa0ae; }
+.fg-fact { border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(0, 0, 0, 0.2); padding: 8px 10px; }
+@media (min-width: 900px) { .fg-stat { display: flex; } }
+@media (max-width: 700px) {
+  .fg-row { grid-template-columns: 20px 30px minmax(0, 1fr); row-gap: 8px; }
+  .fg-chips { grid-column: 1 / -1; }
+  .fg-chips .champ-chip { flex: 1 1 0; min-width: 0; }
+}
+
+/* ===== Selective liquid glass =====
+   Used only where there is something behind to refract: the sticky header and mobile tab bar (page
+   content scrolls under them), the text block over the next-race photo, and dialogs. Data tables and
+   stat cards stay opaque on purpose. */
+.lg-bar {
+  background: linear-gradient(180deg, rgba(22, 24, 34, 0.66), rgba(11, 11, 20, 0.52));
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  backdrop-filter: blur(18px) saturate(170%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10), inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+}
+.lg-bar-top { border-bottom: 1px solid rgba(255, 255, 255, 0.10); }
+.lg-bar-bottom { border-top: 1px solid rgba(255, 255, 255, 0.12); }
+.lg-panel {
+  position: relative;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    radial-gradient(120% 90% at 10% -10%, rgba(255, 255, 255, 0.12), transparent 58%),
+    linear-gradient(160deg, rgba(14, 16, 24, 0.50), rgba(8, 9, 14, 0.42));
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 -1px 0 rgba(0, 0, 0, 0.35), 0 18px 44px -18px rgba(0, 0, 0, 0.6);
+}
+.lg-dialog {
+  background: linear-gradient(160deg, rgba(24, 27, 38, 0.78), rgba(12, 13, 20, 0.72)) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(165%);
+  backdrop-filter: blur(24px) saturate(165%);
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 30px 80px -20px rgba(0, 0, 0, 0.7) !important;
+}
+/* No backdrop-filter support: fall back to near-opaque so text never loses contrast. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lg-bar { background: rgba(11, 11, 20, 0.97); }
+  .lg-panel { background: rgba(14, 16, 24, 0.9); }
+  .lg-dialog { background: rgba(18, 20, 30, 0.97) !important; }
+}

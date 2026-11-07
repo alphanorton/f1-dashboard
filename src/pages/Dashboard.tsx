@@ -17,8 +17,9 @@ import { SeasonStrip } from '@/components/dashboard/SeasonStrip';
 import { StartLights } from '@/components/dashboard/StartLights';
 import { LeaderCard, type LeaderRow } from '@/components/dashboard/LeaderCard';
 import { TitleFightCard, computeTitleFight } from '@/components/dashboard/TitleFightCard';
-import { RacePredictionCard } from '@/components/dashboard/RacePredictionCard';
-import { computeRacePrediction, type PredictionResultsData } from '@/lib/racePrediction';
+import { FormGuideCard, type FormCircuitFacts } from '@/components/dashboard/FormGuideCard';
+import { computeFormGuide, type FormResultsData } from '@/lib/formGuide';
+import { circuitSlug } from '@/lib/trackPaths';
 
 interface Race {
   round: number;
@@ -176,7 +177,7 @@ function NextRaceCard({ race }: { race: Race }) {
         <>
           <img
             src={photo.src}
-            alt={`${race.circuit} aerial view`}
+            alt={`${race.circuit} photo`}
             className="dx-next-photo pointer-events-none absolute inset-0 h-full w-full object-cover"
             loading="eager"
             decoding="async"
@@ -188,7 +189,7 @@ function NextRaceCard({ race }: { race: Race }) {
         R{race.round}
       </span>
       <div className="relative grid gap-6 p-5 sm:p-7 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-        <div className="flex min-w-0 flex-col gap-6">
+        <div className={`flex min-w-0 flex-col gap-6${photo ? ' lg-panel p-4 sm:p-5' : ''}`}>
           <div className="flex flex-wrap items-center gap-2">
             <Flag className="h-4 w-4 text-[#FF5A5A]" aria-hidden="true" />
             <h2 className="font-f1 text-xs font-black uppercase tracking-[0.25em] text-[#FF5A5A]">Next Race</h2>
@@ -279,7 +280,7 @@ function ResultCard({ race }: { race: Race }) {
         <div className="relative h-24 w-full overflow-hidden">
           <img
             src={photo.src}
-            alt={`${race.circuit} aerial view`}
+            alt={`${race.circuit} photo`}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
             decoding="async"
@@ -380,7 +381,7 @@ function UpcomingTile({ race }: { race: Race }) {
         <div className="relative hidden w-14 shrink-0 overflow-hidden sm:block">
           <img
             src={photo.src}
-            alt={`${race.circuit} aerial view`}
+            alt={`${race.circuit} photo`}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
             decoding="async"
@@ -434,7 +435,7 @@ function CircuitGallery() {
           >
             <img
               src={photo.src}
-              alt={`${photo.circuit} aerial view`}
+              alt={`${photo.circuit} photo`}
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
               decoding="async"
@@ -458,7 +459,8 @@ function CircuitGallery() {
 export function Dashboard() {
   const { data: calendarData, loading, error } = useCachedData<CalendarData>('calendar', '/data/calendar.json');
   const { data: standingsData, loading: standingsLoading } = useCachedData<StandingsData>('standings', '/data/standings.json');
-  const { data: resultsData } = useCachedData<PredictionResultsData>('results', '/data/results.json');
+  const { data: resultsData } = useCachedData<FormResultsData>('results', '/data/results.json');
+  const { data: circuitsData } = useCachedData<{ circuits: Array<FormCircuitFacts & { id: string }> }>('circuits', '/data/circuits.json');
 
   const calendar = calendarData?.races ?? [];
   const activeRaces = useMemo(() => calendar.filter((r) => r.status !== 'cancelled'), [calendar]);
@@ -474,16 +476,16 @@ export function Dashboard() {
   const sprintCount = useMemo(() => activeRaces.filter((r) => r.isSprint).length, [activeRaces]);
   const laterRaces = useMemo(() => upcomingRaces.filter((r) => r !== nextRace), [upcomingRaces, nextRace]);
 
-  // Race projection for the next Grand Prix. Built only from the project's own
-  // results + standings data; returns null while the datasets are still loading.
-  const racePrediction = useMemo(() => {
+  // Form guide: the top of the championship, read straight from the results data (no projection).
+  const formGuide = useMemo(() => {
     if (!standingsData || !resultsData || calendar.length === 0) return null;
-    return computeRacePrediction({
-      drivers: standingsData.drivers,
-      results: resultsData,
-      calendar,
-    });
+    return computeFormGuide({ drivers: standingsData.drivers, results: resultsData, calendar });
   }, [standingsData, resultsData, calendar]);
+  const nextCircuit = useMemo(() => {
+    if (!formGuide?.nextRace || !circuitsData) return null;
+    const slug = circuitSlug(formGuide.nextRace.circuit);
+    return slug ? circuitsData.circuits.find((c) => circuitSlug(c.name) === slug) ?? null : null;
+  }, [formGuide, circuitsData]);
 
   const driverRows: LeaderRow[] = useMemo(
     () =>
@@ -591,9 +593,8 @@ export function Dashboard() {
         </dl>
       </section>
 
-      {/* Race prediction (Liquid Glass) — sits directly under the hero so its
-          opening animation is actually seen on first load. */}
-      {racePrediction && <RacePredictionCard prediction={racePrediction} />}
+      {/* Form guide (Liquid Glass): real recent results, no prediction. */}
+      {formGuide && <FormGuideCard guide={formGuide} circuit={nextCircuit} />}
 
       {/* Next race */}
       {nextRace ? (
@@ -607,6 +608,7 @@ export function Dashboard() {
         <SectionHeading
           title="Championship"
           kicker={standingsData?.asOfRace ? `After the ${standingsData.asOfRace}` : 'World drivers & constructors title fight'}
+          action={{ to: '/standings', label: 'Full standings' }}
         />
         <TitleFightCard drivers={standingsData?.drivers ?? []} races={calendar} />
         {standingsLoading ? (
@@ -614,7 +616,11 @@ export function Dashboard() {
             <Skeleton className="h-72 w-full rounded-2xl" />
             <Skeleton className="h-72 w-full rounded-2xl" />
           </div>
-        ) : driverRows.length > 0 && (
+        ) : driverRows.length === 0 ? (
+          <div className="mt-4">
+            <EmptyState icon={Trophy} title="No standings yet" message="Championship data will appear after the first race." />
+          </div>
+        ) : (
           <div className="stagger-group mt-4 grid gap-4 lg:grid-cols-2">
             <LeaderCard title="Drivers" icon={Crown} rows={driverRows} index={0} leaderLabel={computeTitleFight(standingsData?.drivers ?? [], calendar)?.clinched ? 'Champion' : 'Leader'} />
             <LeaderCard title="Constructors" icon={Users} rows={constructorRows} index={1} />

@@ -17,6 +17,9 @@ const SPRINT_MAX = 8;   // sprint win
 // <logic>
 /** Championship maths from the standings and the remaining calendar: points still available,
  *  who is still alive, whether the title is decided, and how much the leader can afford to lose next race. */
+/** Hero artwork per driver code. Drivers without artwork get the plain gradient banner, never someone else's picture. */
+const CHAMPION_HERO: Record<string, string> = { ANT: '/hero-champion.webp' };
+
 export function computeTitleFight(drivers: DriverRow[], races: RaceRow[]) {
   if (drivers.length < 2) return null;
   const sorted = [...drivers].sort((a, b) => b.points - a.points);
@@ -56,14 +59,16 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
           minHeight: '220px',
         }}
       >
-        <img
-          src="/hero-champion.webp"
-          alt={`${leader.name} 2026 World Champion`}
-          className="absolute inset-0 h-full w-full object-cover opacity-[0.88] transition-transform duration-700 hover:scale-[1.02]"
-          loading="eager"
-          decoding="async"
-          style={{ objectPosition: '65% center' }}
-        />
+        {CHAMPION_HERO[leader.code] && (
+          <img
+            src={CHAMPION_HERO[leader.code]}
+            alt={`${leader.name} 2026 World Champion`}
+            className="absolute inset-0 h-full w-full object-cover opacity-[0.88] transition-transform duration-700 hover:scale-[1.02]"
+            loading="eager"
+            decoding="async"
+            style={{ objectPosition: '65% center' }}
+          />
+        )}
         <div
           className="absolute inset-0"
           style={{

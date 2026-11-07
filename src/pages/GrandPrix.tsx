@@ -132,7 +132,7 @@ export function GrandPrix() {
               <>
                 <img
                   src={heroPhoto.src}
-                  alt={`${nextRace.circuit} aerial view`}
+                  alt={`${nextRace.circuit} photo`}
                   className="gp-hero-photo pointer-events-none absolute inset-0 h-full w-full object-cover"
                   loading="eager"
                   decoding="async"
@@ -380,7 +380,7 @@ export function GrandPrix() {
                 <div className="relative h-28 w-full overflow-hidden shrink-0">
                   <img
                     src={cardPhoto.src}
-                    alt={`${race.circuit} aerial photograph`}
+                    alt={`${race.circuit} photo`}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
@@ -555,7 +555,7 @@ export function GrandPrix() {
                 <div className="relative overflow-hidden rounded-xl border border-gray-700/60 shadow-lg">
                   <img
                     src={photo.src}
-                    alt={`${selectedRace.circuit} aerial view`}
+                    alt={`${selectedRace.circuit} photo`}
                     className="h-44 w-full object-cover"
                     loading="lazy"
                     decoding="async"
