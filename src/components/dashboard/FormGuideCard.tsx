@@ -45,7 +45,7 @@ function Row({ row, index }: { row: FormRow; index: number }) {
       </span>
       <span className="fg-stat">
         <span className="fg-stat-v tabular-nums">{row.formPoints}</span>
-        <span className="fg-stat-l">GP pts</span>
+        <span className="fg-stat-l">{row.sprintPoints > 0 ? `pts (${row.sprintPoints} sprint)` : 'pts'}</span>
       </span>
     </li>
   );
@@ -112,7 +112,7 @@ export function FormGuideCard({ guide, circuit, className }: { guide: FormGuide;
           )}
 
           <p className="mt-4 text-[11px] leading-relaxed text-gray-400">
-            Colours: gold, silver and bronze are podium places; white is a points finish. Grand Prix points only; sprint points are not in the results data.
+            Colours: gold, silver and bronze are podium places; white is a points finish. Points include sprint points.
           </p>
         </div>
       </div>

@@ -335,10 +335,10 @@ export function TrackMapPage() {
             <div className="border-t border-gray-800 bg-[#0c0e11] p-4 sm:p-5">
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                 <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-gray-500">
-                  <Flag className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" /> Corner list ({selectedCircuit.corners.length} · official dataset)
+                  <Flag className="h-3.5 w-3.5 text-amber-400" aria-hidden="true" /> Corner list ({selectedCircuit.corners.length} of {selectedCircuit.turns} turns documented)
                 </p>
                 <p className="text-[11px] text-gray-500">
-                  {measuredNums.length} turn peak{measuredNums.length === 1 ? '' : 's'} measured on the traced layout
+                  {measuredNums.length} bend{measuredNums.length === 1 ? '' : 's'} detected on the map
                 </p>
               </div>
               <div className="grid max-h-64 grid-cols-1 gap-1.5 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -357,8 +357,8 @@ export function TrackMapPage() {
                 ))}
               </div>
               <p className="mt-2 text-[11px] leading-relaxed text-gray-500">
-                Names, speed profiles and gears come from the local circuit dataset. Map turn markers are measured from the traced
-                geometry and numbered independently — the two numberings are not interchangeable.
+                Turn numbers, names, speed profiles and gears come from the circuit dataset and are not placed on the map: the map
+                dots are bends detected on the traced outline (their count differs from the official turn count), so they carry no numbers.
               </p>
             </div>
           </CardContent>

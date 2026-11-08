@@ -11,7 +11,7 @@ interface DriverAvatarProps {
   className?: string;
 }
 
-const EXTENSIONS = ['png', 'jpg', 'webp'] as const;
+const EXTENSIONS = ['webp', 'png', 'jpg'] as const;
 
 export function DriverAvatar({ code, name, team, size = 36, className }: DriverAvatarProps) {
   const [extIndex, setExtIndex] = useState(0);

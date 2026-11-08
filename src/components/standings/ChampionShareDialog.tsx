@@ -28,7 +28,7 @@ export function ChampionShareDialog({ open, onOpenChange, card }: Props) {
       const canvas = canvasRef.current;
       if (!canvas) return;
       const code = card.code.toLowerCase();
-      const headshotUrls = ['png', 'jpg', 'webp'].map((ext) => assetUrl(`headshots/${code}.${ext}`));
+      const headshotUrls = ['webp', 'png', 'jpg'].map((ext) => assetUrl(`headshots/${code}.${ext}`));
       renderChampionCard(canvas, { ...card, headshotUrls })
         .then(() => { if (!cancelled) setState('ready'); })
         .catch(() => { if (!cancelled) setState('error'); });

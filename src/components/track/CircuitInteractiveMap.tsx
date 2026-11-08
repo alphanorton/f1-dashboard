@@ -559,7 +559,7 @@ export function CircuitInteractiveMap({
                 strokeLinecap="round"
               />
 
-              {/* direction chevrons (orientation follows the traced line) */}
+              {/* direction chevrons (the traced paths are oriented to the real lap direction, see tools/orient-track-paths.cjs) */}
               {layout?.chevrons.map((cv, i) => (
                 <g
                   key={i}
@@ -568,38 +568,6 @@ export function CircuitInteractiveMap({
                   <path d="M7 0 L-6 6 L-3 0 L-6 -6 Z" className="tmx-chevron" />
                 </g>
               ))}
-
-              {/* start / finish at the traced line origin */}
-              {layout && (
-                <g transform={`translate(${layout.origin.x} ${layout.origin.y})`}>
-                  <g transform={`rotate(${(layout.origin.a * 180) / Math.PI})`}>
-                    <line
-                      x1={-ch * 0.5}
-                      y1={-12 * K}
-                      x2={-ch * 0.5}
-                      y2={12 * K}
-                      className="tmx-sfline"
-                      strokeWidth={3.2 * K}
-                      strokeDasharray={`${4.5 * K} ${4.5 * K}`}
-                    />
-                    <line
-                      x1={-ch * 0.5 + 3.4 * K}
-                      y1={-12 * K}
-                      x2={-ch * 0.5 + 3.4 * K}
-                      y2={12 * K}
-                      stroke="rgba(255,255,255,.38)"
-                      strokeWidth={1.6 * K}
-                      strokeDasharray={`${2.2 * K} ${2.2 * K}`}
-                    />
-                  </g>
-                  <g transform={`scale(${1 / view.s})`} className="tmx-sflabel-g">
-                    <rect x={8 * K} y={-8 * K} width={30 * K} height={16 * K} rx={3 * K} className="tmx-sfchip" />
-                    <text x={23 * K} y={3.6 * K} textAnchor="middle" className="tmx-sflabel" fontSize={11 * K}>
-                      S/F
-                    </text>
-                  </g>
-                </g>
-              )}
 
               {/* turn markers, counter-scaled to stay constant on zoom */}
               {layout?.corners.map((c) => {
@@ -619,7 +587,7 @@ export function CircuitInteractiveMap({
                     onMouseLeave={() => setHover((h) => (h === c.n ? null : h))}
                     tabIndex={0}
                     role="button"
-                    aria-label={`Measured turn ${c.n}, ${Math.round(c.rad * (180 / Math.PI))} degrees change of direction`}
+                    aria-label={`${sharpLabel(c.rad)} bend, ${Math.round(c.rad * (180 / Math.PI))} degrees change of direction`}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
@@ -627,24 +595,12 @@ export function CircuitInteractiveMap({
                       }
                     }}
                   >
-                    {/* chip background sized by sharpness */}
-                    <rect
+                    {/* dot sized by sharpness; deliberately unnumbered: these are measured bends, not official turns */}
+                    <circle
                       className="tmx-chipbg"
-                      x={-cs / 2}
-                      y={-ch / 2}
-                      width={cs}
-                      height={ch}
-                      rx={4 * K}
+                      r={(5 + Math.min(6, (c.rad * RAD) / 30)) * K}
                       style={{ strokeWidth: (active || hovered ? 2.4 : 1.3) * K }}
                     />
-                    <text
-                      className="tmx-chiptxt"
-                      textAnchor="middle"
-                      y={ch * 0.36}
-                      fontSize={ch * 0.62}
-                    >
-                      {c.n}
-                    </text>
                   </g>
                 );
               })}
@@ -658,9 +614,9 @@ export function CircuitInteractiveMap({
               style={markerPct(tipCorner) as React.CSSProperties}
               aria-hidden="true"
             >
-              <p className="tmx-tip-title">Turn {tipCorner.n} · {sharpLabel(tipCorner.rad)}</p>
+              <p className="tmx-tip-title">{sharpLabel(tipCorner.rad)} bend</p>
               <p className="tmx-tip-meta">{Math.round(tipCorner.rad * RAD)}° change of direction (measured)</p>
-              <p className="tmx-tip-sub">Numbering follows the traced line — not the official turn list</p>
+              <p className="tmx-tip-sub">Detected on the traced outline, not an official turn number</p>
             </div>
           )}
 
@@ -682,7 +638,7 @@ export function CircuitInteractiveMap({
           </div>
 
           {/* provenance legend */}
-          <p className="tmx-legend">Traced from official circuit map · turns measured along line · S/F = line origin</p>
+          <p className="tmx-legend">Traced from the circuit map · arrows show the lap direction · dots are detected bends, not official turn numbers</p>
         </div>
       )}
     </div>

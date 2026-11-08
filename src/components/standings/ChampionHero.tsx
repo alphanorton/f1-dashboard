@@ -7,7 +7,7 @@ import { getTeamColor2026, getTeamTextColor2026, teamTint } from '@/lib/teamColo
 import { computeTitleFight } from '@/components/dashboard/TitleFightCard';
 import type { ResultsFile } from '@/lib/teammates';
 
-interface DriverRow { code: string; name: string; team: string; points: number; driverNumber?: number | null; nationality?: string | null }
+interface DriverRow { code: string; name: string; team: string; points: number; driverNumber?: number | null; nationality?: string | null; sprintPoints?: number | null }
 interface RaceRow { status?: string; isSprint?: boolean }
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 
 interface RaceChip { round: number; name: string; pos: number | null; status: string }
 
-/** Season line for one driver, from the Grand Prix results file (sprints are not stored there). */
+/** Season line for one driver, from the Grand Prix results (wins, podiums and finishes are Grand Prix only). */
 export function seasonLine(results: ResultsFile | null, code: string) {
   const chips: RaceChip[] = [];
   if (results) {
@@ -73,6 +73,7 @@ export function ChampionHero({ drivers, races, results }: Props) {
         return { round: c.round, label: out ? c.status : `P${c.pos}`, kind } as const;
       }),
       headline: `Title clinched with ${remainingCount} ${remainingCount === 1 ? 'race' : 'races'} to spare`,
+      sprintPoints: drivers.find((d) => d.code === leader.code)?.sprintPoints ?? null,
     };
   }, [info, line, drivers]);
   if (!info || !info.clinched || !card) return null;
@@ -87,6 +88,7 @@ export function ChampionHero({ drivers, races, results }: Props) {
     { icon: AlertTriangle, label: 'Retirements', value: line.dnfs },
   ];
   const margin = gapToSecond - maxLeft;
+  const sprintPts = drivers.find((d) => d.code === leader.code)?.sprintPoints ?? null;
 
   return (
     <section
@@ -148,7 +150,7 @@ export function ChampionHero({ drivers, races, results }: Props) {
                 </li>
               ))}
             </ol>
-            <p className="mt-2 text-[11px] text-gray-500">Gold, silver and bronze mark podium places. Sprint points are counted in the total but not shown here.</p>
+            <p className="mt-2 text-[11px] text-gray-500">Gold, silver and bronze mark podium places. {sprintPts ? `The ${leader.points} points include ${sprintPts} from sprints.` : ''}</p>
           </div>
         )}
       </div>

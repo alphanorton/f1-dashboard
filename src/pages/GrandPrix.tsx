@@ -376,12 +376,12 @@ export function GrandPrix() {
               <span className="fx-glare" aria-hidden="true" />
               
               {/* Circuit Header Photograph */}
-              {cardPhoto && !isCancel && (
+              {cardPhoto && (
                 <div className="relative h-28 w-full overflow-hidden shrink-0">
                   <img
                     src={cardPhoto.src}
                     alt={`${race.circuit} photo`}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105${isCancel ? ' grayscale' : ''}`}
                     loading="lazy"
                     decoding="async"
                   />
@@ -419,6 +419,11 @@ export function GrandPrix() {
                       {race.status === 'upcoming' && (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-950/80 text-blue-300 border border-blue-700/50 backdrop-blur-md">
                           Upcoming
+                        </span>
+                      )}
+                      {isCancel && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-rose-950/70 text-rose-300 border border-rose-700/50 backdrop-blur-md">
+                          Cancelled
                         </span>
                       )}
                     </div>
