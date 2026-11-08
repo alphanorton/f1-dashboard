@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "source": "Formula1.com Official & FIA Entry / ESPN 2026",
-  "asOfDate": "2026-11-01",
+  "asOfDate": "2026-11-08",
   "totalRounds": 23,
   "races": [
     {
@@ -409,8 +409,15 @@
       "date": "2026-11-08",
       "weekendDates": "06 - 08 Nov",
       "isSprint": false,
-      "status": "next",
-      "podium": []
+      "status": "completed",
+      "podium": [
+        "Lando Norris (McLaren)",
+        "Max Verstappen (Red Bull Racing)",
+        "Isack Hadjar (Red Bull Racing)"
+      ],
+      "officialRound": 20,
+      "winner": "Lando Norris (McLaren)",
+      "notes": "Provisional classification over 71 laps at Interlagos. Race time of the winner: 1:35:23.504. Norris scored McLaren's first win since Hungary; Mercedes clinched the 2026 Constructors' Championship. Stroll retired on lap 30, Bottas did not start, and Rafael Câmara (51) made his debut for Haas. Kimi Antonelli set the fastest lap of the race (1:12.689) with no bonus point available under current rules."
     },
     {
       "round": 23,
@@ -422,7 +429,7 @@
       "date": "2026-11-21",
       "weekendDates": "19 - 21 Nov",
       "isSprint": false,
-      "status": "upcoming",
+      "status": "next",
       "podium": []
     },
     {

@@ -1,9 +1,12 @@
 {
   "season": 2026,
-  "asOfRound": 21,
-  "asOfDate": "2026-11-01",
+  "asOfRound": 22,
+  "asOfDate": "2026-11-08",
   "source": "Official FIA Classification 2026",
   "pointsSystem": "25-18-15-12-10-8-6-4-2-1",
+  "sprintPointsSystem": "8-7-6-5-4-3-2-1 (top eight)",
+  "sprintNote": "Sprint classifications list the eight points-scoring places only. Compiled from the published results of the six 2026 sprints. For the British sprint (P5/P6) and the Singapore sprint (P3-P7) sources were incomplete or disagreed, so those places were reconciled with the drivers' championship totals; the result is the only assignment of 8-1 that makes every total match.",
+  "officialAsOfRound": 20,
   "races": {
     "1": {
       "round": 1,
@@ -370,6 +373,72 @@
           "team": "Williams",
           "status": "DNS",
           "points": 0
+        }
+      ],
+      "sprint": [
+        {
+          "pos": 1,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 2,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 7
+        },
+        {
+          "pos": 3,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 4,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 5
+        },
+        {
+          "pos": 5,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 6,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 3
+        },
+        {
+          "pos": 7,
+          "driver": "Liam Lawson",
+          "code": "LAW",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 8,
+          "driver": "Oliver Bearman",
+          "code": "BEA",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 1
         }
       ]
     },
@@ -739,6 +808,72 @@
           "status": "DNF",
           "points": 0
         }
+      ],
+      "sprint": [
+        {
+          "pos": 1,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 2,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 7
+        },
+        {
+          "pos": 3,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 4,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 5
+        },
+        {
+          "pos": 5,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 6,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 3
+        },
+        {
+          "pos": 7,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 8,
+          "driver": "Pierre Gasly",
+          "code": "GAS",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 1
+        }
       ]
     },
     "7": {
@@ -922,6 +1057,72 @@
           "team": "Racing Bulls",
           "status": "DNS",
           "points": 0
+        }
+      ],
+      "sprint": [
+        {
+          "pos": 1,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 2,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 7
+        },
+        {
+          "pos": 3,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 4,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 5
+        },
+        {
+          "pos": 5,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 6,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 3
+        },
+        {
+          "pos": 7,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 8,
+          "driver": "Arvid Lindblad",
+          "code": "LIN",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 1
         }
       ]
     },
@@ -1659,6 +1860,72 @@
           "status": "DNF",
           "points": 0
         }
+      ],
+      "sprint": [
+        {
+          "pos": 1,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 2,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 7
+        },
+        {
+          "pos": 3,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 4,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 5
+        },
+        {
+          "pos": 5,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 6,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 3
+        },
+        {
+          "pos": 7,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 8,
+          "driver": "Liam Lawson",
+          "code": "LAW",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 1
+        }
       ]
     },
     "12": {
@@ -2210,6 +2477,72 @@
           "team": "Red Bull Racing",
           "status": "DNF",
           "points": 0
+        }
+      ],
+      "sprint": [
+        {
+          "pos": 1,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 2,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 7
+        },
+        {
+          "pos": 3,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 4,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 5
+        },
+        {
+          "pos": 5,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 6,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 3
+        },
+        {
+          "pos": 7,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 8,
+          "driver": "Pierre Gasly",
+          "code": "GAS",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 1
         }
       ]
     },
@@ -3183,6 +3516,72 @@
           "gap": "DNF",
           "laps": null
         }
+      ],
+      "sprint": [
+        {
+          "pos": 1,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 2,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 7
+        },
+        {
+          "pos": 3,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 4,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 5
+        },
+        {
+          "pos": 5,
+          "driver": "Liam Lawson",
+          "code": "LAW",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 6,
+          "driver": "Oliver Bearman",
+          "code": "BEA",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 3
+        },
+        {
+          "pos": 7,
+          "driver": "Nico Hülkenberg",
+          "code": "HUL",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 8,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 1
+        }
       ]
     },
     "20": {
@@ -3608,7 +4007,195 @@
           "points": 0
         }
       ]
+    },
+    "22": {
+      "round": 22,
+      "officialRound": 20,
+      "name": "São Paulo Grand Prix",
+      "date": "2026-11-08",
+      "circuit": "Autódromo José Carlos Pace (Interlagos)",
+      "distanceKm": 4.309,
+      "raceLaps": 71,
+      "winnerTime": "1:35:23.504",
+      "resultsNote": "Provisional classification. Lando Norris won from McLaren ahead of both Red Bulls (Verstappen, Hadjar) so Mercedes could clinch the 2026 Constructors' Championship with three rounds to spare; Kimi Antonelli had already secured the drivers' title in Mexico. Nico Hülkenberg scored Audi's point in tenth. Lance Stroll (Aston Martin, 30 laps) retired and Valtteri Bottas (Cadillac) did not start; Rafael Câmara made his Grand Prix debut for Haas alongside Bearman. Kimi Antonelli set the fastest lap of the race (1:12.689) with no bonus point available under current rules.",
+      "results": [
+        {
+          "pos": 1,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 25
+        },
+        {
+          "pos": 2,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 18
+        },
+        {
+          "pos": 3,
+          "driver": "Isack Hadjar",
+          "code": "HAD",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 15
+        },
+        {
+          "pos": 4,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 12
+        },
+        {
+          "pos": 5,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 10
+        },
+        {
+          "pos": 6,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 7,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 8,
+          "driver": "Liam Lawson",
+          "code": "LAW",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 9,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 10,
+          "driver": "Nico Hülkenberg",
+          "code": "HUL",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 1
+        },
+        {
+          "pos": 11,
+          "driver": "Arvid Lindblad",
+          "code": "LIN",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 12,
+          "driver": "Fernando Alonso",
+          "code": "ALO",
+          "team": "Aston Martin",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 13,
+          "driver": "Franco Colapinto",
+          "code": "COL",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 14,
+          "driver": "Pierre Gasly",
+          "code": "GAS",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 15,
+          "driver": "Alexander Albon",
+          "code": "ALB",
+          "team": "Williams",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 16,
+          "driver": "Gabriel Bortoleto",
+          "code": "BOR",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 17,
+          "driver": "Oliver Bearman",
+          "code": "BEA",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 18,
+          "driver": "Sergio Pérez",
+          "code": "PER",
+          "team": "Cadillac",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 19,
+          "driver": "Carlos Sainz",
+          "code": "SAI",
+          "team": "Williams",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 20,
+          "driver": "Rafael Câmara",
+          "code": "CAM",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": null,
+          "driver": "Lance Stroll",
+          "code": "STR",
+          "team": "Aston Martin",
+          "status": "DNF",
+          "points": 0
+        },
+        {
+          "pos": null,
+          "driver": "Valtteri Bottas",
+          "code": "BOT",
+          "team": "Cadillac",
+          "status": "DNS",
+          "points": 0
+        }
+      ]
     }
-  },
-  "officialAsOfRound": 19
+  }
 }

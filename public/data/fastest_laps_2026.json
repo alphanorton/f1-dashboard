@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "source": "OpenF1 race session laps (api.openf1.org), cross-checked against Jolpica-Ergast results and the official formula1.com fastest-lap list",
-  "asOfDate": "2026-11-01",
+  "asOfDate": "2026-11-08",
   "generatedAt": "2026-10-11T15:28:43.410Z",
   "tolerance": {
     "lapTime": 0.001,
@@ -315,6 +315,22 @@
       "s3": 20.292,
       "source": "OpenF1 /laps (session 11404, driver 44): sectors sum exactly to the 1:19.268 lap time",
       "verified": true
+    },
+    {
+      "round": 22,
+      "grand_prix": "São Paulo Grand Prix",
+      "circuit": "interlagos",
+      "date": "2026-11-08",
+      "driver_name": "Kimi ANTONELLI",
+      "driver_code": "ANT",
+      "team": "Mercedes",
+      "lap_number": null,
+      "lap_time": 72.689,
+      "s1": null,
+      "s2": null,
+      "s3": null,
+      "source": "provisional TIM thread, reported manually (lap number and sectors pending official data)",
+      "verified": false
     }
   ],
   "needs_review": [
@@ -337,6 +353,13 @@
       "openf1_lap_duration": 98.22,
       "rejected_alternative": "1:38.511 (f1-fansite)",
       "driver_code": "VER"
+    },
+    {
+      "round": 22,
+      "grand_prix": "São Paulo Grand Prix",
+      "reason": "fastest lap reported manually; lap number and sector times pending official data",
+      "lap_time": 72.689,
+      "driver_code": "ANT"
     }
   ]
 }
