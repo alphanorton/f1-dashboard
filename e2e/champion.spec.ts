@@ -77,12 +77,14 @@ test.describe('Belgium track map', () => {
     expect(img.headers()['content-type']).toContain('image/png');
   });
 
-  test('deep link shows Spa and its image loads', async ({ page }) => {
+  test('deep link shows Spa and draws its traced layout', async ({ page }) => {
     await page.goto('/track-map?circuit=spa');
     await expect(page.locator('#circuit-select')).toHaveValue('spa');
-    const img = page.getByRole('img', { name: /Spa-Francorchamps track map/i });
-    await expect(img).toBeVisible();
-    expect(await img.evaluate((el: HTMLImageElement) => el.naturalWidth)).toBeGreaterThan(0);
+    const map = page.getByRole('img', { name: /Interactive circuit map of .*Spa-Francorchamps/i });
+    await expect(map).toBeVisible();
+    // the traced layout is drawn: the SVG must contain a real, non-empty path
+    const len = await map.locator('path').first().evaluate((el: SVGPathElement) => el.getTotalLength());
+    expect(len).toBeGreaterThan(100);
   });
 
   test('next and previous buttons change the circuit in the URL', async ({ page }) => {
@@ -120,7 +122,7 @@ test.describe('Share card, constructors banner and track crowns', () => {
     await page.goto('/track-map?circuit=spa');
     await expect(page.getByText(/Antonelli won here · R12/)).toBeVisible();
     await page.goto('/track-map?circuit=silverstone');
-    await expect(page.getByRole('img', { name: /Silverstone.*track map/i })).toBeVisible();
+    await expect(page.getByRole('img', { name: /Interactive circuit map of .*Silverstone/i })).toBeVisible();
     await expect(page.getByText(/won here · R/)).toHaveCount(0);
   });
 

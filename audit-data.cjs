@@ -112,5 +112,61 @@ const fastestRounds = fastest.races.map(r => r.round);
 assert(new Set(fastestRounds).size === fastestRounds.length, 'fastest-lap dataset has no duplicate rounds');
 
 console.log(`\nCompleted events: ${completed.length}; cancelled schedule slots: ${cancelled.length}; race-result snapshots: ${resultKeys.length}`);
+// Points integrity: Grand Prix + sprint points from results.json must reproduce the standings exactly.
+{
+  const results = read('results.json');
+  const standings = read('standings.json');
+  const calendar = read('calendar.json').races;
+  const blocks = Object.values(results.races);
+
+  const sprintRounds = calendar.filter((r) => r.isSprint && r.status === 'completed').map((r) => r.round).sort((a, b) => a - b);
+  const haveSprint = blocks.filter((b) => b.sprint).map((b) => b.round).sort((a, b) => a - b);
+  assert(JSON.stringify(sprintRounds) === JSON.stringify(haveSprint), `sprint results exist for exactly the completed sprint rounds (${sprintRounds.join(', ')})`);
+  for (const b of blocks.filter((x) => x.sprint)) {
+    const ok = b.sprint.length === 8 && b.sprint.every((r, i) => r.pos === i + 1 && r.points === 8 - i) && new Set(b.sprint.map((r) => r.code)).size === 8;
+    assert(ok, `round ${b.round} sprint lists eight unique drivers scoring 8-1`);
+    const sameTeam = b.sprint.every((r) => { const gp = b.results.find((x) => x.code === r.code); return !gp || gp.team === r.team; });
+    assert(sameTeam, `round ${b.round} sprint teams match that weekend's Grand Prix teams`);
+  }
+
+  const total = {}, perTeam = {};
+  for (const b of blocks) {
+    for (const r of b.results) { total[r.code] = (total[r.code] || 0) + (r.points || 0); perTeam[r.team] = (perTeam[r.team] || 0) + (r.points || 0); }
+    for (const r of b.sprint || []) { total[r.code] = (total[r.code] || 0) + r.points; perTeam[r.team] = (perTeam[r.team] || 0) + r.points; }
+  }
+  const driverMismatch = standings.drivers.filter((d) => (total[d.code] || 0) !== d.points).map((d) => `${d.code} ${d.points} vs ${total[d.code] || 0}`);
+  assert(driverMismatch.length === 0, `driver standings equal Grand Prix + sprint points from results.json${driverMismatch.length ? ' (' + driverMismatch.join('; ') + ')' : ''}`);
+  const teamMismatch = standings.constructors.filter((c) => (perTeam[c.shortName] || 0) !== c.points).map((c) => `${c.shortName} ${c.points} vs ${perTeam[c.shortName] || 0}`);
+  assert(teamMismatch.length === 0, `constructor standings equal the points scored by each team's cars${teamMismatch.length ? ' (' + teamMismatch.join('; ') + ')' : ''}`);
+  const listed = new Set(standings.drivers.map((d) => d.code));
+  for (const [code, pts] of Object.entries(total)) if (pts > 0 && !listed.has(code)) warn(`${code} scored ${pts} point(s) in results.json but is missing from the drivers' standings`);
+
+  try {
+    require('node:child_process').execFileSync(process.execPath, [path.join(__dirname, 'tools', 'derive-standings-stats.cjs')], { stdio: 'pipe' });
+    pass('standings wins, podiums and sprintPoints match results.json');
+  } catch (e) {
+    fail('standings wins/podiums/sprintPoints are out of date: run `node tools/derive-standings-stats.cjs --write`');
+  }
+}
+
+// Images: every referenced photo and headshot must exist.
+{
+  const standings = read('standings.json');
+  const photosSrc = fs.readFileSync(path.join(__dirname, 'src', 'lib', 'circuitPhotos.ts'), 'utf8');
+  const photoFiles = [...photosSrc.matchAll(/src: '(\/circuits\/[^']+)'/g)].map((m) => m[1]);
+  const missingPhotos = photoFiles.filter((f) => !fs.existsSync(path.join(__dirname, 'public', f)));
+  assert(photoFiles.length > 0 && missingPhotos.length === 0, `all ${photoFiles.length} circuit photos exist${missingPhotos.length ? ' (missing: ' + missingPhotos.join(', ') + ')' : ''}`);
+  const missingHeads = standings.drivers.filter((d) => !fs.existsSync(path.join(__dirname, 'public', 'headshots', `${d.code.toLowerCase()}.webp`))).map((d) => d.code);
+  assert(missingHeads.length === 0, `every driver in the standings has a headshot${missingHeads.length ? ' (missing: ' + missingHeads.join(', ') + ')' : ''}`);
+}
+
+// Track outlines must run in the real lap direction (arrows and animated cars follow the path).
+try {
+  require('node:child_process').execFileSync(process.execPath, [path.join(__dirname, 'tools', 'orient-track-paths.cjs')], { stdio: 'pipe' });
+  pass('traced track outlines run in the real lap direction');
+} catch (e) {
+  fail('some traced outlines run against the real lap direction: run `node tools/orient-track-paths.cjs --write`');
+}
+
 console.log(`Audit result: ${errors} error(s), ${warnings} warning(s).`);
 if (errors) process.exit(1);
