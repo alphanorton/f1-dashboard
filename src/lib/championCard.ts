@@ -14,6 +14,7 @@ export interface ChampionCardData {
   dnfs: number;
   chips: Array<{ round: number; label: string; kind: 'p1' | 'p2' | 'p3' | 'pts' | 'dnf' | 'other' }>;
   headline: string; // e.g. "Title clinched with 4 races to spare"
+  sprintPoints?: number | null; // part of `points` that came from sprints
   headshotUrls: string[]; // tried in order; falls back to initials
 }
 
@@ -255,7 +256,7 @@ export async function renderChampionCard(canvas: HTMLCanvasElement, d: ChampionC
   // --- footer ---
   ctx.fillStyle = '#6B7280';
   ctx.font = f(BODY, 22, 500);
-  ctx.fillText('F1 Dashboard 2026  ·  sprint points count in the total but are not shown above', 84, CARD_H - 70);
+  ctx.fillText(`F1 Dashboard 2026  ·  ${d.sprintPoints ? `${d.points} points include ${d.sprintPoints} from sprints` : 'Grand Prix finishes shown above'}`, 84, CARD_H - 70);
 }
 
 export function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {

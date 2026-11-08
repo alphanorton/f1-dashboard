@@ -59,6 +59,16 @@ test('average finish ignores retirements and absences', () => {
 test('form points sum Grand Prix points inside the window only', () => {
   eq(guide.rows[0].formPoints, 25 * 4);    // rounds 3,4,6,7; round 5 scored 0
   eq(guide.rows[1].formPoints, 18 * 4);
+  eq(guide.rows[0].sprintPoints, 0);
+});
+test('sprint points inside the window are included, sprints outside it are not', () => {
+  const withSprints = JSON.parse(JSON.stringify(races)) as typeof races;
+  withSprints['4'].sprint = [{ code: 'BBB', points: 8 }, { code: 'AAA', points: 7 }]; // inside (rounds 3-7)
+  withSprints['1'].sprint = [{ code: 'AAA', points: 8 }];                              // outside
+  const g = computeFormGuide({ drivers: DRIVERS, results: { races: withSprints }, calendar: CAL });
+  eq(g.rows[0].formPoints, 25 * 4 + 7); eq(g.rows[0].sprintPoints, 7);
+  eq(g.rows[1].formPoints, 18 * 4 + 8); eq(g.rows[1].sprintPoints, 8);
+  eq(g.rows[2].sprintPoints, 0);
 });
 test('wins and podiums are counted inside the window', () => {
   eq(guide.rows[0].wins, 4); eq(guide.rows[0].podiums, 4);

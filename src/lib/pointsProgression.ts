@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useCachedData } from '@/hooks/useCachedData';
 import { getTeamColor2026 } from '@/lib/teamColors';
+import { seasonTotals, weekendPoints, tookPart } from '@/lib/weekendPoints';
 
 interface ResultEntry {
   pos: number | null;
@@ -14,6 +15,8 @@ interface RaceBlock {
   round: number;
   name: string;
   results: ResultEntry[];
+  /** points-scoring places of the sprint, on sprint weekends only */
+  sprint?: ResultEntry[];
 }
 
 interface ResultsData {
@@ -31,7 +34,7 @@ interface PointsSeries {
 
 /**
  * Builds a cumulative points-progression series for the top-N drivers, from
- * per-round results. Drivers not classified in a round carry a null value so
+ * per-round results (Grand Prix plus sprint points). Drivers not classified in a round carry a null value so
  * the chart line simply skips them instead of implying zero.
  */
 export function usePointsProgression(
@@ -56,12 +59,7 @@ export function usePointsProgression(
 
     // Identify the top-N drivers by summed points across all available rounds.
     const totals = new Map<string, number>();
-    for (const block of blocks) {
-      for (const entry of block.results) {
-        const key = entry.code;
-        totals.set(key, (totals.get(key) ?? 0) + (entry.points ?? 0));
-      }
-    }
+    for (const [code, t] of seasonTotals(blocks)) totals.set(code, t.total);
     // Prefer the official standings order when supplied, falling back to summed points.
     const topKeys = officialOrder && officialOrder.length > 0
       ? officialOrder.slice(0, topN).map((o) => o.code)
@@ -89,9 +87,8 @@ export function usePointsProgression(
       const points: PointsSeries['points'] = [];
       let running = 0;
       for (const block of blocks) {
-        const entry = block.results.find((e) => e.code === code);
-        if (entry) {
-          running += entry.points ?? 0;
+        if (tookPart(block, code)) {
+          running += weekendPoints(block, code); // Grand Prix + sprint, so the line ends on the championship total
           points.push({ round: block.round, race: block.name, value: running });
         } else {
           points.push({ round: block.round, race: block.name, value: null });

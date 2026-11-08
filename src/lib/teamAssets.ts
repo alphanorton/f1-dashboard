@@ -1,5 +1,5 @@
 // Maps team names (as used in standings.json / teamColors.ts) to logo file slugs.
-// Drop files into public/logos/teams/<slug>.svg (or .png) and public/headshots/<code>.png
+// Drop files into public/logos/teams/<slug>.svg (or .png) and public/headshots/<code>.webp (png/jpg also work)
 // (code lowercase, e.g. ant.png). Missing files fall back to a generated badge.
 
 export const TEAM_LOGO_SLUGS: Record<string, string> = {

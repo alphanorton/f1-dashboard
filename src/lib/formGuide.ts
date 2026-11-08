@@ -3,14 +3,23 @@
  *
  * Everything here is read straight from results.json / standings.json / calendar.json. Nothing is
  * predicted, scored or modelled, so the card can never be "wrong" in the way a projection can.
- * Sprint points are not in results.json, so `formPoints` counts Grand Prix points only.
+ * `formPoints` is Grand Prix points plus sprint points for the weekends in the window.
  */
+
+import { weekendPoints, sprintPoints as sprintOf } from './weekendPoints.ts';
 
 export const FORM_WINDOW = 5;
 
 export interface FormStandingDriver { position: number; code: string; name: string; team: string; points: number }
 export interface FormResultRow { pos: number | null; code: string; status: string; points: number }
-export interface FormRace { round: number; name: string; circuit: string; results: FormResultRow[] }
+export interface FormRace {
+  round: number;
+  name: string;
+  circuit: string;
+  results: FormResultRow[];
+  /** points-scoring places of the sprint, sprint weekends only */
+  sprint?: Array<{ code: string; points: number }>;
+}
 export interface FormResultsData { races: Record<string, FormRace> }
 export interface FormCalendarRace { round: number; name: string; circuit: string; status: string }
 
@@ -26,8 +35,10 @@ export interface FormRow {
   chips: FormChip[];
   /** mean classified finishing position over the window, null if the driver did not finish any */
   avgFinish: number | null;
-  /** Grand Prix points scored inside the window (no sprint points) */
+  /** Grand Prix + sprint points scored inside the window */
   formPoints: number;
+  /** the sprint part of formPoints */
+  sprintPoints: number;
   wins: number;
   podiums: number;
   dnfs: number;
@@ -73,10 +84,11 @@ export function computeFormGuide(input: {
         .map((race) => race.results.find((r) => r.code === d.code))
         .filter((r): r is FormResultRow => !!r && r.status === 'Finished' && r.pos != null);
       const avgFinish = classified.length ? classified.reduce((s, r) => s + (r.pos as number), 0) / classified.length : null;
-      const formPoints = races.reduce((s, race) => s + (race.results.find((r) => r.code === d.code)?.points ?? 0), 0);
+      const formPoints = races.reduce((s, race) => s + weekendPoints(race, d.code), 0);
+      const sprintPoints = races.reduce((s, race) => s + sprintOf(race, d.code), 0);
       return {
         position: d.position, code: d.code, name: d.name, team: d.team, points: d.points,
-        chips, avgFinish, formPoints,
+        chips, avgFinish, formPoints, sprintPoints,
         wins: chips.filter((c) => c.kind === 'p1').length,
         podiums: chips.filter((c) => c.kind === 'p1' || c.kind === 'p2' || c.kind === 'p3').length,
         dnfs: chips.filter((c) => c.kind === 'dnf' && c.label === 'DNF').length,
