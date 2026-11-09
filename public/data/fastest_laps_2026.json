@@ -317,20 +317,21 @@
       "verified": true
     },
     {
-      "round": 22,
+      "round": 20,
+      "projectRound": 22,
       "grand_prix": "São Paulo Grand Prix",
       "circuit": "interlagos",
       "date": "2026-11-08",
       "driver_name": "Kimi ANTONELLI",
       "driver_code": "ANT",
       "team": "Mercedes",
-      "lap_number": null,
+      "lap_number": 55,
       "lap_time": 72.689,
       "s1": null,
       "s2": null,
       "s3": null,
-      "source": "provisional TIM thread, reported manually (lap number and sectors pending official data)",
-      "verified": false
+      "source": "FIA Race Final Classification, Sao Paulo Grand Prix 2026 (document 81): 1:12.689 on lap 55, 213.407 km/h. Sector times are not in the document.",
+      "verified": true
     }
   ],
   "needs_review": [
@@ -355,11 +356,12 @@
       "driver_code": "VER"
     },
     {
-      "round": 22,
+      "round": 20,
       "grand_prix": "São Paulo Grand Prix",
-      "reason": "fastest lap reported manually; lap number and sector times pending official data",
+      "reason": "sector times missing",
+      "driver_code": "ANT",
       "lap_time": 72.689,
-      "driver_code": "ANT"
+      "lap_number": 55
     }
   ]
 }

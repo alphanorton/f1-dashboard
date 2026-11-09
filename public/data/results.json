@@ -4017,7 +4017,7 @@
       "distanceKm": 4.309,
       "raceLaps": 71,
       "winnerTime": "1:35:23.504",
-      "resultsNote": "Provisional classification. Lando Norris won from McLaren ahead of both Red Bulls (Verstappen, Hadjar) so Mercedes could clinch the 2026 Constructors' Championship with three rounds to spare; Kimi Antonelli had already secured the drivers' title in Mexico. Nico Hülkenberg scored Audi's point in tenth. Lance Stroll (Aston Martin, 30 laps) retired and Valtteri Bottas (Cadillac) did not start; Rafael Câmara made his Grand Prix debut for Haas alongside Bearman. Kimi Antonelli set the fastest lap of the race (1:12.689) with no bonus point available under current rules.",
+      "resultsNote": "Final classification (FIA document 81). Norris won from Verstappen (+14.602s) and Hadjar (+24.485s). Russell and Antonelli finished fourth and fifth, which secured Mercedes the constructors' title; Antonelli also set the fastest lap. Five-second penalties: Antonelli and Bearman (unsafe release), Leclerc (causing a collision), who finished eighth behind Lawson. Rafael Camara made his F1 debut for Haas, replacing the dropped Esteban Ocon, and finished 20th. Stroll retired and Bottas did not start.",
       "results": [
         {
           "pos": 1,
@@ -4069,17 +4069,17 @@
         },
         {
           "pos": 7,
-          "driver": "Charles Leclerc",
-          "code": "LEC",
-          "team": "Ferrari",
+          "driver": "Liam Lawson",
+          "code": "LAW",
+          "team": "Racing Bulls",
           "status": "Finished",
           "points": 6
         },
         {
           "pos": 8,
-          "driver": "Liam Lawson",
-          "code": "LAW",
-          "team": "Racing Bulls",
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
           "status": "Finished",
           "points": 4
         },

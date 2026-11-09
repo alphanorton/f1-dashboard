@@ -68,10 +68,10 @@
       "name": "Charles Leclerc",
       "nationality": "Monaco",
       "team": "Ferrari",
-      "points": 251,
+      "points": 249,
       "wins": 1,
       "podiums": 6,
-      "gap": 139,
+      "gap": 141,
       "sprintPoints": 34
     },
     {
@@ -120,10 +120,10 @@
       "name": "Liam Lawson",
       "nationality": "New Zealand",
       "team": "Racing Bulls",
-      "points": 87,
+      "points": 89,
       "wins": 0,
       "podiums": 0,
-      "gap": 303,
+      "gap": 301,
       "sprintPoints": 7
     },
     {
@@ -331,10 +331,10 @@
         "Lewis Hamilton",
         "Charles Leclerc"
       ],
-      "points": 512,
+      "points": 510,
       "wins": 2,
       "podiums": 13,
-      "gap": 140,
+      "gap": 142,
       "updates": [
         "New front wing + shorter nose Australia",
         "067/11 Phase B engine with 15 more hp Miami",
@@ -402,10 +402,10 @@
         "Liam Lawson",
         "Yuki Tsunoda"
       ],
-      "points": 112,
+      "points": 114,
       "wins": 0,
       "podiums": 0,
-      "gap": 540,
+      "gap": 538,
       "updates": [
         "New RB22-inspired front wing Miami",
         "Optimized Venturi tunnel Belgium"
