@@ -381,7 +381,7 @@ export function GrandPrix() {
                   <img
                     src={cardPhoto.src}
                     alt={`${race.circuit} photo`}
-                    className={`h-full w-full object-cover transition-transform duration-700 group-hover:scale-105${isCancel ? ' grayscale' : ''}`}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
                   />
