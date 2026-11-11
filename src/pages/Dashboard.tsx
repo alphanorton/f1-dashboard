@@ -17,6 +17,10 @@ import { SeasonStrip } from '@/components/dashboard/SeasonStrip';
 import { StartLights } from '@/components/dashboard/StartLights';
 import { LeaderCard, type LeaderRow } from '@/components/dashboard/LeaderCard';
 import { TitleFightCard, computeTitleFight } from '@/components/dashboard/TitleFightCard';
+import { ConstructorChampionBanner } from '@/components/standings/ConstructorChampionBanner';
+import { computeConstructorTitle } from '@/lib/constructorTitle';
+import { SeasonTimeline } from '@/components/dashboard/SeasonTimeline';
+import type { TimelineResults } from '@/lib/seasonTimeline';
 import { FormGuideCard, type FormCircuitFacts } from '@/components/dashboard/FormGuideCard';
 import { computeFormGuide, type FormResultsData } from '@/lib/formGuide';
 import { circuitSlug } from '@/lib/trackPaths';
@@ -593,6 +597,9 @@ export function Dashboard() {
         </dl>
       </section>
 
+      {/* Season timeline: every round, coloured by the winning team. */}
+      {calendar.length > 0 && <SeasonTimeline calendar={calendar} results={resultsData as unknown as TimelineResults | null} />}
+
       {/* Form guide (Liquid Glass): real recent results, no prediction. */}
       {formGuide && <FormGuideCard guide={formGuide} circuit={nextCircuit} />}
 
@@ -611,6 +618,9 @@ export function Dashboard() {
           action={{ to: '/standings', label: 'Full standings' }}
         />
         <TitleFightCard drivers={standingsData?.drivers ?? []} races={calendar} />
+        {standingsData && (
+          <ConstructorChampionBanner constructors={standingsData.constructors} races={calendar} results={resultsData as any} onlyWhenDecided />
+        )}
         {standingsLoading ? (
           <div className="mt-4 grid gap-4 lg:grid-cols-2">
             <Skeleton className="h-72 w-full rounded-2xl" />
@@ -623,7 +633,7 @@ export function Dashboard() {
         ) : (
           <div className="stagger-group mt-4 grid gap-4 lg:grid-cols-2">
             <LeaderCard title="Drivers" icon={Crown} rows={driverRows} index={0} leaderLabel={computeTitleFight(standingsData?.drivers ?? [], calendar)?.clinched ? 'Champion' : 'Leader'} />
-            <LeaderCard title="Constructors" icon={Users} rows={constructorRows} index={1} />
+            <LeaderCard title="Constructors" icon={Users} rows={constructorRows} index={1} leaderLabel={standingsData && computeConstructorTitle(standingsData.constructors, calendar)?.clinched ? 'Champion' : 'Leader'} />
           </div>
         )}
       </div>

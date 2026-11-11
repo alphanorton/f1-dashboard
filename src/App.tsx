@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { RacingBackground } from '@/components/motion/RacingBackground';
 import { Sidebar } from '@/components/layout/Sidebar';
 import { Header } from '@/components/layout/Header';
 import { MobileTabBar } from '@/components/layout/MobileTabBar';
@@ -55,6 +56,7 @@ function App() {
             Skip to content
           </a>
           <div className="app-backdrop min-h-screen bg-gray-900">
+            <RacingBackground />
             <Sidebar />
             <div className={sidebarOpen ? 'min-w-0 lg:ml-72' : 'min-w-0 lg:ml-20'}>
               <Header />

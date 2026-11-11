@@ -601,7 +601,7 @@ export function Standings() {
 
         {/* CONSTRUCTORS STANDINGS */}
         <TabsContent value="constructors" className="mt-6 space-y-6">
-          {calendarData && <ConstructorChampionBanner constructors={data.constructors} races={calendarData.races} />}
+          {calendarData && <ConstructorChampionBanner constructors={data.constructors} races={calendarData.races} results={resultsData} />}
           <Podium title="Constructors' championship podium" entries={constructorPodium} leaderLabel={ctorChampion ? 'Champion' : 'Leader'} />
           <Card>
             <CardContent className="p-0">
