@@ -1,6 +1,7 @@
 import React from 'react';
 import { Activity, Flag, Info, Ruler, Repeat, CornerUpRight, Timer } from 'lucide-react';
 import { DriverAvatar } from '@/components/ui/DriverAvatar';
+import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
 import { getTeamColor2026 } from '@/lib/teamColors';
 import type { FormChip, FormGuide, FormRow } from '@/lib/formGuide';
 import { cn } from '@/lib/utils';
@@ -32,19 +33,19 @@ function Row({ row, index }: { row: FormRow; index: number }) {
         </span>
       </span>
       <ol className="fg-chips" aria-label={`${row.name}: last ${row.chips.length} Grand Prix finishes, oldest first`}>
-        {row.chips.map((c) => (
-          <li key={c.round} className={chipClass[c.kind]} title={`R${c.round} ${c.race}: ${c.label}`}>
+        {row.chips.map((c, ci) => (
+          <li key={c.round} className={chipClass[c.kind]} style={{ '--c': ci } as React.CSSProperties} title={`R${c.round} ${c.race}: ${c.label}`}>
             <span className="champ-chip-r">R{c.round}</span>
             <span className="champ-chip-p">{c.label}</span>
           </li>
         ))}
       </ol>
       <span className="fg-stat">
-        <span className="fg-stat-v tabular-nums">{fmtAvg(row.avgFinish)}</span>
+        <span className="fg-stat-v tabular-nums">{row.avgFinish === null ? '—' : <AnimatedNumber value={Math.round(row.avgFinish * 10) / 10} />}</span>
         <span className="fg-stat-l">avg finish</span>
       </span>
       <span className="fg-stat">
-        <span className="fg-stat-v tabular-nums">{row.formPoints}</span>
+        <span className="fg-stat-v tabular-nums"><AnimatedNumber value={row.formPoints} /></span>
         <span className="fg-stat-l">{row.sprintPoints > 0 ? `pts (${row.sprintPoints} sprint)` : 'pts'}</span>
       </span>
     </li>

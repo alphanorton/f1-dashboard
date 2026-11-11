@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Crown, Flag, Medal, Target, AlertTriangle, Share2 } from 'lucide-react';
+import { ConfettiBurst } from '@/components/motion/ConfettiBurst';
 import { ChampionShareDialog } from '@/components/standings/ChampionShareDialog';
 import { DriverAvatar } from '@/components/ui/DriverAvatar';
 import { AnimatedNumber } from '@/components/motion/AnimatedNumber';
@@ -97,6 +98,7 @@ export function ChampionHero({ drivers, races, results }: Props) {
       style={{ '--champ': color, backgroundImage: `radial-gradient(620px 260px at 0% 0%, ${teamTint(color, 0.28)}, transparent 70%)` } as React.CSSProperties}
     >
       <span aria-hidden="true" className="dx-ghost pointer-events-none absolute -bottom-3 right-2 text-[96px] sm:text-[150px]">{leader.code}</span>
+      <ConfettiBurst id="drivers-2026" color={color} />
 
       <div className="relative p-5 sm:p-7">
         <span className="dx-pos dx-pos-pill" data-p="1"><Crown className="h-3.5 w-3.5" aria-hidden="true" /> World Champion 2026</span>
