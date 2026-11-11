@@ -11,11 +11,16 @@
     "audit": "node audit-data.cjs",
     "test:data": "node audit-data.cjs",
     "test:helpers": "node --experimental-strip-types src/pages/TireStrategy.helpers.test.ts",
-    "test": "npm run test:helpers && npm run test:presets && npm run test:data && npm run test:allocations && npm run test:motion",
+    "test": "npm run test:helpers && npm run test:presets && npm run test:data && npm run test:allocations && npm run test:motion && npm run test:points && npm run test:dashboard && npm run test:formguide && npm run test:weekend",
     "test:presets": "node --experimental-strip-types src/lib/tyrePresets.test.ts",
     "tyre:add": "node tyre-preset.cjs",
     "test:allocations": "node --experimental-strip-types src/lib/tyreAllocations2026.test.ts",
-    "test:motion": "node --experimental-strip-types src/lib/motion.test.ts"
+    "test:motion": "node --experimental-strip-types src/lib/motion.test.ts",
+    "test:points": "node --experimental-strip-types src/lib/points.test.ts",
+    "test:dashboard": "node --experimental-strip-types src/pages/DashboardAndGrandPrix.test.ts",
+    "test:formguide": "node --experimental-strip-types src/lib/formGuide.test.ts",
+    "test:weekend": "node --experimental-strip-types src/lib/weekendPoints.test.ts",
+    "stats:derive": "node tools/derive-standings-stats.cjs --write"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
