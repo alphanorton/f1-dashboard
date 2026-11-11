@@ -1,4 +1,3 @@
-import { ConfettiBurst } from '@/components/motion/ConfettiBurst';
 import React, { useMemo } from 'react';
 import { Trophy, Crown, Sparkles, ShieldCheck } from 'lucide-react';
 import { DriverAvatar } from '@/components/ui/DriverAvatar';
@@ -60,7 +59,6 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
           minHeight: '220px',
         }}
       >
-        <ConfettiBurst id="drivers-2026" />
         {CHAMPION_HERO[leader.code] && (
           <img
             src={CHAMPION_HERO[leader.code]}
