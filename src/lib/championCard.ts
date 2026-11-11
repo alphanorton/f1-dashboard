@@ -264,3 +264,158 @@ export function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
     canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('Could not export the card'))), 'image/png');
   });
 }
+
+// ---------------------------------------------------------------------------------------------
+// Constructors' champion card (same 1080 x 1350 format)
+
+export interface ConstructorCardData {
+  team: string;
+  teamColor: string;
+  points: number;
+  wins: number;
+  podiums: number;
+  oneTwos: number;
+  margin: number; // points ahead of the runner-up
+  second: string; // the runner-up
+  remaining: number; // races still to run when the title was decided
+  drivers: Array<{ name: string; points: number }>;
+  /** points scored by the team in each race weekend (Grand Prix + sprint) */
+  chips: Array<{ round: number; label: string; kind: 'p1' | 'p2' | 'p3' | 'pts' | 'dnf' | 'other' }>;
+  logoUrls: string[]; // tried in order; falls back to the team name
+}
+
+function paintBackground(ctx: CanvasRenderingContext2D, color: string) {
+  ctx.fillStyle = '#0B0B14';
+  ctx.fillRect(0, 0, CARD_W, CARD_H);
+  let g = ctx.createRadialGradient(120, 80, 0, 120, 80, 900);
+  g.addColorStop(0, rgba(color, 0.42));
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, CARD_W, CARD_H);
+  g = ctx.createRadialGradient(CARD_W, CARD_H, 0, CARD_W, CARD_H, 800);
+  g.addColorStop(0, 'rgba(245,197,66,.22)');
+  g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, CARD_W, CARD_H);
+  ctx.save();
+  ctx.strokeStyle = 'rgba(255,255,255,.025)';
+  ctx.lineWidth = 2;
+  for (let i = -CARD_H; i < CARD_W; i += 26) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + CARD_H, CARD_H); ctx.stroke(); }
+  ctx.restore();
+  roundRect(ctx, 28, 28, CARD_W - 56, CARD_H - 56, 36);
+  ctx.strokeStyle = 'rgba(245,197,66,.55)';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+}
+
+export async function renderConstructorCard(canvas: HTMLCanvasElement, d: ConstructorCardData): Promise<void> {
+  canvas.width = CARD_W;
+  canvas.height = CARD_H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  try {
+    await Promise.all([document.fonts.load(f(DISPLAY, 64)), document.fonts.load(f(BODY, 28, 700))]);
+  } catch { /* system fonts are used when these are not available */ }
+  const logo = await firstImage(d.logoUrls);
+
+  paintBackground(ctx, d.teamColor);
+  ctx.textBaseline = 'alphabetic';
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#9CA3AF';
+  ctx.font = f(BODY, 26, 700);
+  ctx.fillText('FORMULA 1  ·  2026 SEASON', 84, 110);
+  ctx.fillStyle = GOLD;
+  fitText(ctx, "CONSTRUCTORS' CHAMPION", 84, 190, CARD_W - 168, 78);
+
+  // logo plate
+  const px = 84, py = 280, ps = 270;
+  roundRect(ctx, px, py, ps, ps, 36);
+  ctx.fillStyle = 'rgba(255,255,255,.10)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(245,197,66,.6)';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  if (logo) {
+    const k = Math.min((ps - 60) / logo.width, (ps - 60) / logo.height);
+    ctx.drawImage(logo, px + (ps - logo.width * k) / 2, py + (ps - logo.height * k) / 2, logo.width * k, logo.height * k);
+  } else {
+    ctx.fillStyle = d.teamColor;
+    ctx.font = f(DISPLAY, 70);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(d.team.slice(0, 3).toUpperCase(), px + ps / 2, py + ps / 2);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  // team name + drivers
+  const nx = px + ps + 50;
+  ctx.fillStyle = '#FFFFFF';
+  fitText(ctx, d.team.toUpperCase(), nx, 392, CARD_W - nx - 70, 74, 36);
+  ctx.fillStyle = d.teamColor;
+  ctx.font = f(BODY, 30, 700);
+  d.drivers.slice(0, 2).forEach((dr, i) => ctx.fillText(`${dr.name}  ·  ${dr.points}`, nx, 452 + i * 46));
+
+  // points
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = f(DISPLAY, 150);
+  ctx.fillText(String(d.points), 84, 720);
+  const pw = ctx.measureText(String(d.points)).width;
+  ctx.fillStyle = '#9CA3AF';
+  ctx.font = f(BODY, 34, 700);
+  ctx.fillText('POINTS', 84 + pw + 24, 720);
+  ctx.fillStyle = GOLD;
+  ctx.font = f(BODY, 28, 500);
+  ctx.fillText(`Title decided with ${d.remaining} ${d.remaining === 1 ? 'race' : 'races'} to spare  ·  ${d.margin} points clear of ${d.second}`, 84, 774, CARD_W - 168);
+
+  // stat tiles
+  const tiles: Array<[string, number]> = [['GP WINS', d.wins], ['PODIUMS', d.podiums], ['1-2 FINISHES', d.oneTwos], ['POINTS CLEAR', d.margin]];
+  const gap = 18;
+  const tw = (CARD_W - 168 - gap * 3) / 4;
+  tiles.forEach(([label, value], i) => {
+    const x = 84 + i * (tw + gap);
+    roundRect(ctx, x, 818, tw, 150, 22);
+    ctx.fillStyle = 'rgba(255,255,255,.05)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.1)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = f(DISPLAY, 64);
+    ctx.fillText(String(value), x + 22, 902);
+    ctx.fillStyle = '#9CA3AF';
+    ctx.font = f(BODY, 19, 700);
+    ctx.fillText(label, x + 22, 943);
+  });
+
+  // points per weekend
+  ctx.fillStyle = '#9CA3AF';
+  ctx.font = f(BODY, 22, 700);
+  ctx.fillText('SEASON RUN  ·  TEAM POINTS PER RACE WEEKEND', 84, 1030);
+  const cols = 11, cgap = 10;
+  const cw = (CARD_W - 168 - cgap * (cols - 1)) / cols, ch = 84;
+  d.chips.forEach((c, i) => {
+    const x = 84 + (i % cols) * (cw + cgap);
+    const y = 1054 + Math.floor(i / cols) * (ch + cgap);
+    const st = CHIP_STYLE[c.kind];
+    roundRect(ctx, x, y, cw, ch, 14);
+    ctx.fillStyle = st.bg;
+    ctx.fill();
+    ctx.strokeStyle = st.bd;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = st.fg;
+    ctx.globalAlpha = 0.7;
+    ctx.font = f(BODY, 14, 700);
+    ctx.fillText(`R${c.round}`, x + cw / 2, y + 28);
+    ctx.globalAlpha = 1;
+    ctx.font = f(DISPLAY, 24);
+    ctx.fillText(c.label, x + cw / 2, y + 62);
+    ctx.textAlign = 'left';
+  });
+
+  ctx.fillStyle = '#6B7280';
+  ctx.font = f(BODY, 22, 500);
+  ctx.fillText('F1 Dashboard 2026  ·  Grand Prix + sprint points of both cars', 84, CARD_H - 70);
+}

@@ -1,0 +1,101 @@
+/* Horizontal F1 racing background. Only transform and opacity are animated. */
+
+.rb-root { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; contain: layout paint style; }
+.rb-root[data-paused='true'] * { animation-play-state: paused !important; }
+
+/* colour pools: muted racing red low-left, soft ice blue high-right (static, very subtle) */
+.rb-pool { position: absolute; border-radius: 50%; }
+.rb-pool-red { left: -14%; bottom: -22%; width: 66vw; height: 56vh; background: radial-gradient(closest-side, rgba(193, 18, 31, 0.18), transparent); }
+.rb-pool-ice { right: -12%; top: -18%; width: 58vw; height: 46vh; background: radial-gradient(closest-side, rgba(168, 205, 255, 0.07), transparent); }
+
+/* fine parallel lane lines, fading toward the middle so they never sit under the main content */
+.rb-lanes {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 30px);
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 24%, transparent 76%, #000);
+  mask-image: linear-gradient(180deg, #000, transparent 24%, transparent 76%, #000);
+}
+
+/* ---- aerodynamic ribbons: outer bobs vertically, inner slides one period sideways (loops seamlessly) ---- */
+.rb-ribbon { position: absolute; left: 0; width: 100%; will-change: transform; animation: rb-bob var(--bob, 18s) ease-in-out var(--bob-delay, 0s) infinite alternate; }
+.rb-ribbon-inner { position: absolute; left: 0; top: 0; width: 200vw; height: 100%; will-change: transform; }
+.rb-ribbon-inner svg { display: block; width: 100%; height: 100%; }
+.rb-drift-l { animation: rb-drift-l var(--drift, 90s) linear infinite; }
+.rb-drift-r { animation: rb-drift-r var(--drift, 90s) linear infinite; }
+@keyframes rb-drift-l { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
+@keyframes rb-drift-r { from { transform: translate3d(-50%, 0, 0); } to { transform: translate3d(0, 0, 0); } }
+@keyframes rb-bob { from { transform: translate3d(0, -14px, 0); } to { transform: translate3d(0, 16px, 0); } }
+
+/* ---- speed streak bundles: tapered lines with a thick bright head and a fading tail ---- */
+.rb-bundle { position: absolute; left: 0; will-change: transform, opacity; opacity: 0; animation-duration: var(--dur, 10s); animation-delay: var(--delay, 0s); animation-iteration-count: infinite; }
+.rb-ltr { animation-name: rb-ltr; --dir: 90deg; }
+.rb-rtl { animation-name: rb-rtl; --dir: 270deg; }
+.rb-ltr-rare { animation-name: rb-ltr-rare; --dir: 90deg; }
+.rb-rtl-rare { animation-name: rb-rtl-rare; --dir: 270deg; }
+.rb-line { position: absolute; display: block; background: linear-gradient(var(--dir, 90deg), transparent, var(--sc, #fff)); }
+.rb-ltr .rb-line, .rb-ltr-rare .rb-line { right: 0; clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 54%); }
+.rb-rtl .rb-line, .rb-rtl-rare .rb-line { left: 0; clip-path: polygon(100% 46%, 0 0, 0 100%, 100% 54%); }
+/* soft ghost behind the main line: a cheap stand-in for motion blur (no filter) */
+.rb-ghost::before { content: ''; position: absolute; left: 0; right: 0; top: -120%; bottom: -120%; background: inherit; opacity: .22; -webkit-mask-image: linear-gradient(180deg, transparent, #000 45%, #000 55%, transparent); mask-image: linear-gradient(180deg, transparent, #000 45%, #000 55%, transparent); }
+.rb-e-linear { animation-timing-function: linear; }
+.rb-e-smooth { animation-timing-function: cubic-bezier(.45, .05, .55, .95); }
+.rb-e-late { animation-timing-function: cubic-bezier(.6, 0, .3, 1); }
+.rb-c-ice { --sc: rgba(196, 224, 255, .95); }
+.rb-c-white { --sc: rgba(255, 255, 255, .95); }
+.rb-c-graphite { --sc: rgba(160, 170, 192, .9); }
+.rb-c-red { --sc: rgba(222, 40, 52, .98); }
+@keyframes rb-ltr { 0% { transform: translate3d(-105%, 0, 0); opacity: 0; } 8% { opacity: var(--o); } 52% { opacity: calc(var(--o) * .55); } 92% { opacity: var(--o); } 100% { transform: translate3d(100vw, 0, 0); opacity: 0; } }
+@keyframes rb-rtl { 0% { transform: translate3d(100vw, 0, 0); opacity: 0; } 8% { opacity: var(--o); } 52% { opacity: calc(var(--o) * .55); } 92% { opacity: var(--o); } 100% { transform: translate3d(-105%, 0, 0); opacity: 0; } }
+@keyframes rb-ltr-rare { 0%, 58% { transform: translate3d(-105%, 0, 0); opacity: 0; } 61% { opacity: var(--o); } 78% { opacity: var(--o); } 82%, 100% { transform: translate3d(100vw, 0, 0); opacity: 0; } }
+@keyframes rb-rtl-rare { 0%, 58% { transform: translate3d(100vw, 0, 0); opacity: 0; } 61% { opacity: var(--o); } 78% { opacity: var(--o); } 82%, 100% { transform: translate3d(-105%, 0, 0); opacity: 0; } }
+
+/* ---- thin racing stripes (muted red) ---- */
+.rb-stripe { position: absolute; left: -10vw; width: 120vw; height: 2px; opacity: .5; will-change: transform; background: linear-gradient(90deg, transparent, rgba(193, 18, 31, .75) 18%, rgba(193, 18, 31, .75) 62%, transparent); }
+.rb-stripe-1 { top: 27%; animation: rb-stripe-a 46s ease-in-out infinite alternate; }
+.rb-stripe-2 { top: 68%; height: 1.5px; opacity: .38; animation: rb-stripe-b 61s ease-in-out -20s infinite alternate; }
+@keyframes rb-stripe-a { from { transform: translate3d(-8vw, 0, 0); } to { transform: translate3d(8vw, 0, 0); } }
+@keyframes rb-stripe-b { from { transform: translate3d(7vw, 0, 0); } to { transform: translate3d(-7vw, 0, 0); } }
+
+/* ---- circuit-marking details: lane dashes, a timing ruler and kerb strips (all loop by exactly one pattern period) ---- */
+.rb-dashes { position: absolute; left: 0; width: calc(100% + 140px); height: 2px; will-change: transform; background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .22) 0 40px, transparent 40px 70px); }
+.rb-dashes-1 { top: 33%; opacity: .5; animation: rb-dash-l 9s linear infinite; }
+.rb-dashes-2 { top: 74%; opacity: .4; animation: rb-dash-r 13s linear infinite; }
+@keyframes rb-dash-l { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-70px, 0, 0); } }
+@keyframes rb-dash-r { from { transform: translate3d(-70px, 0, 0); } to { transform: translate3d(0, 0, 0); } }
+
+.rb-ticks { position: absolute; left: 0; top: 56%; width: calc(100% + 160px); height: 12px; opacity: .22; will-change: transform; animation: rb-tick 28s linear infinite;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .9) 0 1px, transparent 1px 16px) bottom / 100% 5px no-repeat,
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .9) 0 1px, transparent 1px 80px) bottom / 100% 12px no-repeat; }
+@keyframes rb-tick { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-80px, 0, 0); } }
+
+.rb-kerb { position: absolute; left: 0; width: calc(100% + 96px); height: 5px; opacity: .26; will-change: transform;
+  background: repeating-linear-gradient(90deg, rgba(214, 38, 48, .9) 0 24px, rgba(255, 255, 255, .85) 24px 48px); }
+.rb-kerb-bottom { bottom: 0; animation: rb-kerb-l 8s linear infinite; }
+.rb-kerb-top { top: 0; opacity: .14; animation: rb-kerb-r 11s linear infinite; background: repeating-linear-gradient(90deg, rgba(168, 205, 255, .8) 0 24px, rgba(255, 255, 255, .6) 24px 48px); }
+@keyframes rb-kerb-l { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-96px, 0, 0); } }
+@keyframes rb-kerb-r { from { transform: translate3d(-96px, 0, 0); } to { transform: translate3d(0, 0, 0); } }
+
+/* ---- lite mode (phones, weak hardware): fewer elements, no vertical drift ---- */
+.rb-root[data-mode='lite'] .rb-ribbon { animation: none; }
+.rb-root[data-mode='lite'] .rb-ticks,
+.rb-root[data-mode='lite'] .rb-dashes-2,
+.rb-root[data-mode='lite'] .rb-kerb-top,
+.rb-root[data-mode='lite'] .rb-stripe-2 { display: none; }
+/* glass cards re-blur whatever moves behind them on every frame, so lite mode uses plain translucency */
+html[data-racing-bg='lite'] .glass,
+html[data-racing-bg='lite'] .lg-panel,
+html[data-racing-bg='lite'] .lgp-panel { -webkit-backdrop-filter: none; backdrop-filter: none; background-color: rgba(14, 16, 24, .86); }
+
+/* ---- small screens: calmer, lower contrast so text always wins ---- */
+@media (max-width: 720px) {
+  .rb-ribbon-inner { width: 260vw; }
+  .rb-bundle { opacity: 0; }
+}
+
+/* ---- reduced motion: a still, composed frame ---- */
+@media (prefers-reduced-motion: reduce) {
+  .rb-root * { animation: none !important; }
+  .rb-bundle { transform: translate3d(var(--sx, 30vw), 0, 0); opacity: calc(var(--o) * .6); }
+  .rb-ltr-rare, .rb-rtl-rare { display: none; }
+}
