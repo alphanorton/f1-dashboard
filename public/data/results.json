@@ -5,7 +5,7 @@
   "source": "Official FIA Classification 2026",
   "pointsSystem": "25-18-15-12-10-8-6-4-2-1",
   "sprintPointsSystem": "8-7-6-5-4-3-2-1 (top eight)",
-  "sprintNote": "Sprint classifications list the eight points-scoring places only. Compiled from the published results of the six 2026 sprints. For the British sprint (P5/P6) and the Singapore sprint (P3-P7) sources were incomplete or disagreed, so those places were reconciled with the drivers' championship totals; the result is the only assignment of 8-1 that makes every total match.",
+  "sprintNote": "Sprint classifications list the eight points-scoring places (8-7-6-5-4-3-2-1) of the six 2026 sprints: China, Miami, Canada, Great Britain, the Netherlands and Singapore, in the order supplied as the official results. They are stored apart from the Grand Prix classification and added to the championship totals; together they reproduce every driver's and every team's points exactly.",
   "officialAsOfRound": 20,
   "races": {
     "1": {
