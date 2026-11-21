@@ -27,7 +27,7 @@ export function LeaderCard({ title, icon: Icon, rows, index, leaderLabel = 'Lead
 
   return (
     <div
-      className="glass spotlight lift overflow-hidden rounded-2xl border"
+      className="glass spotlight lift mo-tilt overflow-hidden rounded-2xl border"
       style={{ '--i': index } as React.CSSProperties}
     >
       <div className="flex items-center gap-2 border-b border-white/5 px-4 py-2.5 sm:px-5">

@@ -17,6 +17,7 @@ import { TeammateBattle } from '@/components/standings/TeammateBattle';
 import type { ResultsFile } from '@/lib/teammates';
 import { ConstructorChampionBanner } from '@/components/standings/ConstructorChampionBanner';
 import { computeConstructorTitle } from '@/lib/constructorTitle';
+import { revealProps } from '@/lib/reveal';
 import { ChampionHero } from '@/components/standings/ChampionHero';
 import { computeTitleFight } from '@/components/dashboard/TitleFightCard';
 import { TeamLogo } from '@/components/ui/TeamLogo';
@@ -485,7 +486,7 @@ export function Standings() {
                             <span className="text-xs" style={{ color: getTeamTextColor2026(driver.team) }}>{driver.team}</span>
                           </td>
                           <td className="py-3 px-4 text-center">
-                            <span className={`font-black text-base tabular-nums ${isLeader ? 'text-amber-400' : 'text-white'}`}>
+                            <span className={`mo-num font-black text-base tabular-nums ${isLeader ? 'text-amber-400' : 'text-white'}`}>
                               {driver.points}
                             </span>
                           </td>
@@ -578,7 +579,7 @@ export function Standings() {
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-xs font-medium">Points gap</span>
                 </div>
-                <p className="text-lg font-black text-white tabular-nums">
+                <p className="mo-num text-lg font-black text-white tabular-nums">
                   {data.drivers[1]?.gap != null && data.drivers[1].gap > 0 ? data.drivers[1].gap : '—'}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
@@ -588,7 +589,7 @@ export function Standings() {
 
           <BarChartRace drivers={data.drivers} />
 
-          <Card className="mt-6">
+          <Card className="mo-reveal mt-6" {...revealProps(0)}>
             <CardContent className="p-4">
               <PointsProgressionChart
                 championCode={champion?.code ?? null}
@@ -655,7 +656,7 @@ export function Standings() {
                             <span className="text-gray-300 text-xs font-mono">{team.carName ?? '—'}</span>
                           </td>
                           <td className="py-3 px-4 text-center">
-                            <span className={`font-black text-base tabular-nums ${isLeader ? 'text-amber-400' : 'text-white'}`}>
+                            <span className={`mo-num font-black text-base tabular-nums ${isLeader ? 'text-amber-400' : 'text-white'}`}>
                               {team.points}
                             </span>
                           </td>
@@ -723,7 +724,7 @@ export function Standings() {
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-xs font-medium">Points gap</span>
                 </div>
-                <p className="text-lg font-black text-white tabular-nums">
+                <p className="mo-num text-lg font-black text-white tabular-nums">
                   {data.constructors[1]?.gap != null && data.constructors[1].gap > 0 ? data.constructors[1].gap : '—'}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
@@ -736,7 +737,7 @@ export function Standings() {
                   <Car className="h-4 w-4" />
                   <span className="text-xs font-medium">Active teams</span>
                 </div>
-                <p className="text-lg font-black text-white tabular-nums">{data.constructors.length}</p>
+                <p className="mo-num text-lg font-black text-white tabular-nums">{data.constructors.length}</p>
                 <p className="text-xs text-gray-400 mt-0.5">constructors this season</p>
               </div>
             </div>

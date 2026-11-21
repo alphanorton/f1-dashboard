@@ -1,4 +1,4 @@
-import { countUpValue, decimalPlaces, easeOutExpo, easeOutCubic, formatCount, formatLapTime, clamp01 } from './motion.ts';
+import { countUpValue, decimalPlaces, easeOutExpo, easeOutCubic, formatCount, formatLapTime, clamp01, revealDelayMs, MOTION_STAGGER_MS, REVEAL_MAX_ORDER } from './motion.ts';
 
 declare const process: { exit(code: number): void };
 const tests: Array<[string, () => void]> = [];
@@ -43,6 +43,18 @@ test('formatLapTime rounds to ms before splitting minutes (no 0:60.000)', () => 
   eq(formatLapTime(59.9996), '1:00.000');
   eq(formatLapTime(119.9999), '2:00.000');
   eq(formatLapTime(60), '1:00.000');
+});
+
+test('reveal delay: visible-on-arrival sections stagger by order, scrolled-to sections do not', () => {
+  eq(revealDelayMs(0, 10), 0, 'first');
+  eq(revealDelayMs(2, 10), 2 * MOTION_STAGGER_MS, 'second');
+  eq(revealDelayMs(2, 5000), 0, 'revealed later by scrolling');
+});
+test('reveal delay is capped and robust', () => {
+  eq(revealDelayMs(40, 0), REVEAL_MAX_ORDER * MOTION_STAGGER_MS, 'cap');
+  eq(revealDelayMs(-3, 0), 0, 'negative');
+  eq(revealDelayMs(Number.NaN, 0), 0, 'NaN');
+  eq(revealDelayMs(2.9, 0), 2 * MOTION_STAGGER_MS, 'fraction');
 });
 
 let failed = 0;

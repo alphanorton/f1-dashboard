@@ -19,6 +19,7 @@ import { LeaderCard, type LeaderRow } from '@/components/dashboard/LeaderCard';
 import { TitleFightCard, computeTitleFight } from '@/components/dashboard/TitleFightCard';
 import { ConstructorChampionBanner } from '@/components/standings/ConstructorChampionBanner';
 import { computeConstructorTitle } from '@/lib/constructorTitle';
+import { revealProps } from '@/lib/reveal';
 import { SeasonTimeline } from '@/components/dashboard/SeasonTimeline';
 import type { TimelineResults } from '@/lib/seasonTimeline';
 import { FormGuideCard, type FormCircuitFacts } from '@/components/dashboard/FormGuideCard';
@@ -176,7 +177,7 @@ function NextRaceCard({ race }: { race: Race }) {
   const photo = getCircuitPhotoForRace(race);
 
   return (
-    <section className="next-race-card dx-next group relative overflow-hidden rounded-2xl border border-white/10">
+    <section className="next-race-card dx-next mo-depth spotlight group relative overflow-hidden rounded-2xl border border-white/10">
       {photo && (
         <>
           <img
@@ -550,7 +551,7 @@ export function Dashboard() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="mo-stage space-y-8">
       {/* Hero */}
       <section className="dashboard-hero dx-hero relative overflow-hidden rounded-2xl border border-white/10 p-5 sm:p-7">
         <span aria-hidden="true" className="dx-ghost pointer-events-none absolute -bottom-6 right-4 hidden text-[150px] sm:block lg:text-[190px]">
@@ -611,7 +612,7 @@ export function Dashboard() {
       )}
 
       {/* Championship leaders */}
-      <div className="dashboard-section dashboard-stagger-champ">
+      <div className="mo-reveal dashboard-section dashboard-stagger-champ" {...revealProps(0)}>
         <SectionHeading
           title="Championship"
           kicker={standingsData?.asOfRace ? `After the ${standingsData.asOfRace}` : 'World drivers & constructors title fight'}
@@ -639,7 +640,7 @@ export function Dashboard() {
       </div>
 
       {/* Recent results */}
-      <section className="dashboard-section dashboard-stagger-2">
+      <section className="mo-reveal dashboard-section dashboard-stagger-2" {...revealProps(1)}>
         <SectionHeading title="Recent results" kicker="Podiums from the last three Grands Prix" />
         {completedRaces.length === 0 ? (
           <EmptyState icon={Trophy} title="No results yet" message="Results appear after the first race of the season." />
@@ -658,7 +659,7 @@ export function Dashboard() {
       </section>
 
       {/* Upcoming */}
-      <section className="dashboard-section dashboard-stagger-3">
+      <section className="mo-reveal dashboard-section dashboard-stagger-3" {...revealProps(2)}>
         <SectionHeading title="Upcoming races" kicker="After this weekend" action={{ to: '/grand-prix', label: 'Full calendar' }} />
         {laterRaces.length === 0 ? (
           <EmptyState icon={CalendarDays} title="Nothing left to race" message="All remaining rounds are finished or cancelled." />
@@ -683,7 +684,7 @@ export function Dashboard() {
       </section>
 
       {/* Replica parts showcase */}
-      <section className="dashboard-section dashboard-stagger-4">
+      <section className="mo-reveal dashboard-section dashboard-stagger-4" {...revealProps(3)}>
         <div className="relative overflow-hidden rounded-2xl border border-white/10">
           <img
             src="/hero-parts.webp"

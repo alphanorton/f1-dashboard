@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SprintClassification } from '@/components/grandprix/SprintClassification';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -696,6 +697,10 @@ export function GrandPrix() {
                 </div>
               );
             })()}
+
+            {selectedRace.status === 'completed' && (
+              <SprintClassification raceName={selectedRace.name} sprint={results?.races?.[String(selectedRace.round)]?.sprint} />
+            )}
 
             {selectedRace.notes && (
               <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300">

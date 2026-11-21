@@ -14,7 +14,7 @@ export function SectionHeading({ title, kicker, action }: SectionHeadingProps) {
     <div className="mb-4 flex items-center gap-3">
       <span aria-hidden="true" className="h-6 w-1 shrink-0 rounded-full bg-gradient-to-b from-[#FF5A5A] to-f1-red shadow-[0_0_12px_rgba(225,6,0,.55)]" />
       <div className="min-w-0">
-        <h2 className="font-f1 text-base font-black uppercase tracking-wide text-white sm:text-lg">{title}</h2>
+        <h2 className="mo-head font-f1 text-base font-black uppercase tracking-wide text-white sm:text-lg">{title}</h2>
         {kicker && <p className="text-xs text-gray-400">{kicker}</p>}
       </div>
       <span aria-hidden="true" className="dx-hairline hidden h-px flex-1 sm:block" />

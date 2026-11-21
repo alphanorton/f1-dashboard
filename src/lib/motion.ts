@@ -48,3 +48,21 @@ export function formatLapTime(seconds: number | null | undefined): string {
   const rest = (totalMs - minutes * 60000) / 1000;
   return `${minutes}:${rest.toFixed(3).padStart(6, '0')}`;
 }
+
+// ---- Section reveals -------------------------------------------------------------------------
+// Sections that are already on screen when a page opens enter in a short sequence (header, hero,
+// primary content...). Sections revealed later, by scrolling, enter on their own with no delay.
+export const MOTION_STAGGER_MS = 70;
+export const REVEAL_BURST_WINDOW_MS = 900;
+export const REVEAL_MAX_ORDER = 5;
+
+/**
+ * Delay before a section enters. `order` is its position in the page sequence and `msSinceRegistered`
+ * how long it waited before becoming visible: if it was visible straight away it joins the opening
+ * sequence (order x stagger, capped so long pages never accumulate delay), otherwise 0.
+ */
+export function revealDelayMs(order: number, msSinceRegistered: number, stagger = MOTION_STAGGER_MS): number {
+  if (!Number.isFinite(order) || order <= 0) return 0;
+  if (msSinceRegistered > REVEAL_BURST_WINDOW_MS) return 0;
+  return Math.min(Math.floor(order), REVEAL_MAX_ORDER) * stagger;
+}

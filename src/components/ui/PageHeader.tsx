@@ -21,7 +21,7 @@ export function PageHeader({ title, subtitle, icon: Icon, actions, className }: 
             </span>
           )}
           <div>
-            <h1 className="text-3xl font-black text-white tracking-tight font-f1">
+            <h1 className="mo-head text-3xl font-black text-white tracking-tight font-f1">
               {title}
             </h1>
             {subtitle && (

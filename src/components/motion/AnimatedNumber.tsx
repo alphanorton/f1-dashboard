@@ -14,7 +14,7 @@ export function AnimatedNumber({ value, suffix = '', durationMs, className }: An
   const current = useCountUp(value, durationMs);
   const decimals = decimalPlaces(value);
   return (
-    <span className={className}>
+    <span className={`mo-num${className ? ` ${className}` : ''}`}>
       <span aria-hidden="true" className="tabular-nums">
         {formatCount(current, decimals)}
         {suffix}
