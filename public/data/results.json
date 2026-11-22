@@ -1,12 +1,12 @@
 {
   "season": 2026,
-  "asOfRound": 22,
-  "asOfDate": "2026-11-08",
+  "asOfRound": 23,
+  "asOfDate": "2026-11-21",
   "source": "Official FIA Classification 2026",
   "pointsSystem": "25-18-15-12-10-8-6-4-2-1",
   "sprintPointsSystem": "8-7-6-5-4-3-2-1 (top eight)",
   "sprintNote": "Sprint classifications list the eight points-scoring places (8-7-6-5-4-3-2-1) of the six 2026 sprints: China, Miami, Canada, Great Britain, the Netherlands and Singapore, in the order supplied as the official results. They are stored apart from the Grand Prix classification and added to the championship totals; together they reproduce every driver's and every team's points exactly.",
-  "officialAsOfRound": 20,
+  "officialAsOfRound": 21,
   "races": {
     "1": {
       "round": 1,
@@ -4193,6 +4193,191 @@
           "code": "BOT",
           "team": "Cadillac",
           "status": "DNS",
+          "points": 0
+        }
+      ]
+    },
+    "23": {
+      "round": 23,
+      "officialRound": 21,
+      "name": "Las Vegas Grand Prix",
+      "date": "2026-11-21",
+      "circuit": "Las Vegas Strip Circuit",
+      "results": [
+        {
+          "pos": 1,
+          "driver": "Max Verstappen",
+          "code": "VER",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 25
+        },
+        {
+          "pos": 2,
+          "driver": "Lando Norris",
+          "code": "NOR",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 18
+        },
+        {
+          "pos": 3,
+          "driver": "Oscar Piastri",
+          "code": "PIA",
+          "team": "McLaren",
+          "status": "Finished",
+          "points": 15
+        },
+        {
+          "pos": 4,
+          "driver": "Kimi Antonelli",
+          "code": "ANT",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 12
+        },
+        {
+          "pos": 5,
+          "driver": "Pierre Gasly",
+          "code": "GAS",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 10
+        },
+        {
+          "pos": 6,
+          "driver": "Franco Colapinto",
+          "code": "COL",
+          "team": "Alpine",
+          "status": "Finished",
+          "points": 8
+        },
+        {
+          "pos": 7,
+          "driver": "Lewis Hamilton",
+          "code": "HAM",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 6
+        },
+        {
+          "pos": 8,
+          "driver": "Carlos Sainz",
+          "code": "SAI",
+          "team": "Williams",
+          "status": "Finished",
+          "points": 4
+        },
+        {
+          "pos": 9,
+          "driver": "George Russell",
+          "code": "RUS",
+          "team": "Mercedes",
+          "status": "Finished",
+          "points": 2
+        },
+        {
+          "pos": 10,
+          "driver": "Charles Leclerc",
+          "code": "LEC",
+          "team": "Ferrari",
+          "status": "Finished",
+          "points": 1
+        },
+        {
+          "pos": 11,
+          "driver": "Nico Hülkenberg",
+          "code": "HUL",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 12,
+          "driver": "Gabriel Bortoleto",
+          "code": "BOR",
+          "team": "Audi",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 13,
+          "driver": "Oliver Bearman",
+          "code": "BEA",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 14,
+          "driver": "Isack Hadjar",
+          "code": "HAD",
+          "team": "Red Bull Racing",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 15,
+          "driver": "Liam Lawson",
+          "code": "LAW",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 16,
+          "driver": "Rafael Câmara",
+          "code": "CAM",
+          "team": "Haas",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 17,
+          "driver": "Lance Stroll",
+          "code": "STR",
+          "team": "Aston Martin",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 18,
+          "driver": "Valtteri Bottas",
+          "code": "BOT",
+          "team": "Cadillac",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 19,
+          "driver": "Fernando Alonso",
+          "code": "ALO",
+          "team": "Aston Martin",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 20,
+          "driver": "Arvid Lindblad",
+          "code": "LIN",
+          "team": "Racing Bulls",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 21,
+          "driver": "Sergio Pérez",
+          "code": "PER",
+          "team": "Cadillac",
+          "status": "Finished",
+          "points": 0
+        },
+        {
+          "pos": 22,
+          "driver": "Alexander Albon",
+          "code": "ALB",
+          "team": "Williams",
+          "status": "Finished",
           "points": 0
         }
       ]

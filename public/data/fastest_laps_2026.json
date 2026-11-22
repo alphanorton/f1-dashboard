@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "source": "OpenF1 race session laps (api.openf1.org), cross-checked against Jolpica-Ergast results and the official formula1.com fastest-lap list",
-  "asOfDate": "2026-11-08",
+  "asOfDate": "2026-11-21",
   "generatedAt": "2026-10-11T15:28:43.410Z",
   "tolerance": {
     "lapTime": 0.001,
@@ -332,6 +332,23 @@
       "s3": null,
       "source": "FIA Race Final Classification, Sao Paulo Grand Prix 2026 (document 81): 1:12.689 on lap 55, 213.407 km/h. Sector times are not in the document.",
       "verified": true
+    },
+    {
+      "round": 21,
+      "projectRound": 23,
+      "grand_prix": "Las Vegas Grand Prix",
+      "circuit": null,
+      "date": "2026-11-21",
+      "driver_name": "Liam LAWSON",
+      "driver_code": "LAW",
+      "team": "Racing Bulls",
+      "lap_number": null,
+      "lap_time": 95.591,
+      "s1": null,
+      "s2": null,
+      "s3": null,
+      "source": "inbox/race.txt",
+      "verified": false
     }
   ],
   "needs_review": [
@@ -362,6 +379,14 @@
       "driver_code": "ANT",
       "lap_time": 72.689,
       "lap_number": 55
+    },
+    {
+      "round": 21,
+      "grand_prix": "Las Vegas Grand Prix",
+      "reason": "sector times missing",
+      "driver_code": "LAW",
+      "lap_time": 95.591,
+      "lap_number": null
     }
   ]
 }
