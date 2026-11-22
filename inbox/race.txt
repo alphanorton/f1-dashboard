@@ -1,7 +1,20 @@
-round: 21
-official: 19
+# REAL LAS VEGAS GP RESULT - 22 NOVEMBER 2026
+# Provisional classification
+# Source: Race classification
+
+round: 22
+official: 20
 fastest: LAW 1:35.591
+guest: CAM=Rafael Camara|Haas
+laps: 50
+winnertime: 1:27:39.624
+pole: 1:33.893
+distance: 6.201
+note: Max Verstappen won the Las Vegas Grand Prix ahead of Lando Norris and Oscar Piastri. Liam Lawson recorded the fastest lap in 1:35.591. Leclerc received a 10-second time penalty for causing a collision. Alonso was classified 19th. Lindblad and Perez retired, while Albon did not start. Provisional results.
+
 ---
+Results
+
 1
 VER
 
