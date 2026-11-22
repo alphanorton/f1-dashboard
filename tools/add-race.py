@@ -14,9 +14,9 @@ race.json (see tools/race.example.json):
   officialRound    optional, official FIA round number
   date, circuit, distanceKm, raceLaps, winnerTime, poleTime, note   (all optional but recommended)
   replace          optional true: remove the previously added copy of this round first (last race only), then add this one
-  guests           optional {code: {name, team}} for one-off/substitute drivers who are not in standings.json.
-                   They appear in the race result and their points go to their TEAM's constructor total,
-                   but they do not get a row in the driver standings (the project keeps 22 drivers).
+  guests           optional {code: {name, team}} for a one-off/substitute driver; their driver standings row is created automatically.
+                   Historical points for any participant found in results.json are backfilled before applying the new race.
+                   Driver numbers are left null when unavailable; no number is fabricated.
   results          list in finishing order: {code, status ("Finished"|"DNF"|"DNS"), gap, laps}
                    - give "pos" only for classified drivers; leave it out for unclassified retirements
   sprintResults    optional, driver codes in sprint finishing order (sprint weekends); points go to the standings
@@ -123,9 +123,62 @@ def main():
     drivers = {d['code']: d for d in standings['drivers']}
     guests = race.get('guests') or {}
     teams_known = {t['shortName'] for t in standings['constructors']}
+
+    # Reconcile season participants found in historical results before applying this race.
+    # Driver changes can introduce new codes without changing the 22-car race field.
+    historical_points = {}
+    historical_sprint_points = {}
+    historical_meta = {}
+    for old_race in results.get('races', {}).values():
+        for row in old_race.get('results', []):
+            code = row.get('code')
+            if not code: continue
+            # Use the latest race appearance for the driver's current team/name metadata.
+            historical_meta[code] = {'name': row.get('driver') or code, 'team': row.get('team')}
+            historical_points[code] = historical_points.get(code, 0) + int(row.get('points') or 0)
+        for row in old_race.get('sprint', []):
+            code = row.get('code')
+            if code:
+                historical_sprint_points[code] = historical_sprint_points.get(code, 0) + int(row.get('points') or 0)
+
+    for code, meta in historical_meta.items():
+        if code in drivers: continue
+        team = meta.get('team')
+        if team not in teams_known:
+            die(f'historical driver {code}: team "{team}" is not one of the constructors')
+        standings['drivers'].append({
+            'position': len(standings['drivers']) + 1,
+            'driverNumber': None,
+            'code': code,
+            'name': meta['name'],
+            'nationality': 'Unknown',
+            'team': team,
+            'points': historical_points.get(code, 0) + historical_sprint_points.get(code, 0),
+            'wins': 0,
+            'podiums': 0,
+            'gap': 0,
+            'sprintPoints': historical_sprint_points.get(code, 0)
+        })
+        drivers[code] = {'code': code, 'name': meta['name'], 'team': team, 'driverNumber': None}
+
     for gc, g in guests.items():
-        if gc in drivers: die(f'{gc} is listed as a guest but is already in the standings')
-        if g.get('team') not in teams_known: die(f"guest {gc}: team \"{g.get('team')}\" is not one of the constructors")
+        if g.get('team') not in teams_known:
+            die(f'guest {gc}: team "{g.get("team")}" is not one of the constructors')
+        if gc not in drivers:
+            standings['drivers'].append({
+                'position': len(standings['drivers']) + 1,
+                'driverNumber': None,
+                'code': gc,
+                'name': g['name'],
+                'nationality': 'Unknown',
+                'team': g['team'],
+                'points': 0,
+                'wins': 0,
+                'podiums': 0,
+                'gap': 0,
+                'sprintPoints': 0
+            })
+            drivers[gc] = {'code': gc, 'name': g['name'], 'team': g['team'], 'driverNumber': None}
 
     # ---- classification ----
     rows, pts_gp = [], {}
@@ -153,12 +206,6 @@ def main():
         if c not in drivers: die(f'unknown sprint driver code {c}')
         if i < len(SPRINT_POINTS): sprint_pts[c] = SPRINT_POINTS[i]
     delta = {c: pts_gp.get(c, 0) + sprint_pts.get(c, 0) for c in drivers}
-    guest_team_pts = {}
-    for gc, g in guests.items():
-        gp = pts_gp.get(gc, 0)
-        if gc in sprint_pts: die(f'guest {gc} scored sprint points; handle that by hand')
-        if gp: guest_team_pts[g['team']] = guest_team_pts.get(g['team'], 0) + gp
-
     # ---- results.json ----
     entry = {"round": race['round'], "officialRound": race.get('officialRound'), "name": cal['name'],
              "date": race.get('date', cal['date']), "circuit": race.get('circuit', cal.get('circuit')),
@@ -176,13 +223,12 @@ def main():
 
     # ---- standings.json ----
     prev_pos = {d['code']: d['position'] for d in standings['drivers']}
-    for d in standings['drivers']: d['points'] += delta[d['code']]
-    standings['drivers'].sort(key=lambda d: (-d['points'], prev_pos[d['code']]))
+    for d in standings['drivers']: d['points'] += delta.get(d['code'], 0)
+    standings['drivers'].sort(key=lambda d: (-d['points'], prev_pos.get(d['code'], len(prev_pos) + 1)))
     lead = standings['drivers'][0]['points']
     for i, d in enumerate(standings['drivers'], 1): d['position'] = i; d['gap'] = lead - d['points']
     team_delta = {}
     for c, p in delta.items(): team_delta[drivers[c]['team']] = team_delta.get(drivers[c]['team'], 0) + p
-    for t, p in guest_team_pts.items(): team_delta[t] = team_delta.get(t, 0) + p
     for t in standings['constructors']:
         t['points'] += team_delta.get(t['shortName'], 0)
     unknown = set(team_delta) - {t['shortName'] for t in standings['constructors']}
@@ -241,7 +287,7 @@ def main():
     print(f"Round {rnd}: {cal['name']} - winner {winner['driver']}")
     print('Points added:', ', '.join(f"{c} +{p}" for c, p in sorted(delta.items(), key=lambda x: -x[1]) if p))
     for gc, g in guests.items():
-        print(f"Guest driver {gc} ({g.get('name')}, {g['team']}): {pts_gp.get(gc, 0)} pt(s), added to the team total only")
+        print(f'Guest driver {gc} ({g.get("name")}, {g.get("team")}): {pts_gp.get(gc, 0)} pt(s), recorded in driver standings and constructor total')
     print('Top 5 drivers:', ', '.join(f"{d['code']} {d['points']}" for d in standings['drivers'][:5]))
     print('Constructors:', ', '.join(f"{t['shortName']} {t['points']}" for t in standings['constructors'][:4]), '...')
     print('Next race:', nxt['name'] if nxt else '- (season finished)', '| races left:', len(later))
