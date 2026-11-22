@@ -1,0 +1,76 @@
+round: 22
+official: 20
+fastest: ANT 1:12.689 lap 55
+guest: CAM=Rafael Câmara|Haas
+laps: 71
+winnertime: 1:35:23.504
+distance: 4.309
+note: Final classification (FIA document 81). Norris won from Verstappen (+14.602s) and Hadjar (+24.485s). Russell and Antonelli finished fourth and fifth, which secured Mercedes the constructors' title; Antonelli also set the fastest lap. Five-second penalties: Antonelli and Bearman (unsafe release), Leclerc (causing a collision), who finished eighth behind Lawson. Rafael Camara made his F1 debut for Haas, replacing the dropped Esteban Ocon, and finished 20th. Stroll retired and Bottas did not start.
+--- 
+Results
+
+1
+NOR
+
+2
+VER
+
+3
+HAD
+
+4
+RUS
+
+5
+ANT
+
+6
+PIA
+
+7
+LAW
+
+8
+LEC
+
+9
+HAM
+
+10
+HUL
+
+11
+LIN
+
+12
+ALO
+
+13
+COL
+
+14
+GAS
+
+15
+ALB
+
+16
+BOR
+
+17
+BEA
+
+18
+PER
+
+19
+SAI
+
+20
+CAM
+
+NC
+STR
+
+DNS
+BOT

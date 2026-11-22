@@ -165,7 +165,11 @@ def main():
              "distanceKm": race.get('distanceKm'), "raceLaps": race.get('raceLaps'),
              "winnerTime": race.get('winnerTime'), "poleTime": race.get('poleTime'),
              "resultsNote": race.get('note'), "results": rows}
-    if sprint_pts: entry['sprintResults'] = race['sprintResults']
+    if sprint_pts:
+        entry['sprintResults'] = race['sprintResults']
+        # same shape the data audit and the progression chart read: the eight points-scoring places
+        entry['sprint'] = [dict(pos=i + 1, driver=drivers[c]['name'], code=c, team=drivers[c]['team'], status='Finished', points=SPRINT_POINTS[i])
+                           for i, c in enumerate(race['sprintResults']) if i < len(SPRINT_POINTS)]
     results['races'][rnd] = {k: v for k, v in entry.items() if v is not None}
     results['asOfRound'] = race['round']; results['asOfDate'] = entry['date']
     if race.get('officialRound') is not None: results['officialAsOfRound'] = race['officialRound']

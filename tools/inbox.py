@@ -153,6 +153,10 @@ def main():
     title = f"round {undo_round} undone" if undo_round is not None else f"round {race['round']}"
     if p.returncode != 0:
         restore(); write_status(root, False, title, out); print(out); return
+    if not a.dry_run and shutil.which('node') and os.path.exists(os.path.join(root, 'tools', 'derive-standings-stats.cjs')):
+        dv = subprocess.run(['node', os.path.join('tools', 'derive-standings-stats.cjs'), '--write'], cwd=root, capture_output=True, text=True)
+        if dv.returncode != 0:
+            restore(); write_status(root, False, title + ' (could not update wins/podiums)', dv.stdout + dv.stderr); print(dv.stdout + dv.stderr); return
     if not a.dry_run and not a.no_audit and shutil.which('node') and os.path.exists(os.path.join(root, 'audit-data.cjs')):
         au = subprocess.run(['node', 'audit-data.cjs'], cwd=root, capture_output=True, text=True)
         if au.returncode != 0:
