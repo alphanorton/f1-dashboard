@@ -1,6 +1,6 @@
 {
-  "name": "EHI F1 Dashboard",
-  "short_name": "EHI F1",
+  "name": "F1 Dashboard",
+  "short_name": "F1",
   "description": "F1 2026 standings, results and race strategy",
   "start_url": "/",
   "scope": "/",
