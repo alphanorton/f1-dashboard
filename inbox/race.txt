@@ -1,10 +1,8 @@
 round: 23
 official: 21
 fastest: LAW 1:35.591
-guest: CAM=Rafael Camara|Haas
+guest: CAM=Rafael Câmara|Haas
 ---
-Results
-
 1
 VER
 
@@ -62,11 +60,11 @@ BOT
 19
 ALO
 
-NC
+20
 LIN
 
-NC
+21
 PER
 
-NC
+22
 ALB
