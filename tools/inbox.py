@@ -107,6 +107,41 @@ def build_race(text):
     return race
 
 
+def auto_guests(race, root):
+    """Codes that are not in standings.json and have no guest: line are treated as one-off guest drivers.
+    Name and team come from earlier rounds in results.json when the driver raced before; otherwise, if exactly one
+    unknown code is in the result and exactly one regular driver is missing from it, the guest takes that driver's
+    team (name = the code; add a guest: line to set a full name). Returns a list of notes for STATUS.md."""
+    data = os.path.join(root, 'public', 'data')
+    standings = json.load(open(os.path.join(data, 'standings.json'), encoding='utf-8-sig'))
+    results = json.load(open(os.path.join(data, 'results.json'), encoding='utf-8-sig'))
+    regular = {d['code']: d for d in standings['drivers']}
+    guests = race.setdefault('guests', {}) if 'guests' in race else {}
+    seen = [r['code'] for r in race['results']] + list(race.get('sprintResults', []))
+    unknown = []
+    for c in seen:
+        if c not in regular and c not in guests and c not in unknown: unknown.append(c)
+    if not unknown: return []
+    history = {}
+    for rnd in sorted(results.get('races', {}), key=lambda x: int(x)):
+        for row in results['races'][rnd].get('results', []):
+            if row.get('code') and row.get('team') and row.get('driver'): history[row['code']] = (row['driver'], row['team'])
+    teams = {t['shortName'] for t in standings['constructors']}
+    absent = [d for c, d in regular.items() if c not in seen]
+    notes = []
+    for c in unknown:
+        if c in history and history[c][1] in teams:
+            name, team = history[c]; how = 'taken from an earlier round'
+        elif len(unknown) == 1 and len(absent) == 1:
+            name, team = c, absent[0]['team']; how = f"team taken from {absent[0]['code']}, who is not in this race"
+        else:
+            continue  # add-race.py reports it with the usual hint to add a guest: line
+        guests[c] = {'name': name, 'team': team}
+        notes.append(f'Guest driver {c} added automatically as {name} ({team}); {how}.')
+    if guests: race['guests'] = guests
+    return notes
+
+
 def write_status(root, ok, title, body):
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
     text = f"# {'OK' if ok else 'ERROR'} - {title}\n\n_{stamp}_\n\n```\n{body.strip()}\n```\n"
@@ -129,6 +164,12 @@ def main():
         write_status(root, False, 'could not read inbox/race.txt', str(e)); print('ERROR:', e); return
     if race is None:
         print('Inbox is empty (no "round:" line) - nothing to do.'); return
+    guest_notes = []
+    if 'undo' not in race:
+        try:
+            guest_notes = auto_guests(race, root)
+        except (OSError, ValueError, KeyError) as e:
+            guest_notes = []  # never block the race on this helper; add-race.py will report any real problem
 
     data = os.path.join(root, 'public', 'data')
     backup = tempfile.mkdtemp()
@@ -163,6 +204,7 @@ def main():
             restore(); msg = '\n'.join(l for l in (au.stdout + au.stderr).splitlines() if not l.startswith('PASS'))
             write_status(root, False, title + ' (data check failed)', msg); print(msg); return
         out += '\n\nData audit: passed'
+    if guest_notes: out += '\n\n' + '\n'.join(guest_notes)
     if undo_round is None and 'expectPoints' not in race: out += '\n\nNote: no standings table found in the paste, so the points were not cross-checked.'
     print(out)
     if a.dry_run: return
