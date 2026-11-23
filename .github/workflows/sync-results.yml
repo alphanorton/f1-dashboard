@@ -1,0 +1,54 @@
+name: Sync results from Jolpica API
+
+# Checks the free Jolpica-Ergast API for new race results and adds them through the same
+# tools/add-race.py + audit used by inbox/race.txt. It only calls the API when a race is due.
+on:
+  schedule:
+    - cron: '12 * * * 6,0,1,2'   # hourly Sat-Tue (race weekends end Sun/Mon UTC)
+    - cron: '41 7 * * 3,4,5'     # once a day Wed-Fri as a safety net
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only check, do not change any file'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+# same group as add-race.yml so two workflows never write the data files at the same time
+concurrency:
+  group: add-race
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check the API and update the data
+        run: python3 tools/sync-results.py ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Commit the result
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A public/data inbox
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "Auto-sync F1 results (Jolpica)"
+            git pull --rebase
+            git push
+          fi
