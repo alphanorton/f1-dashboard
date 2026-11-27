@@ -6,6 +6,7 @@ export interface ResultRow {
   driver: string;
   team: string;
   status: string;
+  points?: number;
 }
 export interface ResultsFile {
   races: Record<string, { round: number; name: string; results: ResultRow[] }>;

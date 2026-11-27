@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Trophy, Award, TrendingUp, Car, Zap, ChevronRight, Medal, Target, Search, X, Crown } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { useCachedData } from '@/hooks/useCachedData';
+import { getQualifying, getSprint } from '@/api/dataSync';
 import { usePointsProgression } from '@/lib/pointsProgression';
 import { getTeamColor2026, getTeamTextColor2026 } from '@/lib/teamColors';
 import { Podium, type PodiumEntry } from '@/components/standings/Podium';
@@ -230,6 +231,116 @@ function PointsProgressionChart({
   );
 }
 
+function DriverComparisonPanel({ drivers, results, season }: { drivers: Driver[]; results: ResultsFile | null; season: number }) {
+  const [leftCode, setLeftCode] = useState(drivers[0]?.code ?? '');
+  const [rightCode, setRightCode] = useState(drivers[1]?.code ?? '');
+  const [qualifyingRaces, setQualifyingRaces] = useState<Array<{ QualifyingResults?: Array<{ position?: string; Driver?: { code?: string; driverId?: string } }> }>>([]);
+  const [qualifyingAvailable, setQualifyingAvailable] = useState<boolean | null>(null);
+  const [sprintRaces, setSprintRaces] = useState<Array<{ SprintResults?: Array<{ position?: string; points?: string; Driver?: { code?: string } }> }>>([]);
+  const [sprintAvailable, setSprintAvailable] = useState<boolean | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    getQualifying(season).then((response) => {
+      const races = response?.MRData?.RaceTable?.Races ?? [];
+      if (!cancelled) {
+        setQualifyingRaces(races);
+        setQualifyingAvailable(races.length > 0);
+      }
+    }).catch(() => {
+      if (!cancelled) setQualifyingAvailable(false);
+    });
+    return () => { cancelled = true; };
+  }, [season]);
+  useEffect(() => {
+    let cancelled = false;
+    getSprint(season).then((response) => {
+      const races = response?.MRData?.RaceTable?.Races ?? [];
+      if (!cancelled) {
+        setSprintRaces(races);
+        setSprintAvailable(races.length > 0);
+      }
+    }).catch(() => {
+      if (!cancelled) setSprintAvailable(false);
+    });
+    return () => { cancelled = true; };
+  }, [season]);
+  const left = drivers.find((driver) => driver.code === leftCode) ?? drivers[0];
+  const right = drivers.find((driver) => driver.code === rightCode) ?? drivers[1];
+  const races = Object.values(results?.races ?? {}).sort((a, b) => a.round - b.round);
+  const stats = (driver: Driver) => {
+    const finishes = races.flatMap((race) => race.results.filter((row) => row.code === driver.code));
+    const classified = finishes.filter((row) => row.pos != null);
+    return {
+      wins: finishes.filter((row) => row.pos === 1).length,
+      podiums: finishes.filter((row) => row.pos != null && row.pos <= 3).length,
+      average: classified.length ? classified.reduce((sum, row) => sum + (row.pos ?? 0), 0) / classified.length : null,
+      dnfs: finishes.filter((row) => row.status !== 'Finished' && row.status !== 'Finished (reported)' && row.status !== 'DNS' && row.pos == null).length,
+      points: finishes.reduce((sum, row) => sum + (row.points ?? 0), 0),
+    };
+  };
+  if (!left || !right) return <p className="mt-6 text-sm text-gray-400">Driver data is unavailable.</p>;
+  const leftStats = stats(left), rightStats = stats(right);
+  const qualifyingRows = qualifyingRaces.map((race) => race.QualifyingResults ?? []);
+  const qualifyingPosition = (rows: typeof qualifyingRows, code: string) => rows.flatMap((race) => {
+    const row = race.find((entry) => (entry.Driver?.code ?? '').toUpperCase() === code.toUpperCase());
+    const position = Number(row?.position);
+    return Number.isFinite(position) && position > 0 ? [position] : [];
+  });
+  const leftQuali = qualifyingPosition(qualifyingRows, left.code);
+  const rightQuali = qualifyingPosition(qualifyingRows, right.code);
+  let leftQualiH2H = 0, rightQualiH2H = 0, qualifyingMeetings = 0;
+  for (const race of qualifyingRows) {
+    const a = Number(race.find((row) => (row.Driver?.code ?? '').toUpperCase() === left.code.toUpperCase())?.position);
+    const b = Number(race.find((row) => (row.Driver?.code ?? '').toUpperCase() === right.code.toUpperCase())?.position);
+    if (!Number.isFinite(a) || !Number.isFinite(b) || a < 1 || b < 1) continue;
+    qualifyingMeetings += 1;
+    if (a < b) leftQualiH2H += 1;
+    if (b < a) rightQualiH2H += 1;
+  }
+  const leftQualiAverage = leftQuali.length ? leftQuali.reduce((sum, position) => sum + position, 0) / leftQuali.length : null;
+  const rightQualiAverage = rightQuali.length ? rightQuali.reduce((sum, position) => sum + position, 0) / rightQuali.length : null;
+  const sprintStats = (code: string) => {
+    const rows = sprintRaces.flatMap((race) => race.SprintResults ?? []).filter((row) => (row.Driver?.code ?? '').toUpperCase() === code.toUpperCase());
+    return { points: rows.reduce((sum, row) => sum + (Number(row.points) || 0), 0), wins: rows.filter((row) => Number(row.position) === 1).length };
+  };
+  const leftSprint = sprintStats(left.code), rightSprint = sprintStats(right.code);
+  let leftTotal = 0, rightTotal = 0;
+  const chart = races.map((race) => {
+    leftTotal += race.results.find((row) => row.code === left.code)?.points ?? 0;
+    rightTotal += race.results.find((row) => row.code === right.code)?.points ?? 0;
+    return { round: race.round, race: race.name, [left.code]: leftTotal, [right.code]: rightTotal };
+  });
+  const metrics: Array<[string, number | null, number | null, boolean]> = [
+    ['Championship points', left.points, right.points, true],
+    ['Race wins', leftStats.wins, rightStats.wins, true],
+    ['Podiums', leftStats.podiums, rightStats.podiums, true],
+    ['Average finish', leftStats.average, rightStats.average, false],
+    ['DNF / retirements', leftStats.dnfs, rightStats.dnfs, false],
+  ];
+  return <div className="mt-6 space-y-5">
+    <div className="grid gap-4 sm:grid-cols-2">
+      {[{ driver: left, value: leftCode, set: setLeftCode }, { driver: right, value: rightCode, set: setRightCode }].map(({ driver, value, set }, index) => <Card key={index} className="border-gray-700/60">
+        <CardContent className="p-4"><label className="mb-2 block text-xs text-gray-400">{index ? 'Driver 2' : 'Driver 1'}</label><select value={value} onChange={(event) => set(event.target.value)} className="w-full rounded-md border border-gray-700 bg-surface p-2 text-white">{drivers.map((item) => <option key={item.code} value={item.code}>{item.name} · {item.team}</option>)}</select><div className="mt-4 flex items-center gap-3"><span className="h-10 w-1 rounded" style={{ backgroundColor: getTeamColor2026(driver.team) }} /><div><p className="font-bold text-white">{driver.name}</p><p className="text-xs text-gray-400">{driver.team} · {driver.code}</p></div></div></CardContent>
+      </Card>)}
+    </div>
+    <Card><CardHeader><CardTitle className="text-base">{season} season comparison</CardTitle></CardHeader><CardContent className="space-y-3">
+      {metrics.map(([label, a, b, higherWins]) => <div key={label} className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-gray-800 py-2 last:border-0"><span className={`text-right font-mono ${a != null && b != null && (higherWins ? a > b : a < b) ? 'text-emerald-400' : 'text-gray-300'}`}>{a == null ? '—' : Number.isInteger(a) ? a : a.toFixed(1)}</span><span className="text-xs text-gray-400">{label}</span><span className={`font-mono ${b != null && a != null && (higherWins ? b > a : b < a) ? 'text-emerald-400' : 'text-gray-300'}`}>{b == null ? '—' : Number.isInteger(b) ? b : b.toFixed(1)}</span></div>)}
+      <p className="pt-1 text-xs text-gray-500">Total championship points include all scoring sessions in the season standings.</p>
+    </CardContent></Card>
+    <div className="grid gap-4 md:grid-cols-2">
+      <Card><CardHeader><CardTitle className="text-base">Qualifying</CardTitle></CardHeader><CardContent className="space-y-3">
+        {[[left.name, qualifyingMeetings ? leftQualiAverage : null, leftQualiH2H], [right.name, qualifyingMeetings ? rightQualiAverage : null, rightQualiH2H]].map(([name, average, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{qualifyingAvailable === null ? 'Loading…' : qualifyingAvailable ? `Avg ${typeof average === 'number' ? average.toFixed(1) : '—'} · ${wins}/${qualifyingMeetings} head-to-head` : 'Unavailable'}</span></div>)}
+        <p className="text-xs text-gray-500">Lower average position is better. Ties are not counted as a head-to-head win.</p>
+      </CardContent></Card>
+      <Card><CardHeader><CardTitle className="text-base">Sprint</CardTitle></CardHeader><CardContent className="space-y-3">
+        {[[left.name, leftSprint.points, leftSprint.wins], [right.name, rightSprint.points, rightSprint.wins]].map(([name, points, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{sprintAvailable === null ? 'Loading…' : sprintAvailable ? `${points} points · ${wins} wins` : 'Unavailable'}</span></div>)}
+        <p className="text-xs text-gray-500">Sprint points and wins use the current season’s sprint classifications.</p>
+      </CardContent></Card>
+    </div>
+    <Card><CardHeader><CardTitle className="text-base">Cumulative points progression</CardTitle></CardHeader><CardContent><div className="h-64 w-full"><ResponsiveContainer width="100%" height="100%"><LineChart data={chart}><CartesianGrid stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" /><XAxis dataKey="round" tickFormatter={(round) => `R${round}`} stroke="#9ca3af" /><YAxis stroke="#9ca3af" /><Tooltip /><Legend /><Line type="monotone" dataKey={left.code} name={left.name} stroke={getTeamColor2026(left.team)} strokeWidth={2.5} /><Line type="monotone" dataKey={right.code} name={right.name} stroke={getTeamColor2026(right.team)} strokeWidth={2.5} /></LineChart></ResponsiveContainer></div></CardContent></Card>
+  </div>;
+}
+
 export function Standings() {
   const [data, setData] = useState<StandingsData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -238,7 +349,7 @@ export function Standings() {
   const { data: resultsData } = useCachedData<ResultsFile>('results', '/data/results.json');
   const { data: calendarData } = useCachedData<{ races: Array<{ round?: number; status?: string; isSprint?: boolean; notes?: string }> }>('calendar', '/data/calendar.json');
   const [searchParams, setSearchParams] = useSearchParams();
-  const tab = ['drivers', 'constructors', 'teammates'].includes(searchParams.get('tab') ?? '') ? (searchParams.get('tab') as string) : 'drivers';
+  const tab = ['drivers', 'constructors', 'teammates', 'comparison'].includes(searchParams.get('tab') ?? '') ? (searchParams.get('tab') as string) : 'drivers';
   const searchRef = useRef<HTMLInputElement | null>(null);
   const changeTab = useCallback((value: string) => {
     setSearchParams(value === 'drivers' ? {} : { tab: value }, { replace: true });
@@ -376,7 +487,7 @@ export function Standings() {
       />
 
       <Tabs value={tab} onValueChange={changeTab} className="standings-tabs w-full">
-        <TabsList className="grid w-full md:w-[560px] grid-cols-3 bg-muted border border-gray-700/50">
+        <TabsList className="grid w-full md:w-[720px] grid-cols-2 sm:grid-cols-4 bg-muted border border-gray-700/50">
           <TabsTrigger value="drivers" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Drivers
           </TabsTrigger>
@@ -385,6 +496,9 @@ export function Standings() {
           </TabsTrigger>
           <TabsTrigger value="teammates" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Teammates
+          </TabsTrigger>
+          <TabsTrigger value="comparison" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
+            Driver Comparison
           </TabsTrigger>
         </TabsList>
 
@@ -751,6 +865,9 @@ export function Standings() {
           ) : (
             <Skeleton className="h-72 w-full rounded-2xl" />
           )}
+        </TabsContent>
+        <TabsContent value="comparison" className="mt-6">
+          {resultsData ? <DriverComparisonPanel drivers={data.drivers} results={resultsData} season={data.season} /> : <Skeleton className="h-72 w-full rounded-2xl" />}
         </TabsContent>
       </Tabs>
 
