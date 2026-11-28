@@ -9,7 +9,7 @@ export function SprintClassification({ raceName, sprint }: { raceName: string; s
     <div className="bg-gray-800/40 border border-amber-500/25 p-4 rounded-xl" data-testid="sprint-classification">
       <h4 className="text-xs font-bold uppercase tracking-wider text-amber-300 mb-1 flex items-center gap-1.5">
         <Zap className="h-4 w-4" aria-hidden="true" />
-        Sprint Classification â€” top {sprint.length}
+        Sprint Classification — top {sprint.length}
       </h4>
       <p className="text-xs text-gray-400 mb-3">Sprint points (8 to 1) are separate from the Grand Prix points and count towards the championship.</p>
       <ol className="space-y-1" aria-label={`${raceName} sprint classification`}>
@@ -36,4 +36,3 @@ export function SprintClassification({ raceName, sprint }: { raceName: string; s
     </div>
   );
 }
-

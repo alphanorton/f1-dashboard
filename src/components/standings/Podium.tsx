@@ -122,4 +122,3 @@ export function Podium({ entries, title, className = '', leaderLabel = 'Leader' 
     </section>
   );
 }
-

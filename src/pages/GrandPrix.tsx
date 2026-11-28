@@ -114,7 +114,7 @@ export function GrandPrix() {
       {/* Header */}
       <PageHeader
         title="2026 Grand Prix Calendar"
-        subtitle={`${data.source} â€¢ ${data.totalRounds} rounds â€¢ Last updated: ${data.asOfDate}`}
+        subtitle={`${data.source} • ${data.totalRounds} rounds • Last updated: ${data.asOfDate}`}
         icon={Flag}
         actions={
           <div className="flex items-center gap-2 self-start md:self-auto bg-muted/40 border border-gray-700/50 px-3 py-1.5 rounded-lg text-xs text-gray-400">
@@ -148,7 +148,7 @@ export function GrandPrix() {
                 <div className="flex items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-600 text-white shadow-lg shadow-red-600/30 animate-pulse">
                     <Sparkles className="h-3.5 w-3.5" />
-                    Next Grand Prix â€” Round {nextRace.round}
+                    Next Grand Prix — Round {nextRace.round}
                   </span>
                   <span className="text-xs text-gray-300 bg-gray-900/80 px-2.5 py-1 rounded-full border border-gray-700 backdrop-blur-sm">
                     {nextRace.weekendDates}
@@ -160,19 +160,19 @@ export function GrandPrix() {
                     {getFlagUrl(nextRace.country) ? (
                       <img src={getFlagUrl(nextRace.country)!} alt={`${nextRace.country} flag`} className="w-10 h-7 object-cover rounded-sm shadow-md" />
                     ) : (
-                      <span className="text-4xl">ðŸ</span>
+                      <span className="text-4xl">🏁</span>
                     )}
                     <span>{nextRace.name}</span>
                   </h2>
                   <p className="text-gray-300 flex items-center gap-2 mt-2 text-sm sm:text-base">
                     <MapPin className="h-4 w-4 text-red-400 shrink-0" />
-                    <span>{nextRace.circuit} â€” {nextRace.locality}, {nextRace.country}</span>
+                    <span>{nextRace.circuit} — {nextRace.locality}, {nextRace.country}</span>
                   </p>
                 </div>
 
                 {nextRace.notes && (
                   <p className="text-xs text-amber-300/90 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-md inline-block backdrop-blur-sm">
-                    âš¡ {nextRace.notes}
+                    ⚡ {nextRace.notes}
                   </p>
                 )}
 
@@ -206,7 +206,7 @@ export function GrandPrix() {
         );
       })()}
 
-      {/* KPI Stats Overview â€” Liquid Glass */}
+      {/* KPI Stats Overview — Liquid Glass */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <div className="gp-stat-card liquid-glass">
           <div className="p-5 flex items-center justify-between">
@@ -459,7 +459,7 @@ export function GrandPrix() {
                   {getFlagUrl(race.country) ? (
                     <img src={getFlagUrl(race.country)!} alt={`${race.country} flag`} className="w-9 h-6 object-cover rounded-sm shrink-0 select-none shadow-md ring-1 ring-white/10" />
                   ) : (
-                    <span className="text-3xl shrink-0 select-none">ðŸ</span>
+                    <span className="text-3xl shrink-0 select-none">🏁</span>
                   )}
                   <div className="flex-1 min-w-0">
                     <h3 className="text-base font-bold text-white truncate group-hover:text-red-400 transition-colors">
@@ -492,7 +492,7 @@ export function GrandPrix() {
 
                 {isCancel && (
                   <div className="mt-2.5 pt-2 border-t border-gray-800/60 text-xs text-rose-400/90 truncate relative z-10">
-                    âš ï¸ {race.notes || 'Race cancelled'}
+                    ⚠️ {race.notes || 'Race cancelled'}
                   </div>
                 )}
               </div>
@@ -524,7 +524,7 @@ export function GrandPrix() {
                 {getFlagUrl(selectedRace.country) ? (
                   <img src={getFlagUrl(selectedRace.country)!} alt={`${selectedRace.country} flag`} className="w-10 h-7 object-cover rounded-sm shadow-md" />
                 ) : (
-                  <span className="text-4xl">ðŸ</span>
+                  <span className="text-4xl">🏁</span>
                 )}
                 <div>
                   <div className="flex items-center gap-2">
@@ -533,7 +533,7 @@ export function GrandPrix() {
                     </span>
                     {selectedRace.isSprint && (
                       <span className="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                        âš¡ Sprint Weekend
+                        ⚡ Sprint Weekend
                       </span>
                     )}
                   </div>
@@ -567,7 +567,7 @@ export function GrandPrix() {
                     style={{ background: 'linear-gradient(180deg, transparent 20%, rgba(9,11,16,0.92) 100%)' }}
                   />
                   <p className="absolute bottom-2 left-3 text-[10px] font-bold uppercase tracking-[0.18em] text-gray-300">
-                    Verified circuit photograph Â· {selectedRace.circuit}
+                    Verified circuit photograph · {selectedRace.circuit}
                   </p>
                 </div>
               );
@@ -590,10 +590,10 @@ export function GrandPrix() {
               <div className="bg-gray-800/60 p-3 rounded-lg border border-gray-700/60">
                 <span className="text-xs text-gray-400 block">Race Status</span>
                 <span className="text-white font-medium">
-                  {selectedRace.status === 'completed' && 'âœ… Completed'}
-                  {selectedRace.status === 'next' && 'ðŸ”¥ Next Race'}
-                  {selectedRace.status === 'upcoming' && 'â³ Upcoming'}
-                  {selectedRace.status === 'cancelled' && 'âŒ Cancelled'}
+                  {selectedRace.status === 'completed' && '✅ Completed'}
+                  {selectedRace.status === 'next' && '🔥 Next Race'}
+                  {selectedRace.status === 'upcoming' && '⏳ Upcoming'}
+                  {selectedRace.status === 'cancelled' && '❌ Cancelled'}
                 </span>
               </div>
             </div>
@@ -633,7 +633,7 @@ export function GrandPrix() {
                 <div className="bg-gray-800/40 border border-gray-800 p-4 rounded-xl">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 flex items-center gap-1.5">
                     <Award className="h-4 w-4 text-red-400" />
-                    Full Classification â€” {raceResult.results.length} Entries
+                    Full Classification — {raceResult.results.length} Entries
                   </h4>
                   <div className="max-h-72 overflow-y-auto space-y-1 pr-1">
                     {raceResult.results.map((r, idx) => {
@@ -664,7 +664,7 @@ export function GrandPrix() {
                               r.pos === 3 ? 'bg-amber-700 text-white' :
                               'bg-gray-800 text-gray-300'
                             }`}>
-                              {r.pos ?? 'â€”'}
+                              {r.pos ?? '—'}
                             </span>
                             <div className="min-w-0">
                               <span className={`text-sm font-medium truncate block ${isDNS ? 'text-gray-400' : isNC ? 'text-gray-400' : 'text-white'}`}>{r.driver}</span>
@@ -686,7 +686,7 @@ export function GrandPrix() {
                                 <p className="text-xs font-mono text-gray-300">{r.gap}</p>
                               )}
                               <p className="text-xs text-gray-400 font-mono">
-                                {r.points > 0 ? `+${r.points} points` : 'â€”'}
+                                {r.points > 0 ? `+${r.points} points` : '—'}
                               </p>
                             </div>
                           </div>
@@ -704,7 +704,7 @@ export function GrandPrix() {
 
             {selectedRace.notes && (
               <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300">
-                ðŸ“Œ {selectedRace.notes}
+                📌 {selectedRace.notes}
               </div>
             )}
 
@@ -729,4 +729,3 @@ export function GrandPrix() {
     </div>
   );
 }
-

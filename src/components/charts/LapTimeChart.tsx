@@ -71,7 +71,7 @@ export function LapTimeChart({
           {lap && (
             <>
               <p className="text-xs text-textMuted mt-1">
-                Tire: {lap.compound || 'â€”'} (Age: {lap.tireAge || 0})
+                Tire: {lap.compound || '—'} (Age: {lap.tireAge || 0})
               </p>
               <p className="text-xs text-textMuted">
                 S1: {formatTime(lap.sector1 || 0)} | S2: {formatTime(lap.sector2 || 0)} | S3: {formatTime(lap.sector3 || 0)}
@@ -141,4 +141,3 @@ export function LapTimeChart({
     </div>
   );
 }
-

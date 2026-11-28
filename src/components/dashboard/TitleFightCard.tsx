@@ -172,4 +172,3 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
     </section>
   );
 }
-

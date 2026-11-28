@@ -103,7 +103,7 @@ const LIVE_TIMING_DATA: Driver[] = [
   {
     position: 6,
     number: '11',
-    name: 'Sergio PÃ©rez',
+    name: 'Sergio Pérez',
     team: 'Red Bull Racing',
     interval: '+5.123',
     gap: '+16.473',
@@ -219,7 +219,7 @@ export function LiveTiming() {
         <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <p className="text-xs text-gray-400 mb-1">Status</p>
-            <p className="text-2xl font-bold text-white">âœ“ Finished</p>
+            <p className="text-2xl font-bold text-white">✓ Finished</p>
           </CardContent>
         </Card>
         <Card className="border-gray-700/50 bg-surface">
@@ -237,7 +237,7 @@ export function LiveTiming() {
         <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <p className="text-xs text-gray-400 mb-1">Flag</p>
-            <p className="text-2xl font-bold text-white">ðŸ Finished</p>
+            <p className="text-2xl font-bold text-white">🏁 Finished</p>
           </CardContent>
         </Card>
       </div>
@@ -247,7 +247,7 @@ export function LiveTiming() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-yellow-400" />
-            Final classification - British GP 2026 ðŸ‡¬ðŸ‡§
+            Final classification - British GP 2026 🇬🇧
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -387,7 +387,7 @@ export function LiveTiming() {
             </div>
             <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
               <p className="text-sm text-white">
-                <span className="font-bold text-orange-400">Positions 2â€“4:</span> McLaren vs Ferrari battle (+1.9s)
+                <span className="font-bold text-orange-400">Positions 2–4:</span> McLaren vs Ferrari battle (+1.9s)
               </p>
             </div>
             <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
@@ -401,4 +401,3 @@ export function LiveTiming() {
     </div>
   );
 }
-

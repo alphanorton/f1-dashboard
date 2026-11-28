@@ -17,7 +17,7 @@ const chipClass: Record<FormChip['kind'], string> = {
   other: 'champ-chip',
 };
 
-const fmtAvg = (n: number | null) => (n === null ? 'â€”' : n.toFixed(1));
+const fmtAvg = (n: number | null) => (n === null ? '—' : n.toFixed(1));
 
 function Row({ row, index }: { row: FormRow; index: number }) {
   const color = getTeamColor2026(row.team);
@@ -41,7 +41,7 @@ function Row({ row, index }: { row: FormRow; index: number }) {
         ))}
       </ol>
       <span className="fg-stat">
-        <span className="fg-stat-v tabular-nums">{row.avgFinish === null ? 'â€”' : <AnimatedNumber value={Math.round(row.avgFinish * 10) / 10} />}</span>
+        <span className="fg-stat-v tabular-nums">{row.avgFinish === null ? '—' : <AnimatedNumber value={Math.round(row.avgFinish * 10) / 10} />}</span>
         <span className="fg-stat-l">Average finishing position</span>
       </span>
       <span className="fg-stat">
@@ -120,4 +120,3 @@ export function FormGuideCard({ guide, circuit, className }: { guide: FormGuide;
     </section>
   );
 }
-

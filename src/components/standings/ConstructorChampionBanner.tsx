@@ -116,4 +116,3 @@ export function ConstructorChampionBanner({ constructors, races, results = null,
     </section>
   );
 }
-

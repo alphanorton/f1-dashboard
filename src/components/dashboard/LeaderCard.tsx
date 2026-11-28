@@ -106,4 +106,3 @@ export function LeaderCard({ title, icon: Icon, rows, index, leaderLabel = 'Lead
     </div>
   );
 }
-

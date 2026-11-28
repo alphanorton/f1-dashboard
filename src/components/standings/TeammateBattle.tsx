@@ -16,7 +16,7 @@ function PairCard({ pair }: { pair: TeammatePair }) {
   const aLead = pair.aAhead > pair.bAhead;
   const bLead = pair.bAhead > pair.aAhead;
   const aShare = pair.compared ? (pair.aAhead / pair.compared) * 100 : 50;
-  const avg = (v: number | null) => (v == null ? 'â€”' : v.toFixed(1));
+  const avg = (v: number | null) => (v == null ? '—' : v.toFixed(1));
   const aBetterAvg = pair.aAvg != null && pair.bAvg != null && pair.aAvg < pair.bAvg;
   const bBetterAvg = pair.aAvg != null && pair.bAvg != null && pair.bAvg < pair.aAvg;
 
@@ -97,4 +97,3 @@ export function TeammateBattle({ results, teamOrder }: TeammateBattleProps) {
     </div>
   );
 }
-

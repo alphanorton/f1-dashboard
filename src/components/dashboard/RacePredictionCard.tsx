@@ -22,14 +22,14 @@ const CONFIDENCE_LABEL: Record<RacePrediction['confidence'], string> = {
   'too-close': 'Too close to call',
 };
 
-const fmt = (n: number | null, digits = 1) => (n === null || !Number.isFinite(n) ? 'â€”' : n.toFixed(digits));
+const fmt = (n: number | null, digits = 1) => (n === null || !Number.isFinite(n) ? '—' : n.toFixed(digits));
 
 /** One-line, unambiguous note that this is a projection, never a result. */
 function ProjectionPill() {
   return (
     <span className="lgp-pill" title="Derived from this project's own results and standings data">
       <Info className="h-3 w-3" aria-hidden="true" />
-      Model output Â· not a result
+      Model output · not a result
     </span>
   );
 }
@@ -70,7 +70,7 @@ export function RacePredictionCard({ prediction, className }: RacePredictionCard
       aria-labelledby="race-prediction-heading"
       className={cn('lgp-wrap', className)}
     >
-      {/* Colour bloom *behind* the panel â€” this is what the glass actually refracts. */}
+      {/* Colour bloom *behind* the panel — this is what the glass actually refracts. */}
       <span className="lgp-bloom" aria-hidden="true" />
 
       <div className="lgp-panel">
@@ -92,9 +92,9 @@ export function RacePredictionCard({ prediction, className }: RacePredictionCard
                     <>
                       <Flag className="h-3 w-3 shrink-0" aria-hidden="true" />
                       <span className="font-semibold text-gray-300">
-                        Round {nextRace.round} Â· {nextRace.name}
+                        Round {nextRace.round} · {nextRace.name}
                       </span>
-                      <span className="hidden sm:inline">â€” {nextRace.circuit}</span>
+                      <span className="hidden sm:inline">— {nextRace.circuit}</span>
                     </>
                   ) : (
                     <span>No race left on the calendar</span>
@@ -166,4 +166,3 @@ export function RacePredictionCard({ prediction, className }: RacePredictionCard
     </section>
   );
 }
-

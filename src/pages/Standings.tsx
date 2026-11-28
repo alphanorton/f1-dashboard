@@ -115,7 +115,7 @@ function ProgressionTooltip({
           />
           <span className="text-gray-300">{item.name}</span>
           <span className="ml-auto font-mono font-bold text-white tabular-nums">
-            {item.value == null ? 'â€”' : item.value}
+            {item.value == null ? '—' : item.value}
           </span>
         </div>
       ))}
@@ -161,7 +161,7 @@ function PointsProgressionChart({
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-sm font-bold text-white">
-          Points progression â€” top {series.length} drivers
+          Points progression — top {series.length} drivers
         </h3>
         <p className="text-xs text-gray-400">Cumulative points after each race</p>
       </div>
@@ -190,7 +190,7 @@ function PointsProgressionChart({
               wrapperStyle={{ fontSize: 11, color: '#9ca3af', paddingTop: 8, cursor: 'pointer' }}
               formatter={(value: string) => {
                 const s = series.find((x) => x.key === value);
-                return s ? `${s.driver} (${s.team})${s.key === championCode ? ' Â· Champion' : ''}` : value;
+                return s ? `${s.driver} (${s.team})${s.key === championCode ? ' · Champion' : ''}` : value;
               }}
             />
             {clinchRound != null && (
@@ -473,7 +473,7 @@ export function Standings() {
     key: c.shortName,
     position: c.position,
     name: c.shortName,
-    sub: c.drivers.join(' Â· '),
+    sub: c.drivers.join(' · '),
     points: c.points,
     color: getTeamColor2026(c.shortName),
     textColor: getTeamTextColor2026(c.shortName),
@@ -489,7 +489,7 @@ export function Standings() {
       {/* Header */}
       <PageHeader
         title="2026 Championship Standings"
-        subtitle={`${champion ? `${champion.name} is the 2026 World Champion Â· ` : ''}After Round ${data.asOfRound} â€” ${data.asOfRace} | ${data.remainingRaces} races remaining`}
+        subtitle={`${champion ? `${champion.name} is the 2026 World Champion · ` : ''}After Round ${data.asOfRound} — ${data.asOfRace} | ${data.remainingRaces} races remaining`}
         icon={Trophy}
         actions={
           <div className="flex items-center gap-2 bg-muted/40 border border-gray-700/50 px-3 py-1.5 rounded-lg text-xs text-gray-400">
@@ -531,7 +531,7 @@ export function Standings() {
                     id="driver-search"
                     ref={searchRef}
                     type="search"
-                    placeholder="Search driver, team or codeâ€¦  ( / )"
+                    placeholder="Search driver, team or code…  ( / )"
                     onKeyDown={(e) => { if (e.key === 'Escape' && driverSearch) { e.preventDefault(); setDriverSearch(''); } }}
                     value={driverSearch}
                     onChange={(e) => setDriverSearch(e.target.value)}
@@ -549,7 +549,7 @@ export function Standings() {
                   )}
                 </div>
                 <p className="mt-2 text-xs text-gray-400" role="status" aria-live="polite">
-                  {driverSearch.trim() ? `${filteredDrivers.length} of ${data.drivers.length} drivers` : `${data.drivers.length} drivers Â· press / to search`}
+                  {driverSearch.trim() ? `${filteredDrivers.length} of ${data.drivers.length} drivers` : `${data.drivers.length} drivers · press / to search`}
                 </p>
               </div>
               <div className="overflow-x-auto max-h-[70vh]">
@@ -619,17 +619,17 @@ export function Standings() {
                           </td>
                           {driversHaveWins && (
                             <td className="py-3 px-4 text-center hidden sm:table-cell">
-                              <span className="text-gray-300 font-medium tabular-nums">{driver.wins ?? 'â€”'}</span>
+                              <span className="text-gray-300 font-medium tabular-nums">{driver.wins ?? '—'}</span>
                             </td>
                           )}
                           {driversHavePodium finishes && (
                             <td className="py-3 px-4 text-center hidden lg:table-cell">
-                              <span className="text-gray-400 tabular-nums">{driver.podiums ?? 'â€”'}</span>
+                              <span className="text-gray-400 tabular-nums">{driver.podiums ?? '—'}</span>
                             </td>
                           )}
                           <td className="py-3 px-4 text-center hidden sm:table-cell">
                             {driver.gap === null ? (
-                              <span className="text-gray-400 text-xs">â€”</span>
+                              <span className="text-gray-400 text-xs">—</span>
                             ) : driver.gap === 0 ? (
                               <span className="text-amber-400 text-xs font-bold">{champion ? 'Champion' : 'Leader'}</span>
                             ) : (
@@ -642,7 +642,7 @@ export function Standings() {
                     {filteredDrivers.length === 0 && (
                       <tr>
                         <td colSpan={driversHaveWins || driversHavePodium finishes ? 7 : 5} className="px-4 py-8 text-center text-sm text-gray-400">
-                          No drivers match â€œ{driverSearch}â€.
+                          No drivers match “{driverSearch}”.
                         </td>
                       </tr>
                     )}
@@ -660,7 +660,7 @@ export function Standings() {
                   <span className="text-xs font-medium">{champion ? 'World Champion' : 'Championship leader'}</span>
                 </div>
                 <p className="text-lg font-black text-white">{data.drivers[0].name}</p>
-                <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{data.drivers[0].points} points{champion && title ? ` Â· ${title.remainingCount} races to spare` : ''}</p>
+                <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{data.drivers[0].points} points{champion && title ? ` · ${title.remainingCount} races to spare` : ''}</p>
               </div>
             </div>
 
@@ -676,7 +676,7 @@ export function Standings() {
                     <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostWins.value} wins</p>
                   </>
                 ) : (
-                  <p className="text-lg font-black text-gray-400">â€”</p>
+                  <p className="text-lg font-black text-gray-400">—</p>
                 )}
               </div>
             </div>
@@ -694,7 +694,7 @@ export function Standings() {
                       <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostPodium finishes.value} podiums</p>
                     </>
                   ) : (
-                    <p className="text-lg font-black text-gray-400">â€”</p>
+                    <p className="text-lg font-black text-gray-400">—</p>
                   )}
                 </div>
               </div>
@@ -707,7 +707,7 @@ export function Standings() {
                   <span className="text-xs font-medium">Points gap</span>
                 </div>
                 <p className="mo-num text-lg font-black text-white tabular-nums">
-                  {data.drivers[1]?.gap != null && data.drivers[1].gap > 0 ? data.drivers[1].gap : 'â€”'}
+                  {data.drivers[1]?.gap != null && data.drivers[1].gap > 0 ? data.drivers[1].gap : '—'}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">points behind second place</p>
               </div>
@@ -780,7 +780,7 @@ export function Standings() {
                             </div>
                           </td>
                           <td className="py-3 px-4 hidden lg:table-cell">
-                            <span className="text-gray-300 text-xs font-mono">{team.carName ?? 'â€”'}</span>
+                            <span className="text-gray-300 text-xs font-mono">{team.carName ?? '—'}</span>
                           </td>
                           <td className="py-3 px-4 text-center">
                             <span className={`mo-num font-black text-base tabular-nums ${isLeader ? 'text-amber-400' : 'text-white'}`}>
@@ -789,7 +789,7 @@ export function Standings() {
                           </td>
                           <td className="py-3 px-4 text-center hidden sm:table-cell">
                             {team.gap === null ? (
-                              <span className="text-gray-400 text-xs">â€”</span>
+                              <span className="text-gray-400 text-xs">—</span>
                             ) : team.gap === 0 ? (
                               <span className="text-amber-400 text-xs font-bold">{ctorChampion ? 'Champion' : 'Leader'}</span>
                             ) : (
@@ -815,7 +815,7 @@ export function Standings() {
             </CardContent>
           </Card>
 
-          {/* Constructor Stats â€” Liquid Glass */}
+          {/* Constructor Stats — Liquid Glass */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="standings-stat-card liquid-glass">
               <div className="p-4">
@@ -840,7 +840,7 @@ export function Standings() {
                     <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostTeamWins.value} wins</p>
                   </>
                 ) : (
-                  <p className="text-lg font-black text-gray-400">â€”</p>
+                  <p className="text-lg font-black text-gray-400">—</p>
                 )}
               </div>
             </div>
@@ -852,7 +852,7 @@ export function Standings() {
                   <span className="text-xs font-medium">Points gap</span>
                 </div>
                 <p className="mo-num text-lg font-black text-white tabular-nums">
-                  {data.constructors[1]?.gap != null && data.constructors[1].gap > 0 ? data.constructors[1].gap : 'â€”'}
+                  {data.constructors[1]?.gap != null && data.constructors[1].gap > 0 ? data.constructors[1].gap : '—'}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">points behind second place</p>
               </div>
@@ -901,20 +901,20 @@ export function Standings() {
                     <Car className="h-4 w-4" />
                     <span className="text-xs font-medium">Car</span>
                   </div>
-                  <span className="text-white font-bold font-mono">{selectedConstructor.carName ?? 'â€”'}</span>
+                  <span className="text-white font-bold font-mono">{selectedConstructor.carName ?? '—'}</span>
                 </div>
                 <div className="bg-surface p-3 rounded-lg border border-gray-700/50">
                   <div className="flex items-center gap-1.5 text-blue-400 mb-1">
                     <Zap className="h-4 w-4" />
                     <span className="text-xs font-medium">Power unit</span>
                   </div>
-                  <span className="text-white font-medium text-sm">{selectedConstructor.powerUnit ?? 'â€”'}</span>
+                  <span className="text-white font-medium text-sm">{selectedConstructor.powerUnit ?? '—'}</span>
                 </div>
               </div>
 
               <div className="bg-surface p-3 rounded-lg border border-gray-700/50">
                 <span className="text-xs text-gray-400 block mb-1">Engine specification:</span>
-                <span className="text-xs text-gray-300">{selectedConstructor.engine ?? 'â€”'}</span>
+                <span className="text-xs text-gray-300">{selectedConstructor.engine ?? '—'}</span>
               </div>
 
               {/* Drivers */}
@@ -937,11 +937,11 @@ export function Standings() {
                 </div>
                 <div className="bg-surface p-3 rounded-lg border border-gray-700/50 text-center">
                   <span className="text-xs text-gray-400 block mb-1">Wins</span>
-                  <span className="text-xl font-black text-emerald-400 tabular-nums">{selectedConstructor.wins ?? 'â€”'}</span>
+                  <span className="text-xl font-black text-emerald-400 tabular-nums">{selectedConstructor.wins ?? '—'}</span>
                 </div>
                 <div className="bg-surface p-3 rounded-lg border border-gray-700/50 text-center">
                   <span className="text-xs text-gray-400 block mb-1">Podium finishes</span>
-                  <span className="text-xl font-black text-blue-400 tabular-nums">{selectedConstructor.podiums ?? 'â€”'}</span>
+                  <span className="text-xl font-black text-blue-400 tabular-nums">{selectedConstructor.podiums ?? '—'}</span>
                 </div>
               </div>
 
@@ -955,7 +955,7 @@ export function Standings() {
                   <ul className="space-y-2">
                     {selectedConstructor.updates.map((update, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-xs text-gray-300">
-                        <span className="text-amber-400 mt-0.5">â–¸</span>
+                        <span className="text-amber-400 mt-0.5">▸</span>
                         <span>{update}</span>
                       </li>
                     ))}
@@ -971,4 +971,3 @@ export function Standings() {
     </div>
   );
 }
-
