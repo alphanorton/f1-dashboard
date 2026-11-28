@@ -16,7 +16,7 @@ function PairCard({ pair }: { pair: TeammatePair }) {
   const aLead = pair.aAhead > pair.bAhead;
   const bLead = pair.bAhead > pair.aAhead;
   const aShare = pair.compared ? (pair.aAhead / pair.compared) * 100 : 50;
-  const avg = (v: number | null) => (v == null ? '—' : v.toFixed(1));
+  const avg = (v: number | null) => (v == null ? 'â€”' : v.toFixed(1));
   const aBetterAvg = pair.aAvg != null && pair.bAvg != null && pair.aAvg < pair.bAvg;
   const bBetterAvg = pair.aAvg != null && pair.bAvg != null && pair.bAvg < pair.aAvg;
 
@@ -42,7 +42,7 @@ function PairCard({ pair }: { pair: TeammatePair }) {
         {side(pair.a, aLead, 'left')}
         <p className="shrink-0 font-f1 text-2xl font-black tabular-nums text-white" aria-label={`${pair.a.name} ahead ${pair.aAhead} times, ${pair.b.name} ahead ${pair.bAhead} times`}>
           <span className={aLead ? '' : 'text-gray-400'}>{pair.aAhead}</span>
-          <span className="px-1 text-gray-600">–</span>
+          <span className="px-1 text-gray-600">-</span>
           <span className={bLead ? '' : 'text-gray-400'}>{pair.bAhead}</span>
         </p>
         {side(pair.b, bLead, 'right')}
@@ -56,7 +56,7 @@ function PairCard({ pair }: { pair: TeammatePair }) {
 
       <dl className="mt-3 grid grid-cols-3 items-center gap-2 text-center text-sm tabular-nums">
         <dd className={cn('font-semibold', aBetterAvg ? 'text-white' : 'text-gray-400')}>{avg(pair.aAvg)}</dd>
-        <dt className="text-[11px] uppercase tracking-widest text-gray-500">Avg finish</dt>
+        <dt className="text-[11px] uppercase tracking-widest text-gray-500">Average finishing position</dt>
         <dd className={cn('font-semibold', bBetterAvg ? 'text-white' : 'text-gray-400')}>{avg(pair.bAvg)}</dd>
       </dl>
     </article>
@@ -97,3 +97,4 @@ export function TeammateBattle({ results, teamOrder }: TeammateBattleProps) {
     </div>
   );
 }
+
