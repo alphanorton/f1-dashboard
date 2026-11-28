@@ -446,11 +446,11 @@ export function Standings() {
   const ctorTitle = calendarData ? computeConstructorTitle(data.constructors, calendarData.races) : null;
   const ctorChampion = ctorTitle?.clinched ? ctorTitle.leader : null;
   const mostWins = leaderBy(data.drivers, (d) => d.wins);
-  const mostPodium finishes = leaderBy(data.drivers, (d) => d.podiums);
+  const mostPodiums = leaderBy(data.drivers, (d) => d.podiums);
   const mostTeamWins = leaderBy(data.constructors, (c) => c.wins);
 
   const driversHaveWins = data.drivers.some((d) => d.wins != null);
-  const driversHavePodium finishes = data.drivers.some((d) => d.podiums != null);
+  const driversHavePodiums = data.drivers.some((d) => d.podiums != null);
   const filteredDrivers = driverSearch.trim()
     ? data.drivers.filter((d) =>
         d.name.toLowerCase().includes(driverSearch.toLowerCase()) ||
@@ -563,7 +563,7 @@ export function Standings() {
                       {driversHaveWins && (
                         <th className="py-3 px-4 text-center font-bold tabular-nums hidden sm:table-cell">Wins</th>
                       )}
-                      {driversHavePodium finishes && (
+                      {driversHavePodiums && (
                         <th className="py-3 px-4 text-center font-bold tabular-nums hidden lg:table-cell">Podium finishes</th>
                       )}
                       <th className="py-3 px-4 text-center font-bold tabular-nums hidden sm:table-cell">Gap</th>
@@ -622,7 +622,7 @@ export function Standings() {
                               <span className="text-gray-300 font-medium tabular-nums">{driver.wins ?? '—'}</span>
                             </td>
                           )}
-                          {driversHavePodium finishes && (
+                          {driversHavePodiums && (
                             <td className="py-3 px-4 text-center hidden lg:table-cell">
                               <span className="text-gray-400 tabular-nums">{driver.podiums ?? '—'}</span>
                             </td>
@@ -641,7 +641,7 @@ export function Standings() {
                     })}
                     {filteredDrivers.length === 0 && (
                       <tr>
-                        <td colSpan={driversHaveWins || driversHavePodium finishes ? 7 : 5} className="px-4 py-8 text-center text-sm text-gray-400">
+                        <td colSpan={driversHaveWins || driversHavePodiums ? 7 : 5} className="px-4 py-8 text-center text-sm text-gray-400">
                           No drivers match “{driverSearch}”.
                         </td>
                       </tr>
@@ -681,17 +681,17 @@ export function Standings() {
               </div>
             </div>
 
-            {driversHavePodium finishes ? (
+            {driversHavePodiums ? (
               <div className="liquid-glass">
                 <div className="p-4">
                   <div className="flex items-center gap-2 text-blue-400 mb-1">
                     <Medal className="h-4 w-4" />
                     <span className="text-xs font-medium">Most podiums</span>
                   </div>
-                  {mostPodium finishes ? (
+                  {mostPodiums ? (
                     <>
-                      <p className="text-lg font-black text-white">{mostPodium finishes.row.name}</p>
-                      <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostPodium finishes.value} podiums</p>
+                      <p className="text-lg font-black text-white">{mostPodiums.row.name}</p>
+                      <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostPodiums.value} podiums</p>
                     </>
                   ) : (
                     <p className="text-lg font-black text-gray-400">—</p>
