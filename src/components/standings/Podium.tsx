@@ -108,7 +108,7 @@ export function Podium({ entries, title, className = '', leaderLabel = 'Leader' 
                 <p className="mt-1.5 font-f1 text-lg font-black text-white sm:text-3xl">
                   <AnimatedNumber value={e.points} durationMs={1800} />
                 </p>
-                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 sm:text-[10px]">pts</p>
+                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-gray-400 sm:text-[10px]">points</p>
               </div>
 
               <div className="fx-pod-block">
@@ -122,3 +122,4 @@ export function Podium({ entries, title, className = '', leaderLabel = 'Leader' 
     </section>
   );
 }
+
