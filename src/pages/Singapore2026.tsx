@@ -393,7 +393,7 @@ export function Singapore2026() {
                 <table className="w-full text-sm">
                   <thead className="bg-muted/60 text-xs uppercase text-gray-400">
                     <tr>
-                      <th scope="col" className="px-4 py-3 text-center font-bold">Pos</th>
+                      <th scope="col" className="px-4 py-3 text-center font-bold">Position</th>
                       <th scope="col" className="px-4 py-3 text-left font-bold">Driver</th>
                       <th scope="col" className="px-4 py-3 text-left font-bold">Team</th>
                       <th scope="col" className="px-4 py-3 text-right font-bold">Time or gap</th>
@@ -476,7 +476,7 @@ export function Singapore2026() {
                 <table className="w-full text-sm">
                   <thead className="bg-muted/60 text-xs uppercase text-gray-400">
                     <tr>
-                      <th scope="col" className="px-4 py-3 text-center font-bold">Pos</th>
+                      <th scope="col" className="px-4 py-3 text-center font-bold">Position</th>
                       <th scope="col" className="px-4 py-3 text-left font-bold">Driver</th>
                       <th scope="col" className="px-4 py-3 text-left font-bold">Team</th>
                       <th scope="col" className="px-4 py-3 text-center font-bold">Points</th>
@@ -529,7 +529,7 @@ export function Singapore2026() {
                 <table className="w-full text-sm">
                   <thead className="bg-muted/60 text-xs uppercase text-gray-400">
                     <tr>
-                      <th scope="col" className="px-4 py-3 text-center font-bold">Pos</th>
+                      <th scope="col" className="px-4 py-3 text-center font-bold">Position</th>
                       <th scope="col" className="px-4 py-3 text-left font-bold">Team</th>
                       <th scope="col" className="px-4 py-3 text-center font-bold">Points</th>
                       <th scope="col" className="px-4 py-3 text-center font-bold">Gap</th>
