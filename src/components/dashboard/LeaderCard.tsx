@@ -93,7 +93,7 @@ export function LeaderCard({ title, icon: Icon, rows, index, leaderLabel = 'Lead
                   <p className="text-sm font-bold text-white">
                     <AnimatedNumber value={row.points} />
                   </p>
-                  <p className="text-xs tabular-nums text-gray-400">{gap > 0 ? `−${gap}` : 'Level'}</p>
+                  <p className="text-xs tabular-nums text-gray-400">{gap > 0 ? `-${gap}` : 'Level'}</p>
                 </div>
               </div>
               <div className="dx-gapbar mt-2.5" aria-hidden="true">
@@ -106,3 +106,4 @@ export function LeaderCard({ title, icon: Icon, rows, index, leaderLabel = 'Lead
     </div>
   );
 }
+
