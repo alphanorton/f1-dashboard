@@ -131,7 +131,7 @@ const SESSION_LABEL: Record<string, string> = {
 // A missing value is shown as an em dash. Nothing on this page is inferred: where a figure
 // was not supplied the cell stays empty rather than being filled from another figure.
 const Dash = ({ className = '' }: { className?: string }) => (
-  <span className={`text-gray-400 ${className}`} aria-label="not available">—</span>
+  <span className={`text-gray-400 ${className}`} aria-label="not available">â€”</span>
 );
 
 function TeamBar({ team, className = '' }: { team: string; className?: string }) {
@@ -247,7 +247,7 @@ export function Singapore2026() {
     <div className="space-y-6">
       <PageHeader
         title={data.name}
-        subtitle={`${data.circuit} — ${data.locality}, ${data.country} · ${data.date}`}
+        subtitle={`${data.circuit} â€” ${data.locality}, ${data.country} Â· ${data.date}`}
         icon={Trophy}
       />
 
@@ -261,13 +261,13 @@ export function Singapore2026() {
         <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="min-w-0">
             <p className="eyebrow">
-              Round {data.projectRound} · official round {data.officialRound} · {data.weekendDates}
+              Round {data.projectRound} Â· official round {data.officialRound} Â· {data.weekendDates}
             </p>
             <h1 className="mt-1 font-f1 text-2xl font-black uppercase tracking-tight text-white sm:text-3xl lg:text-4xl">
               {data.name}
             </h1>
             <p className="mt-2 text-sm text-gray-400">
-              {data.circuit} — {data.locality}, {data.country} · {data.date}
+              {data.circuit} â€” {data.locality}, {data.country} Â· {data.date}
             </p>
           </div>
           <dl className="grid grid-cols-2 gap-x-6 gap-y-2 text-xs sm:grid-cols-4 lg:text-right">
@@ -304,19 +304,19 @@ export function Singapore2026() {
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-bold text-amber-300 sm:text-base">
-              The world championship is not decided yet — {champ.leader.driver} leads by {champ.gap} points
+              The world championship is not decided yet â€” {champ.leader.driver} leads by {champ.gap} points
             </p>
             <p className="mt-1 text-xs leading-relaxed text-gray-300 sm:text-sm">
               {champ.leader.driver} has {champ.leader.points} points; {champ.gap} clear of {champ.runnerUp.driver}{' '}
               on {champ.runnerUp.points} and {champ.third.gap} clear of {champ.third.driver} on {champ.third.points}.{' '}
               {champ.remainingRaces} races remain and none of them is a sprint, so every race is worth at most{' '}
-              {champ.maxPointsPerRace} points. The title is decided once {champ.leader.driver}’s lead over second
+              {champ.maxPointsPerRace} points. The title is decided once {champ.leader.driver}â€™s lead over second
               place is bigger than the maximum points still available: right now that means more than{' '}
-              {champ.clenchThresholdNow} ({champ.remainingRaces} × {champ.maxPointsPerRace}), so it is not yet
+              {champ.clenchThresholdNow} ({champ.remainingRaces} Ã— {champ.maxPointsPerRace}), so it is not yet
               decided. After {champ.afterClench.name} ({champ.afterClench.remainingRaces} races left) it has to be
               more than {champ.afterClench.maxPointsRemaining}, which means {champ.leader.driver} must take about{' '}
-              {champ.afterClench.requiredSwing} points more than {champ.runnerUp.driver} there — an{' '}
-              {champ.leader.driver} win with {champ.runnerUp.driver} on a maximum of 1 point would do it — and the
+              {champ.afterClench.requiredSwing} points more than {champ.runnerUp.driver} there â€” an{' '}
+              {champ.leader.driver} win with {champ.runnerUp.driver} on a maximum of 1 point would do it â€” and the
               same condition must hold against {champ.third.driver}.
             </p>
           </div>
@@ -335,18 +335,18 @@ export function Singapore2026() {
             {data.pole.driver}
           </p>
           <p className="mt-1 text-xs text-gray-400 tabular-nums">
-            {data.winnerTime} · led all {data.raceLaps} laps
+            {data.winnerTime} Â· led all {data.raceLaps} laps
           </p>
         </div>
         <div className="rounded-xl border border-gray-700/50 bg-muted/40 p-4">
           <p className="text-xs uppercase tracking-widest text-gray-400">Fastest lap (race)</p>
           <p className="mt-1 flex items-center gap-2 text-lg font-black text-white">
             <TeamBar team={raceFastest?.team ?? null} className="h-5" />
-            {raceFastest?.driver ?? '—'}
+            {raceFastest?.driver ?? 'â€”'}
           </p>
           <p className="mt-1 font-mono text-xs text-gray-400 tabular-nums">
-            {raceFastest?.lap_time ?? '—'}
-            {raceFastest?.lap_number ? ` · lap ${raceFastest.lap_number}` : ''}
+            {raceFastest?.lap_time ?? 'â€”'}
+            {raceFastest?.lap_number ? ` Â· lap ${raceFastest.lap_number}` : ''}
           </p>
         </div>
         <div className="rounded-xl border border-gray-700/50 bg-muted/40 p-4">
@@ -452,7 +452,7 @@ export function Singapore2026() {
                     </div>
                     <div className="shrink-0 text-right">
                       <p className="font-mono text-sm font-bold text-white tabular-nums">{r.points > 0 ? `+${r.points}` : '0'}</p>
-                      <p className="text-xs text-gray-400 tabular-nums">{r.laps !== null ? `${r.laps} laps` : 'laps —'}</p>
+                      <p className="text-xs text-gray-400 tabular-nums">{r.laps !== null ? `${r.laps} laps` : 'laps â€”'}</p>
                     </div>
                   </li>
                 ))}
@@ -507,7 +507,7 @@ export function Singapore2026() {
                           </span>
                         </td>
                         <td className="px-4 py-2.5 text-center font-mono text-xs text-gray-400">
-                          {d.gap === 0 ? <span className="font-bold text-amber-400">Leader</span> : `−${d.gap}`}
+                          {d.gap === 0 ? <span className="font-bold text-amber-400">Leader</span> : `-${d.gap}`}
                         </td>
                       </tr>
                     ))}
@@ -560,7 +560,7 @@ export function Singapore2026() {
                           </span>
                         </td>
                         <td className="px-4 py-2.5 text-center font-mono text-xs text-gray-400">
-                          {t.gap === 0 ? <span className="font-bold text-amber-400">Leader</span> : `−${t.gap}`}
+                          {t.gap === 0 ? <span className="font-bold text-amber-400">Leader</span> : `-${t.gap}`}
                         </td>
                         <td className="px-4 py-2.5 text-center">
                           <span className="rounded bg-muted px-2 py-0.5 font-mono text-xs font-bold text-gray-200 tabular-nums">
@@ -734,3 +734,4 @@ export function Singapore2026() {
     </div>
   );
 }
+
