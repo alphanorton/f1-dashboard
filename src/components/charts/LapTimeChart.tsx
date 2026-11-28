@@ -71,7 +71,7 @@ export function LapTimeChart({
           {lap && (
             <>
               <p className="text-xs text-textMuted mt-1">
-                Tire: {lap.compound || '—'} (Age: {lap.tireAge || 0})
+                Tire: {lap.compound || 'â€”'} (Age: {lap.tireAge || 0})
               </p>
               <p className="text-xs text-textMuted">
                 S1: {formatTime(lap.sector1 || 0)} | S2: {formatTime(lap.sector2 || 0)} | S3: {formatTime(lap.sector3 || 0)}
@@ -131,7 +131,7 @@ export function LapTimeChart({
           {showAverage && (
             <ReferenceLine
               y={avgTime}
-              label={{ value: `Avg: ${formatTime(avgTime)}`, position: 'insideEnd', fill: '#FF8700', fontSize: 10 }}
+              label={{ value: `Average lap time: ${formatTime(avgTime)}`, position: 'insideEnd', fill: '#FF8700', fontSize: 10 }}
               stroke="#FF8700"
               strokeDasharray="5 5"
             />
@@ -141,3 +141,4 @@ export function LapTimeChart({
     </div>
   );
 }
+
