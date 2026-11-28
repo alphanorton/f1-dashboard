@@ -108,11 +108,11 @@ export function ChampionHero({ drivers, races, results }: Props) {
           <div className="min-w-0">
             <h2 className="text-balance font-f1 text-2xl font-black uppercase leading-tight text-white sm:text-4xl">{leader.name}</h2>
             <p className="mt-1 text-sm font-semibold" style={{ color: getTeamTextColor2026(leader.team) }}>
-              {leader.team}{fullLeader?.driverNumber ? ` · #${fullLeader.driverNumber}` : ''}{fullLeader?.nationality ? ` · ${fullLeader.nationality}` : ''}
+              {leader.team}{fullLeader?.driverNumber ? ` Â· #${fullLeader.driverNumber}` : ''}{fullLeader?.nationality ? ` Â· ${fullLeader.nationality}` : ''}
             </p>
             <p className="mt-2 flex items-end gap-2">
               <span className="font-f1 text-4xl font-black tabular-nums text-white sm:text-5xl"><AnimatedNumber value={leader.points} /></span>
-              <span className="pb-1.5 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">pts</span>
+              <span className="pb-1.5 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">points</span>
             </p>
           </div>
         </div>
@@ -126,7 +126,7 @@ export function ChampionHero({ drivers, races, results }: Props) {
           {stats.map(({ icon: Icon, label, value }) => (
             <div key={label} className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
               <dt className="flex items-center gap-1.5 text-[11px] font-medium text-gray-400"><Icon className="h-3.5 w-3.5 text-yellow-300" aria-hidden="true" />{label}</dt>
-              <dd className="mt-1 font-f1 text-2xl font-black tabular-nums text-white">{results ? value : '—'}</dd>
+              <dd className="mt-1 font-f1 text-2xl font-black tabular-nums text-white">{results ? value : 'â€”'}</dd>
             </div>
           ))}
         </dl>
@@ -143,7 +143,7 @@ export function ChampionHero({ drivers, races, results }: Props) {
 
         {line.chips.length > 0 && (
           <div className="mt-5">
-            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">Season run · Grand Prix finishes</p>
+            <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">Season run Â· Grand Prix finishes</p>
             <ol className="flex flex-wrap gap-1.5">
               {line.chips.map((c) => (
                 <li key={c.round} className={chipClass(c)} title={`R${c.round} ${c.name}: ${c.status === 'DNF' || c.status === 'DNS' ? c.status : `P${c.pos}`}`}>
@@ -159,3 +159,4 @@ export function ChampionHero({ drivers, races, results }: Props) {
     </section>
   );
 }
+
