@@ -57,10 +57,10 @@ export function LeaderCard({ title, icon: Icon, rows, index, leaderLabel = 'Lead
             <span className="font-f1 text-4xl font-black text-white sm:text-5xl">
               <AnimatedNumber value={leader.points} />
             </span>
-            <span className="pb-1.5 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">pts</span>
+            <span className="pb-1.5 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">points</span>
             {margin !== null && margin > 0 && (
               <span className="mb-1 ml-auto rounded-full border border-neon-green/30 bg-neon-green/10 px-2.5 py-1 text-xs font-bold tabular-nums text-neon-green">
-                +{margin} on P2
+                +{margin} ahead of second place
               </span>
             )}
           </div>
