@@ -93,18 +93,18 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
                     2026 Champion
                   </span>
                   <span className="text-[10px] font-bold font-mono text-gray-300 bg-black/50 px-2 py-0.5 rounded-full border border-white/10">
-                    +{gapToSecond} pts
+                    +{gapToSecond} points
                   </span>
                 </div>
                 <h2 className="truncate font-f1 text-lg font-black text-white sm:text-xl">{leader.name}</h2>
                 <p className="mt-0.5 text-xs font-semibold text-gray-200 flex items-center gap-1.5">
                   <span className="inline-block h-2 w-2 rounded-full" style={{ background: lc }} />
-                  {leader.team} · <span className="font-mono text-yellow-300 font-bold">{leader.points} pts</span>
+                  {leader.team} | <span className="font-mono text-yellow-300 font-bold">{leader.points} points</span>
                 </p>
                 <p className="mt-2 text-xs font-medium text-gray-300">
                   {remainingCount > 0
-                    ? `Clinched with ${spare} to spare · ${gapToSecond} pts clear of ${second.name}`
-                    : `Champion by ${gapToSecond} pts over ${second.name}`}
+                    ? `Clinched with ${spare} to spare | ${gapToSecond} points clear of ${second.name}`
+                    : `Champion by ${gapToSecond} points over ${second.name}`}
                 </p>
               </div>
               <Trophy className="hidden sm:block ml-auto h-9 w-9 shrink-0 text-yellow-300 drop-shadow-[0_0_15px_rgba(250,204,21,0.6)]" aria-hidden="true" />
@@ -127,7 +127,7 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
           <h2 className="font-f1 text-base font-black uppercase tracking-wide text-white">Championship Title Fight</h2>
         </div>
         <span className="text-xs font-semibold text-gray-300 bg-white/10 px-3 py-1 rounded-full border border-white/10">
-          {remainingCount} races left · {maxLeft} pts available
+          {remainingCount} races left | {maxLeft} points available
         </span>
       </div>
 
@@ -137,7 +137,7 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
           <div className="min-w-0">
             <span className="text-[10px] font-bold uppercase tracking-widest text-amber-400">Leader</span>
             <p className="truncate text-base font-black text-white">{leader.name}</p>
-            <p className="text-xs font-mono font-bold text-gray-300">{leader.points} pts</p>
+            <p className="text-xs font-mono font-bold text-gray-300">{leader.points} points</p>
           </div>
         </div>
 
@@ -150,7 +150,7 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
           <div className="min-w-0">
             <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Challenger</span>
             <p className="truncate text-base font-black text-white">{second.name}</p>
-            <p className="text-xs font-mono font-bold text-gray-300">{second.points} pts</p>
+            <p className="text-xs font-mono font-bold text-gray-300">{second.points} points</p>
           </div>
           <DriverAvatar code={second.code} name={second.name} team={second.team} size={48} />
         </div>
@@ -160,7 +160,7 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
         <div className="h-full rounded-full transition-all duration-1000" style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${sc}, ${lc})` }} />
       </div>
       <div className="mt-1.5 flex justify-between text-[11px] text-gray-400">
-        <span>Lead share of points on offer ({gapToSecond} / {maxLeft} pts)</span>
+        <span>Lead share of points on offer ({gapToSecond} / {maxLeft} points)</span>
         <span className="font-mono text-gray-300">{pct}%</span>
       </div>
 
@@ -172,3 +172,4 @@ export function TitleFightCard({ drivers, races }: TitleFightCardProps) {
     </section>
   );
 }
+
