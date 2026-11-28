@@ -103,7 +103,7 @@ const LIVE_TIMING_DATA: Driver[] = [
   {
     position: 6,
     number: '11',
-    name: 'Sergio Pérez',
+    name: 'Sergio PÃ©rez',
     team: 'Red Bull Racing',
     interval: '+5.123',
     gap: '+16.473',
@@ -219,7 +219,7 @@ export function LiveTiming() {
         <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <p className="text-xs text-gray-400 mb-1">Status</p>
-            <p className="text-2xl font-bold text-white">✓ Finished</p>
+            <p className="text-2xl font-bold text-white">âœ“ Finished</p>
           </CardContent>
         </Card>
         <Card className="border-gray-700/50 bg-surface">
@@ -237,7 +237,7 @@ export function LiveTiming() {
         <Card className="border-gray-700/50 bg-surface">
           <CardContent className="p-4">
             <p className="text-xs text-gray-400 mb-1">Flag</p>
-            <p className="text-2xl font-bold text-white">🏁 Finished</p>
+            <p className="text-2xl font-bold text-white">ðŸ Finished</p>
           </CardContent>
         </Card>
       </div>
@@ -247,14 +247,14 @@ export function LiveTiming() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-yellow-400" />
-            Final classification - British GP 2026 🇬🇧
+            Final classification - British GP 2026 ðŸ‡¬ðŸ‡§
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-1">
             {/* Header Row */}
             <div className="grid grid-cols-12 gap-2 p-2 text-xs text-gray-400 font-medium border-b border-gray-700">
-              <div className="col-span-1 text-center">Pos</div>
+              <div className="col-span-1 text-center">Position</div>
               <div className="col-span-3">Driver</div>
               <div className="col-span-2 text-center hidden md:block">Interval</div>
               <div className="col-span-2 text-center">Last Lap</div>
@@ -387,7 +387,7 @@ export function LiveTiming() {
             </div>
             <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
               <p className="text-sm text-white">
-                <span className="font-bold text-orange-400">P2-P4:</span> McLaren vs Ferrari battle (+1.9s)
+                <span className="font-bold text-orange-400">Positions 2â€“4:</span> McLaren vs Ferrari battle (+1.9s)
               </p>
             </div>
             <div className="p-3 rounded-lg bg-surface/50 border border-gray-700">
@@ -401,3 +401,4 @@ export function LiveTiming() {
     </div>
   );
 }
+
