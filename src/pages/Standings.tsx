@@ -633,7 +633,7 @@ export function Standings() {
                             ) : driver.gap === 0 ? (
                               <span className="text-amber-400 text-xs font-bold">{champion ? 'Champion' : 'Leader'}</span>
                             ) : (
-                              <span className="text-gray-400 text-xs font-mono tabular-nums">âˆ’{driver.gap}</span>
+                              <span className="text-gray-400 text-xs font-mono tabular-nums">-{driver.gap}</span>
                             )}
                           </td>
                         </tr>
@@ -793,7 +793,7 @@ export function Standings() {
                             ) : team.gap === 0 ? (
                               <span className="text-amber-400 text-xs font-bold">{ctorChampion ? 'Champion' : 'Leader'}</span>
                             ) : (
-                              <span className="text-gray-400 text-xs font-mono tabular-nums">âˆ’{team.gap}</span>
+                              <span className="text-gray-400 text-xs font-mono tabular-nums">-{team.gap}</span>
                             )}
                           </td>
                           <td className="py-3 px-4 text-center">
