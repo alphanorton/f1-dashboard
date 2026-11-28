@@ -61,7 +61,7 @@ export function ConstructorChampionBanner({ constructors, races, results = null,
         <div className="flex items-center gap-2">
           <Users className="h-4 w-4 text-[#FF5A5A]" aria-hidden="true" />
           <h3 className="font-f1 text-xs font-bold uppercase tracking-[0.2em] text-gray-300">Constructors' title still open</h3>
-          <span className="ml-auto text-xs text-gray-400">{remainingCount} races · up to {maxLeft} pts</span>
+          <span className="ml-auto text-xs text-gray-400">{remainingCount} races | up to {maxLeft} points</span>
         </div>
         <p className="mt-3 text-sm text-gray-300">
           {leader.shortName} lead {second.shortName} by <span className="font-bold tabular-nums text-white">{gap}</span> points. The title is decided once the gap is bigger than the points still available.
@@ -87,7 +87,7 @@ export function ConstructorChampionBanner({ constructors, races, results = null,
           <span className="dx-pos dx-pos-pill" data-p="1"><Crown className="h-3.5 w-3.5" aria-hidden="true" /> Constructors' Champion 2026</span>
           <h2 className="mt-3 text-balance font-f1 text-2xl font-black uppercase leading-tight text-white sm:text-3xl">{leader.name}</h2>
           <p className="mt-1 text-sm font-semibold" style={{ color: getTeamTextColor2026(leader.shortName) }}>
-            {full?.drivers.join(' · ')} · {leader.points} pts
+            {full?.drivers.join(' | ')} | {leader.points} points
           </p>
           <p className="mt-2 text-sm text-gray-300">
             Title decided with {remainingCount} {remainingCount === 1 ? 'race' : 'races'} to spare, {gap} points clear of {second.shortName}.
@@ -116,3 +116,4 @@ export function ConstructorChampionBanner({ constructors, races, results = null,
     </section>
   );
 }
+
