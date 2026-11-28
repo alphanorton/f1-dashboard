@@ -115,7 +115,7 @@ function ProgressionTooltip({
           />
           <span className="text-gray-300">{item.name}</span>
           <span className="ml-auto font-mono font-bold text-white tabular-nums">
-            {item.value == null ? '—' : item.value}
+            {item.value == null ? 'â€”' : item.value}
           </span>
         </div>
       ))}
@@ -161,7 +161,7 @@ function PointsProgressionChart({
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-sm font-bold text-white">
-          Points progression — top {series.length} drivers
+          Points progression â€” top {series.length} drivers
         </h3>
         <p className="text-xs text-gray-400">Cumulative points after each race</p>
       </div>
@@ -190,7 +190,7 @@ function PointsProgressionChart({
               wrapperStyle={{ fontSize: 11, color: '#9ca3af', paddingTop: 8, cursor: 'pointer' }}
               formatter={(value: string) => {
                 const s = series.find((x) => x.key === value);
-                return s ? `${s.driver} (${s.team})${s.key === championCode ? ' · Champion' : ''}` : value;
+                return s ? `${s.driver} (${s.team})${s.key === championCode ? ' Â· Champion' : ''}` : value;
               }}
             />
             {clinchRound != null && (
@@ -318,23 +318,36 @@ function DriverComparisonPanel({ drivers, results, season }: { drivers: Driver[]
     ['DNF / retirements', leftStats.dnfs, rightStats.dnfs, false],
   ];
   return <div className="mt-6 space-y-5">
-    <div className="grid gap-4 sm:grid-cols-2">
-      {[{ driver: left, value: leftCode, set: setLeftCode }, { driver: right, value: rightCode, set: setRightCode }].map(({ driver, value, set }, index) => <Card key={index} className="border-gray-700/60">
-        <CardContent className="p-4"><label className="mb-2 block text-xs text-gray-400">{index ? 'Driver 2' : 'Driver 1'}</label><select value={value} onChange={(event) => set(event.target.value)} className="w-full rounded-md border border-gray-700 bg-surface p-2 text-white">{drivers.map((item) => <option key={item.code} value={item.code}>{item.name} · {item.team}</option>)}</select><div className="mt-4 flex items-center gap-3"><span className="h-10 w-1 rounded" style={{ backgroundColor: getTeamColor2026(driver.team) }} /><div><p className="font-bold text-white">{driver.name}</p><p className="text-xs text-gray-400">{driver.team} · {driver.code}</p></div></div></CardContent>
+    <div className="grid grid-cols-2 gap-2 sm:gap-4">
+      {[{ driver: left, value: leftCode, set: setLeftCode }, { driver: right, value: rightCode, set: setRightCode }].map(({ driver, value, set }, index) => <Card key={index} className="min-w-0 overflow-hidden border-gray-700/60">
+        <CardContent className="p-3 sm:p-4">
+          <label className="mb-2 block text-xs text-gray-400">{index ? 'Driver 2' : 'Driver 1'}</label>
+          <select aria-label={`Select ${index ? 'second' : 'first'} driver`} value={value} onChange={(event) => set(event.target.value)} className="w-full min-w-0 rounded-md border border-gray-700 bg-surface px-2 py-2 text-xs text-white sm:text-sm">
+            {drivers.map((item) => <option key={item.code} value={item.code}>{item.name} ({item.code})</option>)}
+          </select>
+          <div className="mt-3 flex min-w-0 items-center gap-2 sm:gap-3">
+            <DriverAvatar code={driver.code} name={driver.name} team={driver.team} size={44} />
+            <div className="min-w-0 border-l-2 pl-2 sm:pl-3" style={{ borderColor: getTeamColor2026(driver.team) }}>
+              <p className="truncate text-sm font-bold text-white sm:text-base">{driver.name}</p>
+              <p className="truncate text-[11px] text-gray-400 sm:text-xs">{driver.team}</p>
+              <p className="text-[10px] font-mono text-gray-500 sm:text-xs">{driver.code}</p>
+            </div>
+          </div>
+        </CardContent>
       </Card>)}
     </div>
     <Card><CardHeader><CardTitle className="text-base">{season} season comparison</CardTitle></CardHeader><CardContent className="space-y-3">
-      {metrics.map(([label, a, b, higherWins]) => <div key={label} className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-gray-800 py-2 last:border-0"><span className={`text-right font-mono ${a != null && b != null && (higherWins ? a > b : a < b) ? 'text-emerald-400' : 'text-gray-300'}`}>{a == null ? '—' : Number.isInteger(a) ? a : a.toFixed(1)}</span><span className="text-xs text-gray-400">{label}</span><span className={`font-mono ${b != null && a != null && (higherWins ? b > a : b < a) ? 'text-emerald-400' : 'text-gray-300'}`}>{b == null ? '—' : Number.isInteger(b) ? b : b.toFixed(1)}</span></div>)}
+      {metrics.map(([label, a, b, higherWins]) => <div key={label} className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-gray-800 py-2 last:border-0"><span className={`text-right font-mono ${a != null && b != null && (higherWins ? a > b : a < b) ? 'text-emerald-400' : 'text-gray-300'}`}>{a == null ? 'â€”' : Number.isInteger(a) ? a : a.toFixed(1)}</span><span className="text-xs text-gray-400">{label}</span><span className={`font-mono ${b != null && a != null && (higherWins ? b > a : b < a) ? 'text-emerald-400' : 'text-gray-300'}`}>{b == null ? 'â€”' : Number.isInteger(b) ? b : b.toFixed(1)}</span></div>)}
       <p className="pt-1 text-xs text-gray-500">Total championship points include all scoring sessions in the season standings.</p>
     </CardContent></Card>
     <div className="grid gap-4 md:grid-cols-2">
       <Card><CardHeader><CardTitle className="text-base">Qualifying</CardTitle></CardHeader><CardContent className="space-y-3">
-        {[[left.name, qualifyingMeetings ? leftQualiAverage : null, leftQualiH2H], [right.name, qualifyingMeetings ? rightQualiAverage : null, rightQualiH2H]].map(([name, average, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{qualifyingAvailable === null ? 'Loading…' : qualifyingAvailable ? `Avg ${typeof average === 'number' ? average.toFixed(1) : '—'} · ${wins}/${qualifyingMeetings} head-to-head` : 'Unavailable'}</span></div>)}
+        {[[left.name, qualifyingMeetings ? leftQualiAverage : null, leftQualiH2H], [right.name, qualifyingMeetings ? rightQualiAverage : null, rightQualiH2H]].map(([name, average, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{qualifyingAvailable === null ? 'Loadingâ€¦' : qualifyingAvailable ? `Avg ${typeof average === 'number' ? average.toFixed(1) : 'â€”'} Â· ${wins}/${qualifyingMeetings} head-to-head` : 'Unavailable'}</span></div>)}
         <p className="text-xs text-gray-500">Lower average position is better. Ties are not counted as a head-to-head win.</p>
       </CardContent></Card>
       <Card><CardHeader><CardTitle className="text-base">Sprint</CardTitle></CardHeader><CardContent className="space-y-3">
-        {[[left.name, leftSprint.points, leftSprint.wins], [right.name, rightSprint.points, rightSprint.wins]].map(([name, points, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{sprintAvailable === null ? 'Loading…' : sprintAvailable ? `${points} points · ${wins} wins` : 'Unavailable'}</span></div>)}
-        <p className="text-xs text-gray-500">Sprint points and wins use the current season’s sprint classifications.</p>
+        {[[left.name, leftSprint.points, leftSprint.wins], [right.name, rightSprint.points, rightSprint.wins]].map(([name, points, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{sprintAvailable === null ? 'Loadingâ€¦' : sprintAvailable ? `${points} points Â· ${wins} wins` : 'Unavailable'}</span></div>)}
+        <p className="text-xs text-gray-500">Sprint points and wins use the current seasonâ€™s sprint classifications.</p>
       </CardContent></Card>
     </div>
     <Card><CardHeader><CardTitle className="text-base">Cumulative points progression</CardTitle></CardHeader><CardContent><div className="h-64 w-full"><ResponsiveContainer width="100%" height="100%"><LineChart data={chart}><CartesianGrid stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" /><XAxis dataKey="round" tickFormatter={(round) => `R${round}`} stroke="#9ca3af" /><YAxis stroke="#9ca3af" /><Tooltip /><Legend /><Line type="monotone" dataKey={left.code} name={left.name} stroke={getTeamColor2026(left.team)} strokeWidth={2.5} /><Line type="monotone" dataKey={right.code} name={right.name} stroke={getTeamColor2026(right.team)} strokeWidth={2.5} /></LineChart></ResponsiveContainer></div></CardContent></Card>
@@ -460,7 +473,7 @@ export function Standings() {
     key: c.shortName,
     position: c.position,
     name: c.shortName,
-    sub: c.drivers.join(' · '),
+    sub: c.drivers.join(' Â· '),
     points: c.points,
     color: getTeamColor2026(c.shortName),
     textColor: getTeamTextColor2026(c.shortName),
@@ -476,7 +489,7 @@ export function Standings() {
       {/* Header */}
       <PageHeader
         title="2026 Championship Standings"
-        subtitle={`${champion ? `${champion.name} is the 2026 World Champion · ` : ''}After Round ${data.asOfRound} — ${data.asOfRace} | ${data.remainingRaces} races remaining`}
+        subtitle={`${champion ? `${champion.name} is the 2026 World Champion Â· ` : ''}After Round ${data.asOfRound} â€” ${data.asOfRace} | ${data.remainingRaces} races remaining`}
         icon={Trophy}
         actions={
           <div className="flex items-center gap-2 bg-muted/40 border border-gray-700/50 px-3 py-1.5 rounded-lg text-xs text-gray-400">
@@ -487,17 +500,17 @@ export function Standings() {
       />
 
       <Tabs value={tab} onValueChange={changeTab} className="standings-tabs w-full">
-        <TabsList className="grid w-full md:w-[720px] grid-cols-2 sm:grid-cols-4 bg-muted border border-gray-700/50">
-          <TabsTrigger value="drivers" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
+        <TabsList aria-label="Standings sections" className="flex w-full justify-start gap-1 overflow-x-auto bg-muted border border-gray-700/50 md:w-[720px]">
+          <TabsTrigger value="drivers" className="shrink-0 whitespace-nowrap px-3 text-xs sm:text-sm data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Drivers
           </TabsTrigger>
-          <TabsTrigger value="constructors" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
+          <TabsTrigger value="constructors" className="shrink-0 whitespace-nowrap px-3 text-xs sm:text-sm data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Constructors
           </TabsTrigger>
-          <TabsTrigger value="teammates" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
+          <TabsTrigger value="teammates" className="shrink-0 whitespace-nowrap px-3 text-xs sm:text-sm data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Teammates
           </TabsTrigger>
-          <TabsTrigger value="comparison" className="data-[state=active]:bg-f1-red data-[state=active]:text-white">
+          <TabsTrigger value="comparison" className="shrink-0 whitespace-nowrap px-3 text-xs sm:text-sm data-[state=active]:bg-f1-red data-[state=active]:text-white">
             Driver Comparison
           </TabsTrigger>
         </TabsList>
@@ -518,7 +531,7 @@ export function Standings() {
                     id="driver-search"
                     ref={searchRef}
                     type="search"
-                    placeholder="Search driver, team or code…  ( / )"
+                    placeholder="Search driver, team or codeâ€¦  ( / )"
                     onKeyDown={(e) => { if (e.key === 'Escape' && driverSearch) { e.preventDefault(); setDriverSearch(''); } }}
                     value={driverSearch}
                     onChange={(e) => setDriverSearch(e.target.value)}
@@ -536,7 +549,7 @@ export function Standings() {
                   )}
                 </div>
                 <p className="mt-2 text-xs text-gray-400" role="status" aria-live="polite">
-                  {driverSearch.trim() ? `${filteredDrivers.length} of ${data.drivers.length} drivers` : `${data.drivers.length} drivers · press / to search`}
+                  {driverSearch.trim() ? `${filteredDrivers.length} of ${data.drivers.length} drivers` : `${data.drivers.length} drivers Â· press / to search`}
                 </p>
               </div>
               <div className="overflow-x-auto max-h-[70vh]">
@@ -606,21 +619,21 @@ export function Standings() {
                           </td>
                           {driversHaveWins && (
                             <td className="py-3 px-4 text-center hidden sm:table-cell">
-                              <span className="text-gray-300 font-medium tabular-nums">{driver.wins ?? '—'}</span>
+                              <span className="text-gray-300 font-medium tabular-nums">{driver.wins ?? 'â€”'}</span>
                             </td>
                           )}
                           {driversHavePodiums && (
                             <td className="py-3 px-4 text-center hidden lg:table-cell">
-                              <span className="text-gray-400 tabular-nums">{driver.podiums ?? '—'}</span>
+                              <span className="text-gray-400 tabular-nums">{driver.podiums ?? 'â€”'}</span>
                             </td>
                           )}
                           <td className="py-3 px-4 text-center hidden sm:table-cell">
                             {driver.gap === null ? (
-                              <span className="text-gray-400 text-xs">—</span>
+                              <span className="text-gray-400 text-xs">â€”</span>
                             ) : driver.gap === 0 ? (
                               <span className="text-amber-400 text-xs font-bold">{champion ? 'Champion' : 'Leader'}</span>
                             ) : (
-                              <span className="text-gray-400 text-xs font-mono tabular-nums">−{driver.gap}</span>
+                              <span className="text-gray-400 text-xs font-mono tabular-nums">âˆ’{driver.gap}</span>
                             )}
                           </td>
                         </tr>
@@ -629,7 +642,7 @@ export function Standings() {
                     {filteredDrivers.length === 0 && (
                       <tr>
                         <td colSpan={driversHaveWins || driversHavePodiums ? 7 : 5} className="px-4 py-8 text-center text-sm text-gray-400">
-                          No drivers match “{driverSearch}”.
+                          No drivers match â€œ{driverSearch}â€.
                         </td>
                       </tr>
                     )}
@@ -647,7 +660,7 @@ export function Standings() {
                   <span className="text-xs font-medium">{champion ? 'World Champion' : 'Championship leader'}</span>
                 </div>
                 <p className="text-lg font-black text-white">{data.drivers[0].name}</p>
-                <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{data.drivers[0].points} points{champion && title ? ` · ${title.remainingCount} races to spare` : ''}</p>
+                <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{data.drivers[0].points} points{champion && title ? ` Â· ${title.remainingCount} races to spare` : ''}</p>
               </div>
             </div>
 
@@ -663,7 +676,7 @@ export function Standings() {
                     <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostWins.value} wins</p>
                   </>
                 ) : (
-                  <p className="text-lg font-black text-gray-400">—</p>
+                  <p className="text-lg font-black text-gray-400">â€”</p>
                 )}
               </div>
             </div>
@@ -681,7 +694,7 @@ export function Standings() {
                       <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostPodiums.value} podiums</p>
                     </>
                   ) : (
-                    <p className="text-lg font-black text-gray-400">—</p>
+                    <p className="text-lg font-black text-gray-400">â€”</p>
                   )}
                 </div>
               </div>
@@ -694,7 +707,7 @@ export function Standings() {
                   <span className="text-xs font-medium">Points gap</span>
                 </div>
                 <p className="mo-num text-lg font-black text-white tabular-nums">
-                  {data.drivers[1]?.gap != null && data.drivers[1].gap > 0 ? data.drivers[1].gap : '—'}
+                  {data.drivers[1]?.gap != null && data.drivers[1].gap > 0 ? data.drivers[1].gap : 'â€”'}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
               </div>
@@ -767,7 +780,7 @@ export function Standings() {
                             </div>
                           </td>
                           <td className="py-3 px-4 hidden lg:table-cell">
-                            <span className="text-gray-300 text-xs font-mono">{team.carName ?? '—'}</span>
+                            <span className="text-gray-300 text-xs font-mono">{team.carName ?? 'â€”'}</span>
                           </td>
                           <td className="py-3 px-4 text-center">
                             <span className={`mo-num font-black text-base tabular-nums ${isLeader ? 'text-amber-400' : 'text-white'}`}>
@@ -776,11 +789,11 @@ export function Standings() {
                           </td>
                           <td className="py-3 px-4 text-center hidden sm:table-cell">
                             {team.gap === null ? (
-                              <span className="text-gray-400 text-xs">—</span>
+                              <span className="text-gray-400 text-xs">â€”</span>
                             ) : team.gap === 0 ? (
                               <span className="text-amber-400 text-xs font-bold">{ctorChampion ? 'Champion' : 'Leader'}</span>
                             ) : (
-                              <span className="text-gray-400 text-xs font-mono tabular-nums">−{team.gap}</span>
+                              <span className="text-gray-400 text-xs font-mono tabular-nums">âˆ’{team.gap}</span>
                             )}
                           </td>
                           <td className="py-3 px-4 text-center">
@@ -802,7 +815,7 @@ export function Standings() {
             </CardContent>
           </Card>
 
-          {/* Constructor Stats — Liquid Glass */}
+          {/* Constructor Stats â€” Liquid Glass */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="standings-stat-card liquid-glass">
               <div className="p-4">
@@ -827,7 +840,7 @@ export function Standings() {
                     <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostTeamWins.value} wins</p>
                   </>
                 ) : (
-                  <p className="text-lg font-black text-gray-400">—</p>
+                  <p className="text-lg font-black text-gray-400">â€”</p>
                 )}
               </div>
             </div>
@@ -839,7 +852,7 @@ export function Standings() {
                   <span className="text-xs font-medium">Points gap</span>
                 </div>
                 <p className="mo-num text-lg font-black text-white tabular-nums">
-                  {data.constructors[1]?.gap != null && data.constructors[1].gap > 0 ? data.constructors[1].gap : '—'}
+                  {data.constructors[1]?.gap != null && data.constructors[1].gap > 0 ? data.constructors[1].gap : 'â€”'}
                 </p>
                 <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
               </div>
@@ -888,20 +901,20 @@ export function Standings() {
                     <Car className="h-4 w-4" />
                     <span className="text-xs font-medium">Car</span>
                   </div>
-                  <span className="text-white font-bold font-mono">{selectedConstructor.carName ?? '—'}</span>
+                  <span className="text-white font-bold font-mono">{selectedConstructor.carName ?? 'â€”'}</span>
                 </div>
                 <div className="bg-surface p-3 rounded-lg border border-gray-700/50">
                   <div className="flex items-center gap-1.5 text-blue-400 mb-1">
                     <Zap className="h-4 w-4" />
                     <span className="text-xs font-medium">Power unit</span>
                   </div>
-                  <span className="text-white font-medium text-sm">{selectedConstructor.powerUnit ?? '—'}</span>
+                  <span className="text-white font-medium text-sm">{selectedConstructor.powerUnit ?? 'â€”'}</span>
                 </div>
               </div>
 
               <div className="bg-surface p-3 rounded-lg border border-gray-700/50">
                 <span className="text-xs text-gray-400 block mb-1">Engine specification:</span>
-                <span className="text-xs text-gray-300">{selectedConstructor.engine ?? '—'}</span>
+                <span className="text-xs text-gray-300">{selectedConstructor.engine ?? 'â€”'}</span>
               </div>
 
               {/* Drivers */}
@@ -924,11 +937,11 @@ export function Standings() {
                 </div>
                 <div className="bg-surface p-3 rounded-lg border border-gray-700/50 text-center">
                   <span className="text-xs text-gray-400 block mb-1">Wins</span>
-                  <span className="text-xl font-black text-emerald-400 tabular-nums">{selectedConstructor.wins ?? '—'}</span>
+                  <span className="text-xl font-black text-emerald-400 tabular-nums">{selectedConstructor.wins ?? 'â€”'}</span>
                 </div>
                 <div className="bg-surface p-3 rounded-lg border border-gray-700/50 text-center">
                   <span className="text-xs text-gray-400 block mb-1">Podiums</span>
-                  <span className="text-xl font-black text-blue-400 tabular-nums">{selectedConstructor.podiums ?? '—'}</span>
+                  <span className="text-xl font-black text-blue-400 tabular-nums">{selectedConstructor.podiums ?? 'â€”'}</span>
                 </div>
               </div>
 
@@ -942,7 +955,7 @@ export function Standings() {
                   <ul className="space-y-2">
                     {selectedConstructor.updates.map((update, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-xs text-gray-300">
-                        <span className="text-amber-400 mt-0.5">▸</span>
+                        <span className="text-amber-400 mt-0.5">â–¸</span>
                         <span>{update}</span>
                       </li>
                     ))}
@@ -958,3 +971,4 @@ export function Standings() {
     </div>
   );
 }
+
