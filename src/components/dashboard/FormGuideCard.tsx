@@ -17,7 +17,7 @@ const chipClass: Record<FormChip['kind'], string> = {
   other: 'champ-chip',
 };
 
-const fmtAvg = (n: number | null) => (n === null ? '—' : n.toFixed(1));
+const fmtAvg = (n: number | null) => (n === null ? 'â€”' : n.toFixed(1));
 
 function Row({ row, index }: { row: FormRow; index: number }) {
   const color = getTeamColor2026(row.team);
@@ -41,12 +41,12 @@ function Row({ row, index }: { row: FormRow; index: number }) {
         ))}
       </ol>
       <span className="fg-stat">
-        <span className="fg-stat-v tabular-nums">{row.avgFinish === null ? '—' : <AnimatedNumber value={Math.round(row.avgFinish * 10) / 10} />}</span>
-        <span className="fg-stat-l">avg finish</span>
+        <span className="fg-stat-v tabular-nums">{row.avgFinish === null ? 'â€”' : <AnimatedNumber value={Math.round(row.avgFinish * 10) / 10} />}</span>
+        <span className="fg-stat-l">Average finishing position</span>
       </span>
       <span className="fg-stat">
         <span className="fg-stat-v tabular-nums"><AnimatedNumber value={row.formPoints} /></span>
-        <span className="fg-stat-l">{row.sprintPoints > 0 ? `pts (${row.sprintPoints} sprint)` : 'pts'}</span>
+        <span className="fg-stat-l">{row.sprintPoints > 0 ? `Points (${row.sprintPoints} from sprint races)` : 'Points'}</span>
       </span>
     </li>
   );
@@ -81,7 +81,7 @@ export function FormGuideCard({ guide, circuit, className }: { guide: FormGuide;
                   {nextRace && (
                     <>
                       <Flag className="h-3 w-3 shrink-0" aria-hidden="true" />
-                      <span>Next: Round {nextRace.round} · {nextRace.name}</span>
+                      <span>Next: Round {nextRace.round} | {nextRace.name}</span>
                     </>
                   )}
                 </p>
@@ -89,7 +89,7 @@ export function FormGuideCard({ guide, circuit, className }: { guide: FormGuide;
             </div>
             <span className="lgp-pill" title="Taken from the Grand Prix results in this project's data">
               <Info className="h-3 w-3" aria-hidden="true" />
-              Race results · no prediction
+              Race results | no prediction
             </span>
           </div>
 
@@ -99,7 +99,7 @@ export function FormGuideCard({ guide, circuit, className }: { guide: FormGuide;
 
           {facts.length > 0 && (
             <div className="lgp-item mt-4" style={{ '--i': rows.length + 1 } as React.CSSProperties}>
-              <p className="lgp-eyebrow">The next circuit{circuit ? ` · ${circuit.name.replace(/ \(.*\)$/, '')}` : ''}</p>
+              <p className="lgp-eyebrow">The next circuit{circuit ? ` | ${circuit.name.replace(/ \(.*\)$/, '')}` : ''}</p>
               <dl className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {facts.map(({ icon: Icon, label, value, sub }) => (
                   <div key={label} className="fg-fact">
@@ -120,3 +120,4 @@ export function FormGuideCard({ guide, circuit, className }: { guide: FormGuide;
     </section>
   );
 }
+
