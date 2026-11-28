@@ -313,9 +313,9 @@ function DriverComparisonPanel({ drivers, results, season }: { drivers: Driver[]
   const metrics: Array<[string, number | null, number | null, boolean]> = [
     ['Championship points', left.points, right.points, true],
     ['Race wins', leftStats.wins, rightStats.wins, true],
-    ['Podiums', leftStats.podiums, rightStats.podiums, true],
-    ['Average finish', leftStats.average, rightStats.average, false],
-    ['DNF / retirements', leftStats.dnfs, rightStats.dnfs, false],
+    ['Podium finishes', leftStats.podiums, rightStats.podiums, true],
+    ['Average finishing position', leftStats.average, rightStats.average, false],
+    ['Did not finish or retired', leftStats.dnfs, rightStats.dnfs, false],
   ];
   return <div className="mt-6 space-y-5">
     <div className="grid grid-cols-2 gap-2 sm:gap-4">
@@ -337,17 +337,17 @@ function DriverComparisonPanel({ drivers, results, season }: { drivers: Driver[]
       </Card>)}
     </div>
     <Card><CardHeader><CardTitle className="text-base">{season} season comparison</CardTitle></CardHeader><CardContent className="space-y-3">
-      {metrics.map(([label, a, b, higherWins]) => <div key={label} className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-gray-800 py-2 last:border-0"><span className={`text-right font-mono ${a != null && b != null && (higherWins ? a > b : a < b) ? 'text-emerald-400' : 'text-gray-300'}`}>{a == null ? 'â€”' : Number.isInteger(a) ? a : a.toFixed(1)}</span><span className="text-xs text-gray-400">{label}</span><span className={`font-mono ${b != null && a != null && (higherWins ? b > a : b < a) ? 'text-emerald-400' : 'text-gray-300'}`}>{b == null ? 'â€”' : Number.isInteger(b) ? b : b.toFixed(1)}</span></div>)}
+      {metrics.map(([label, a, b, higherWins]) => <div key={label} className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-gray-800 py-2 last:border-0"><span className={`text-right font-mono ${a != null && b != null && (higherWins ? a > b : a < b) ? 'text-emerald-400' : 'text-gray-300'}`}>{a == null ? 'N/A' : Number.isInteger(a) ? a : a.toFixed(1)}</span><span className="text-xs text-gray-400">{label}</span><span className={`font-mono ${b != null && a != null && (higherWins ? b > a : b < a) ? 'text-emerald-400' : 'text-gray-300'}`}>{b == null ? 'N/A' : Number.isInteger(b) ? b : b.toFixed(1)}</span></div>)}
       <p className="pt-1 text-xs text-gray-500">Total championship points include all scoring sessions in the season standings.</p>
     </CardContent></Card>
     <div className="grid gap-4 md:grid-cols-2">
       <Card><CardHeader><CardTitle className="text-base">Qualifying</CardTitle></CardHeader><CardContent className="space-y-3">
-        {[[left.name, qualifyingMeetings ? leftQualiAverage : null, leftQualiH2H], [right.name, qualifyingMeetings ? rightQualiAverage : null, rightQualiH2H]].map(([name, average, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{qualifyingAvailable === null ? 'Loadingâ€¦' : qualifyingAvailable ? `Avg ${typeof average === 'number' ? average.toFixed(1) : 'â€”'} Â· ${wins}/${qualifyingMeetings} head-to-head` : 'Unavailable'}</span></div>)}
-        <p className="text-xs text-gray-500">Lower average position is better. Ties are not counted as a head-to-head win.</p>
+        {[[left.name, qualifyingMeetings ? leftQualiAverage : null, leftQualiH2H], [right.name, qualifyingMeetings ? rightQualiAverage : null, rightQualiH2H]].map(([name, average, wins]) => <div key={String(name)} className="flex min-w-0 flex-col gap-1 rounded-lg border border-gray-800 p-3 sm:flex-row sm:items-center sm:justify-between"><span className="font-medium text-white">{name}</span><span className="text-sm text-gray-300">{qualifyingAvailable === null ? 'Loading qualifying results...' : qualifyingAvailable ? `Average qualifying position: ${typeof average === 'number' ? average.toFixed(1) : 'N/A'}. Had the better qualifying position in ${wins} of ${qualifyingMeetings} shared races.` : 'Qualifying results are not available.'}</span></div>)}
+        <p className="text-xs text-gray-500">A lower average position is better. Equal positions do not count as a win.</p>
       </CardContent></Card>
       <Card><CardHeader><CardTitle className="text-base">Sprint</CardTitle></CardHeader><CardContent className="space-y-3">
-        {[[left.name, leftSprint.points, leftSprint.wins], [right.name, rightSprint.points, rightSprint.wins]].map(([name, points, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{sprintAvailable === null ? 'Loadingâ€¦' : sprintAvailable ? `${points} points Â· ${wins} wins` : 'Unavailable'}</span></div>)}
-        <p className="text-xs text-gray-500">Sprint points and wins use the current seasonâ€™s sprint classifications.</p>
+        {[[left.name, leftSprint.points, leftSprint.wins], [right.name, rightSprint.points, rightSprint.wins]].map(([name, points, wins]) => <div key={String(name)} className="flex items-center justify-between gap-3 rounded-lg border border-gray-800 p-3"><span className="font-medium text-white">{name}</span><span className="text-right text-sm text-gray-300">{sprintAvailable === null ? 'Loading sprint results...' : sprintAvailable ? `${points} points | ${wins} wins` : 'Sprint results are not available.'}</span></div>)}
+        <p className="text-xs text-gray-500">Sprint points and wins use this season's sprint classifications.</p>
       </CardContent></Card>
     </div>
     <Card><CardHeader><CardTitle className="text-base">Cumulative points progression</CardTitle></CardHeader><CardContent><div className="h-64 w-full"><ResponsiveContainer width="100%" height="100%"><LineChart data={chart}><CartesianGrid stroke="rgba(255,255,255,0.08)" strokeDasharray="4 4" /><XAxis dataKey="round" tickFormatter={(round) => `R${round}`} stroke="#9ca3af" /><YAxis stroke="#9ca3af" /><Tooltip /><Legend /><Line type="monotone" dataKey={left.code} name={left.name} stroke={getTeamColor2026(left.team)} strokeWidth={2.5} /><Line type="monotone" dataKey={right.code} name={right.name} stroke={getTeamColor2026(right.team)} strokeWidth={2.5} /></LineChart></ResponsiveContainer></div></CardContent></Card>
@@ -446,11 +446,11 @@ export function Standings() {
   const ctorTitle = calendarData ? computeConstructorTitle(data.constructors, calendarData.races) : null;
   const ctorChampion = ctorTitle?.clinched ? ctorTitle.leader : null;
   const mostWins = leaderBy(data.drivers, (d) => d.wins);
-  const mostPodiums = leaderBy(data.drivers, (d) => d.podiums);
+  const mostPodium finishes = leaderBy(data.drivers, (d) => d.podiums);
   const mostTeamWins = leaderBy(data.constructors, (c) => c.wins);
 
   const driversHaveWins = data.drivers.some((d) => d.wins != null);
-  const driversHavePodiums = data.drivers.some((d) => d.podiums != null);
+  const driversHavePodium finishes = data.drivers.some((d) => d.podiums != null);
   const filteredDrivers = driverSearch.trim()
     ? data.drivers.filter((d) =>
         d.name.toLowerCase().includes(driverSearch.toLowerCase()) ||
@@ -556,15 +556,15 @@ export function Standings() {
                 <table className="w-full text-sm">
                   <thead className="bg-muted/95 backdrop-blur-sm text-gray-400 text-xs uppercase sticky top-0 z-10">
                     <tr>
-                      <th className="py-3 px-4 text-center font-bold">Pos</th>
+                      <th className="py-3 px-4 text-center font-bold">Position</th>
                       <th className="py-3 px-4 text-left font-bold">Driver</th>
                       <th className="py-3 px-4 text-left font-bold hidden md:table-cell">Team</th>
                       <th className="py-3 px-4 text-center font-bold tabular-nums">Points</th>
                       {driversHaveWins && (
                         <th className="py-3 px-4 text-center font-bold tabular-nums hidden sm:table-cell">Wins</th>
                       )}
-                      {driversHavePodiums && (
-                        <th className="py-3 px-4 text-center font-bold tabular-nums hidden lg:table-cell">Podiums</th>
+                      {driversHavePodium finishes && (
+                        <th className="py-3 px-4 text-center font-bold tabular-nums hidden lg:table-cell">Podium finishes</th>
                       )}
                       <th className="py-3 px-4 text-center font-bold tabular-nums hidden sm:table-cell">Gap</th>
                     </tr>
@@ -622,7 +622,7 @@ export function Standings() {
                               <span className="text-gray-300 font-medium tabular-nums">{driver.wins ?? 'â€”'}</span>
                             </td>
                           )}
-                          {driversHavePodiums && (
+                          {driversHavePodium finishes && (
                             <td className="py-3 px-4 text-center hidden lg:table-cell">
                               <span className="text-gray-400 tabular-nums">{driver.podiums ?? 'â€”'}</span>
                             </td>
@@ -641,7 +641,7 @@ export function Standings() {
                     })}
                     {filteredDrivers.length === 0 && (
                       <tr>
-                        <td colSpan={driversHaveWins || driversHavePodiums ? 7 : 5} className="px-4 py-8 text-center text-sm text-gray-400">
+                        <td colSpan={driversHaveWins || driversHavePodium finishes ? 7 : 5} className="px-4 py-8 text-center text-sm text-gray-400">
                           No drivers match â€œ{driverSearch}â€.
                         </td>
                       </tr>
@@ -681,17 +681,17 @@ export function Standings() {
               </div>
             </div>
 
-            {driversHavePodiums ? (
+            {driversHavePodium finishes ? (
               <div className="liquid-glass">
                 <div className="p-4">
                   <div className="flex items-center gap-2 text-blue-400 mb-1">
                     <Medal className="h-4 w-4" />
                     <span className="text-xs font-medium">Most podiums</span>
                   </div>
-                  {mostPodiums ? (
+                  {mostPodium finishes ? (
                     <>
-                      <p className="text-lg font-black text-white">{mostPodiums.row.name}</p>
-                      <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostPodiums.value} podiums</p>
+                      <p className="text-lg font-black text-white">{mostPodium finishes.row.name}</p>
+                      <p className="text-xs text-gray-400 mt-0.5 tabular-nums">{mostPodium finishes.value} podiums</p>
                     </>
                   ) : (
                     <p className="text-lg font-black text-gray-400">â€”</p>
@@ -709,7 +709,7 @@ export function Standings() {
                 <p className="mo-num text-lg font-black text-white tabular-nums">
                   {data.drivers[1]?.gap != null && data.drivers[1].gap > 0 ? data.drivers[1].gap : 'â€”'}
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
+                <p className="text-xs text-gray-400 mt-0.5">points behind second place</p>
               </div>
             </div>
           </div>
@@ -737,7 +737,7 @@ export function Standings() {
                 <table className="w-full text-sm">
                   <thead className="bg-muted/95 backdrop-blur-sm text-gray-400 text-xs uppercase sticky top-0 z-10">
                     <tr>
-                      <th className="py-3 px-4 text-center font-bold">Pos</th>
+                      <th className="py-3 px-4 text-center font-bold">Position</th>
                       <th className="py-3 px-4 text-left font-bold">Constructor</th>
                       <th className="py-3 px-4 text-left font-bold hidden lg:table-cell">Car</th>
                       <th className="py-3 px-4 text-center font-bold tabular-nums">Points</th>
@@ -854,7 +854,7 @@ export function Standings() {
                 <p className="mo-num text-lg font-black text-white tabular-nums">
                   {data.constructors[1]?.gap != null && data.constructors[1].gap > 0 ? data.constructors[1].gap : 'â€”'}
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5">points to P2</p>
+                <p className="text-xs text-gray-400 mt-0.5">points behind second place</p>
               </div>
             </div>
 
@@ -940,7 +940,7 @@ export function Standings() {
                   <span className="text-xl font-black text-emerald-400 tabular-nums">{selectedConstructor.wins ?? 'â€”'}</span>
                 </div>
                 <div className="bg-surface p-3 rounded-lg border border-gray-700/50 text-center">
-                  <span className="text-xs text-gray-400 block mb-1">Podiums</span>
+                  <span className="text-xs text-gray-400 block mb-1">Podium finishes</span>
                   <span className="text-xl font-black text-blue-400 tabular-nums">{selectedConstructor.podiums ?? 'â€”'}</span>
                 </div>
               </div>
